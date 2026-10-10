@@ -8,7 +8,7 @@
 | [`instalacion.md`](instalacion.md) | Instalación del entorno y configuración de la clave de xeno-canto |
 | [`api.md`](api.md) | Comandos de la línea de comandos (incluye `especies`) y funciones de Python |
 
-El cronograma vigente está en `entrega_1/docs/cronograma.xlsx`.
+Mantenemos el cronograma vigente en `entrega_1/docs/cronograma.xlsx`.
 
 ## Correspondencia con la rúbrica de la Entrega 2 (10 %)
 

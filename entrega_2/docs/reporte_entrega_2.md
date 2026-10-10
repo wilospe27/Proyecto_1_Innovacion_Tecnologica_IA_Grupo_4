@@ -7,7 +7,7 @@ Universidad Icesi · Facultad Barberi de Ingeniería, Diseño y Ciencias Aplicad
 Integrantes: Wilson Ospina Pérez · Santiago Osorio · Martín Pérez · Adriana Zapata  
 Fecha de entrega: 19 de noviembre de 2026
 
-> **Cómo usar esta plantilla:** cada sección indica qué debe contener (en cursiva) y las tareas del cronograma que la alimentan. Reemplacen las indicaciones por el contenido final y borren esta nota antes de entregar.
+> **Cómo usamos esta plantilla:** cada sección indica en cursiva qué debe contener y qué tareas del cronograma la alimentan. Reemplazamos esas indicaciones por el contenido final, **redactado en primera persona del plural** (por ejemplo, «elegimos», «encontramos», «proponemos»), y borramos esta nota antes de entregar.
 
 | Criterio de la rúbrica | Peso | Secciones |
 |---|---|---|
@@ -32,7 +32,7 @@ Fecha de entrega: 19 de noviembre de 2026
 
 ### B. Selección de especies objetivo (tarea 2.1)
 
-*Criterios (≥ 30 grabaciones de calidad A/B, número de grabadores, 20–30 especies), tabla con el ranking resumido (`experiments/results/ranking_especies.csv`) y lista final con la razón de cada inclusión o exclusión relevante. Explicar por qué se descargan grabaciones de toda Colombia para las especies elegidas.*
+*Criterios (≥ 30 grabaciones de calidad A/B, número de grabadores, 20–30 especies), tabla con el ranking resumido (`experiments/results/ranking_especies.csv`) y lista final con la razón de cada inclusión o exclusión relevante. Explicar por qué descargamos grabaciones de toda Colombia para las especies elegidas.*
 
 ### C. Descarga y depuración (tareas 2.2 y 2.3)
 
@@ -54,13 +54,13 @@ Fecha de entrega: 19 de noviembre de 2026
 
 ### D. Justificación de la selección de datos y variables
 
-*Por qué las ventanas de 5 s, la frecuencia de muestreo de 32 kHz y los 128 filtros Mel entre 50 Hz y 14 kHz; filtros de calidad aplicados; variables usadas por los modelos de referencia (estadísticas de MFCC) y por la CNN (espectrogramas).*
+*Por qué las ventanas de 5 s, la frecuencia de muestreo de 32 kHz y los 128 filtros Mel entre 50 Hz y 14 kHz; filtros de calidad que aplicamos; variables que usan los modelos de referencia (estadísticas de MFCC) y por la CNN (espectrogramas).*
 
 ## IV. Hipótesis y diseño experimental (tarea 2.6)
 
 *Formalizar las hipótesis preliminares del reporte 1 con criterios medibles. Por ejemplo:*
 
-| Hipótesis | Predicción medible | Cómo se pone a prueba | Entrega |
+| Hipótesis | Predicción medible | Cómo la ponemos a prueba | Entrega |
 |---|---|---|---|
 | H1. Las representaciones preentrenadas superan a una CNN entrenada desde cero con pocas grabaciones por especie | F1 macro mayor en prueba | CNN base (Entrega 2) frente a EfficientNet y *embeddings* (Entrega 3), misma partición | 2–3 |
 | H2. La aumentación mejora las especies con menos grabaciones | Mayor F1 en el tercio de especies con menos datos | CNN con y sin aumentación | 2 |

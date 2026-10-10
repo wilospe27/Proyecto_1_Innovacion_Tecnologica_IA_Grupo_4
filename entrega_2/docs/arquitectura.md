@@ -1,6 +1,6 @@
 # 🏗️ Arquitectura y diseño del modelo
 
-Diseño técnico del sistema, versión de la Entrega 2 (en construcción). Parte del diseño de la Entrega 1 y se ajustará con los resultados del análisis exploratorio y de los modelos de referencia.
+Este es el diseño técnico de nuestro sistema, versión de la Entrega 2 (en construcción). Partimos del diseño de la Entrega 1 y lo ajustaremos con los resultados del análisis exploratorio y de los modelos de referencia.
 
 ## 1. Flujo de extremo a extremo
 
@@ -44,7 +44,7 @@ data/processed/audio_config.json              # parámetros usados (se reutiliza
 ```
 
 - **Etiqueta:** nombre de la carpeta de la especie (`Turdus_fuscater`).
-- **`recording_id`:** identifica la grabación de origen de cada ventana; se usa para agrupar en la partición.
+- **`recording_id`:** identifica la grabación de origen de cada ventana; la usamos para agrupar en la partición.
 - **`split`:** lo agrega el entrenamiento la primera vez (`train` / `val` / `test`) y queda guardado para que todas las corridas comparen sobre la misma partición.
 
 ## 3. Preprocesamiento
@@ -58,7 +58,7 @@ data/processed/audio_config.json              # parámetros usados (se reutiliza
 | Bandas Mel | 128, de 50 Hz a 14 kHz | Reduce parte del ruido de muy baja frecuencia (viento, tráfico) |
 | Escala | dB relativos al máximo, rango de 80 dB | Comprime el rango dinámico |
 | Normalización | media 0, desviación 1 por ventana | Reduce diferencias de volumen entre grabadoras |
-| Reducción de ruido | opcional (`--reduce-noise`) | Se evaluará su efecto en la Entrega 2 |
+| Reducción de ruido | opcional (`--reduce-noise`) | Evaluaremos su efecto en la Entrega 2 |
 
 Forma de cada ventana: **128 × 501** (bandas Mel × cuadros de tiempo).
 
@@ -80,11 +80,11 @@ Forma de cada ventana: **128 × 501** (bandas Mel × cuadros de tiempo).
 
 ### 4.2 Transferencia de aprendizaje (`efficientnet_b0`)
 
-EfficientNet-B0 de `torchvision` con pesos de ImageNet; el espectrograma se replica en 3 canales y se reemplaza la capa final por una de N especies. Se ajusta todo el modelo con una tasa de aprendizaje menor.
+Usamos EfficientNet-B0 de `torchvision` con pesos de ImageNet: replicamos el espectrograma en 3 canales y reemplazamos la capa final por una de N especies. Ajustamos todo el modelo con una tasa de aprendizaje menor.
 
 ### 4.3 *Embeddings* bioacústicos (Entrega 3)
 
-Se extraen vectores de características con un modelo bioacústico preentrenado (BirdNET o Perch 2.0) y se entrena un clasificador lineal (por ejemplo, regresión logística). Es la opción recomendada cuando hay pocas grabaciones por especie (ver estado del arte, trabajos 5 y 6).
+Extraeremos vectores de características con un modelo bioacústico preentrenado (BirdNET o Perch 2.0) y entrenaremos un clasificador lineal (por ejemplo, regresión logística). Es la opción que recomendamos cuando hay pocas grabaciones por especie (ver estado del arte, trabajos 5 y 6).
 
 ## 5. Entrenamiento
 
@@ -108,9 +108,9 @@ Salidas de cada corrida (en `experiments/`): `checkpoints/<corrida>.pt`, `logs/<
 
 ## 7. Inferencia
 
-1. Cargar el audio con la misma configuración del entrenamiento (guardada en el checkpoint).
-2. Dividirlo en ventanas de 5 s y calcular la probabilidad de cada especie por ventana.
-3. Promediar las probabilidades y devolver las N especies más probables.
+1. Cargamos el audio con la misma configuración del entrenamiento (guardada en el checkpoint).
+2. Lo dividimos en ventanas de 5 s y calculamos la probabilidad de cada especie por ventana.
+3. Promediamos las probabilidades y devolvemos las N especies más probables.
 
 ## 8. Decisiones pendientes (Entrega 2)
 

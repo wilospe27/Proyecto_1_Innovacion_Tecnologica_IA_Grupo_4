@@ -1,10 +1,10 @@
 # 📂 data/
 
-Los audios y sus derivados **no se versionan** en Git (pesan mucho y cada grabación tiene su propia licencia). Esta carpeta solo guarda la estructura; cada integrante la llena localmente con los comandos del proyecto.
+**No subimos a Git** los audios ni sus derivados (pesan mucho y cada grabación tiene su propia licencia). Esta carpeta solo guarda la estructura; cada integrante la llena en su computador con los comandos del proyecto.
 
 ```
 data/
-├── especies_objetivo.txt  # Lista de especies elegidas por el equipo (sí se versiona)
+├── especies_objetivo.txt  # Lista de especies que elegimos (sí la versionamos)
 ├── raw/                   # Audios originales: raw/<Genero_especie>/XC<id>.mp3
 ├── processed/             # Ventanas de 5 s como espectrogramas Mel (.npy) + index.csv + audio_config.json
 └── metadata/              # Metadatos de xeno-canto (región y especies elegidas, con licencia y autor)
@@ -34,4 +34,4 @@ python -m src.main preprocess
 | [Colección de Sonidos Ambientales – Instituto Humboldt](https://www.humboldt.org.co) | Grabaciones de fauna colombiana | Acceso mediante solicitud a la colección |
 | [iNaturalist](https://www.inaturalist.org) | Observaciones ciudadanas con audio | Creative Commons, según cada observación |
 
-> Conserve siempre la licencia (`lic`) y el autor (`rec`) de cada grabación: se necesitan para citar las fuentes en los reportes.
+> Conservamos siempre la licencia (`lic`) y el autor (`rec`) de cada grabación, porque los necesitamos para citar las fuentes en los reportes.

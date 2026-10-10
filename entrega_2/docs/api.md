@@ -1,6 +1,6 @@
 # 🔌 Interfaces del proyecto (CLI y funciones de Python)
 
-El proyecto aún no expone una API web; la interfaz es la **línea de comandos** de `src/main.py` y las funciones de Python que esta usa. La interfaz web de demostración (Streamlit o Gradio) se documentará aquí en la Entrega 3.
+Todavía no exponemos una API web: la interfaz es la **línea de comandos** de `src/main.py` y las funciones de Python que esta usa. En la Entrega 3 documentaremos aquí la interfaz web de demostración (Streamlit o Gradio).
 
 ## Línea de comandos
 
@@ -23,7 +23,7 @@ python -m src.main <comando> [opciones]
 
 ```bash
 python -m src.main especies --region valle_del_cauca --filtrar-localidad "Valle del Cauca"
-# el equipo elige las especies y las escribe en data/especies_objetivo.txt
+# elegimos las especies y las escribimos en data/especies_objetivo.txt
 python -m src.main download --lista data/especies_objetivo.txt --max-per-species 60
 python -m src.main preprocess
 python -m src.main train --model cnn_baseline --epochs 30 --run-name cnn_v1

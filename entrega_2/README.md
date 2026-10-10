@@ -2,7 +2,7 @@
 
 **Proyecto 1 · Innovación Tecnológica con IA · Grupo 4** — Reporte de la segunda etapa (10 % de la nota) · Fecha de entrega: **19 de noviembre de 2026**
 
-Esta carpeta se trabaja en la rama `entrega-2` y se une a `main` al publicar la entrega (tarea 2.9). Parte del código de la Entrega 1 y agrega la consulta de metadatos de xeno-canto para seleccionar las especies objetivo.
+Trabajamos esta carpeta en la rama `entrega-2` y la uniremos a `main` al publicar la entrega (tarea 2.9). Partimos del código de la Entrega 1 y le agregamos la consulta de metadatos de xeno-canto para seleccionar las especies objetivo.
 
 ## 📄 Qué contendrá esta entrega
 
@@ -15,7 +15,7 @@ Esta carpeta se trabaja en la rama `entrega-2` y se une a `main` al publicar la 
 
 ```bash
 cd entrega_2
-# guarde la clave de xeno-canto en entrega_2/.env  →  XC_API_KEY=su_clave
+# guardamos la clave de xeno-canto en entrega_2/.env  →  XC_API_KEY=la_clave
 python -m src.main especies --region valle_del_cauca --filtrar-localidad "Valle del Cauca"
 ```
 
@@ -39,7 +39,7 @@ entrega_2/
 ├── src/           # data/ (download con ranking de especies) · models/ · training/ · evaluation/ · inference/ · utils/ · main.py
 ├── notebooks/     # 02_eda.ipynb y 03_modelos_referencia.ipynb (pendientes)
 ├── data/          # especies_objetivo.txt · raw/ · processed/ · metadata/
-├── experiments/   # logs/ · checkpoints/ · results/ (el ranking de especies se versiona aquí)
+├── experiments/   # logs/ · checkpoints/ · results/ (aquí versionamos el ranking de especies)
 ├── tests/         # Pruebas con pytest (sin acceso a la red)
 ├── requirements.txt · environment.yml · pytest.ini · .gitignore · LICENSE
 └── README.md
@@ -47,4 +47,4 @@ entrega_2/
 
 ## 📄 Licencia
 
-Código y documentación bajo licencia [MIT](LICENSE). Las grabaciones conservan la licencia de sus autores y no se redistribuyen.
+Publicamos el código y la documentación bajo licencia [MIT](LICENSE). Las grabaciones conservan la licencia de sus autores y no las redistribuimos.
