@@ -1,4 +1,3 @@
-  [README.md](https://github.com/user-attachments/files/33084657/README.md)
 # 🐦 Identificación de especies por su canto
 ### Aves y fauna de Colombia mediante Inteligencia Artificial
 
@@ -70,53 +69,65 @@ Construir un modelo de IA capaz de clasificar especies de fauna colombiana a par
 - **Interfaz:** `Streamlit` o `Gradio`
 - **Entorno:** Jupyter Notebook / Google Colab
 
+## 📦 Entregas
+
+Cada entrega vive en su propia carpeta con la estructura estándar del curso (`docs/`, `src/`, `notebooks/`, `experiments/`, `tests/`, `requirements.txt`, `README.md`).
+
+| Entrega | Contenido | Peso | Carpeta | Estado |
+|---|---|---|---|---|
+| 1 | Análisis del problema, estado del arte y planeación | 20 % | [`entrega_1/`](entrega_1/) | ✅ Lista para revisión del equipo |
+| 2 | Análisis exploratorio de datos, modelos de referencia e hipótesis | 10 % | `entrega_2/` | ⏳ Pendiente |
+| 3 | Reporte final y video de 10 minutos | 70 % | `entrega_3/` | ⏳ Pendiente |
+
+📄 **Reporte de la Entrega 1:** [`entrega_1/docs/reporte_entrega_1.md`](entrega_1/docs/reporte_entrega_1.md) · 📅 **Cronograma:** [`entrega_1/docs/cronograma.xlsx`](entrega_1/docs/cronograma.xlsx)
+
 ## 📁 Estructura del repositorio
 
 ```
 Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4/
-├── data/
-│   ├── raw/              # Audios originales descargados
-│   └── processed/        # Espectrogramas y audios procesados
-├── notebooks/
-│   ├── 01_exploracion.ipynb
-│   ├── 02_preprocesamiento.ipynb
-│   └── 03_entrenamiento.ipynb
-├── src/
-│   ├── descarga_datos.py
-│   ├── preprocesamiento.py
-│   ├── modelo.py
-│   └── prediccion.py
-├── app/
-│   └── app.py            # Interfaz web (Streamlit/Gradio)
-├── models/               # Modelos entrenados
-├── docs/                 # Informe, presentación y diagramas
-├── requirements.txt
-└── README.md
+├── README.md                 # Este archivo
+├── LICENSE
+├── .gitignore
+└── entrega_1/
+    ├── docs/                 # Reporte, cronograma (Excel), arquitectura, API e instalación
+    ├── src/                  # data/ · models/ · training/ · evaluation/ · inference/ · utils/ · main.py
+    ├── notebooks/            # 01_exploracion_inicial.ipynb
+    ├── data/                 # raw/ · processed/ · metadata/ (no se versionan)
+    ├── experiments/          # logs/ · checkpoints/ · results/
+    ├── tests/                # Pruebas con pytest
+    ├── requirements.txt
+    ├── environment.yml
+    ├── .gitignore
+    ├── LICENSE
+    └── README.md
 ```
 
 ## 🚀 Instalación y uso
 
 ```bash
-# 1. Clonar el repositorio
+# 1. Clonar el repositorio y entrar a la entrega
 git clone https://github.com/wilospe27/Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4.git
-cd Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4
+cd Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4/entrega_1
 
 # 2. Crear entorno virtual
-python -m venv venv
-source venv/bin/activate      # Windows: venv\Scripts\activate
+python -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\Activate.ps1
 
-# 3. Instalar dependencias
+# 3. Instalar dependencias y verificar
 pip install -r requirements.txt
-
-# 4. Ejecutar la aplicación
-streamlit run app/app.py
+python -m pytest
 ```
 
-**Predicción desde consola:**
+**Comandos del proyecto** (ver [`entrega_1/docs/api.md`](entrega_1/docs/api.md)):
 
 ```bash
-python src/prediccion.py --audio ruta/al/audio.wav
+python -m src.main download --species "Turdus fuscater" --max-per-species 30   # requiere XC_API_KEY
+python -m src.main preprocess
+python -m src.main train --model cnn_baseline --epochs 30 --run-name cnn_v1
+python -m src.main predict --audio ruta/al/audio.wav --checkpoint experiments/checkpoints/cnn_v1.pt
 ```
+
+La interfaz web (Streamlit/Gradio) se desarrollará en la Entrega 3.
 
 ## 📊 Resultados
 

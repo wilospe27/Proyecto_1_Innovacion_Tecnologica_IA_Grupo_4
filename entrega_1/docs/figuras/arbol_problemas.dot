@@ -1,0 +1,56 @@
+// Árbol de problemas (fuente de figuras/arbol_problemas.png)
+// Regenerar con:  dot -Tpng -Gdpi=170 arbol_problemas.dot -o arbol_problemas.png
+digraph arbol_problemas {
+    rankdir=BT;
+    newrank=true;
+    nodesep=0.35;
+    ranksep=0.55;
+    bgcolor="white";
+    node [shape=box, style="rounded,filled", fontname="Liberation Sans", fontsize=11, margin="0.18,0.10", width=2.6];
+    edge [color="#6B7280", arrowsize=0.7];
+
+    // Causas indirectas
+    subgraph cluster_ci {
+        label="Causas indirectas"; fontname="Liberation Sans Bold"; fontsize=12; color="#E5E7EB"; style="rounded";
+        CI6 [label="Lluvia, viento, ruido humano\ny coros de varias especies", fillcolor="#FEF2F2", color="#FCA5A5"];
+        CI5 [label="Datos dispersos en varios\nrepositorios con licencias\ny calidades distintas", fillcolor="#FEF2F2", color="#FCA5A5"];
+        CI4 [label="Pocas grabaciones etiquetadas\nde especies raras o endémicas", fillcolor="#FEF2F2", color="#FCA5A5"];
+        CI3 [label="Modelos globales entrenados\nsobre todo con datos de\nNorteamérica y Europa", fillcolor="#FEF2F2", color="#FCA5A5"];
+        CI2 [label="Grabadoras autónomas que\nregistran durante semanas\no meses", fillcolor="#FEF2F2", color="#FCA5A5"];
+        CI1 [label="Alta diversidad de especies\ny cantos similares entre\nespecies emparentadas", fillcolor="#FEF2F2", color="#FCA5A5"];
+    }
+
+    // Causas directas
+    subgraph cluster_c {
+        label="Causas directas"; fontname="Liberation Sans Bold"; fontsize=12; color="#E5E7EB"; style="rounded";
+        C4 [label="C4. Condiciones acústicas\ndifíciles en las grabaciones\nde campo", fillcolor="#FEE2E2", color="#B91C1C"];
+        C3 [label="C3. Desempeño desigual de las\nherramientas automáticas con\nespecies neotropicales", fillcolor="#FEE2E2", color="#B91C1C"];
+        C2 [label="C2. Volumen de audio que supera\nla capacidad de análisis manual", fillcolor="#FEE2E2", color="#B91C1C"];
+        C1 [label="C1. Identificación auditiva\ndependiente de expertos escasos", fillcolor="#FEE2E2", color="#B91C1C"];
+    }
+
+    P [label="PROBLEMA CENTRAL\nBaja capacidad para identificar de forma rápida, confiable y escalable\nlas especies de fauna colombiana a partir de sus vocalizaciones",
+       fillcolor="#FDE68A", color="#B45309", penwidth=2, fontsize=13, fontname="Liberation Sans Bold", width=6];
+
+    // Efectos
+    subgraph cluster_e {
+        label="Efectos directos"; fontname="Liberation Sans Bold"; fontsize=12; color="#E5E7EB"; style="rounded";
+        E4 [label="E4. Barreras para la ciencia\nciudadana, la educación\ny el aviturismo", fillcolor="#DBEAFE", color="#1D4ED8"];
+        E3 [label="E3. Grabaciones acústicas\nrecolectadas pero subutilizadas", fillcolor="#DBEAFE", color="#1D4ED8"];
+        E2 [label="E2. Detección tardía de cambios\nen poblaciones amenazadas", fillcolor="#DBEAFE", color="#1D4ED8"];
+        E1 [label="E1. Inventarios y monitoreos\nlentos y costosos", fillcolor="#DBEAFE", color="#1D4ED8"];
+    }
+
+    EF [label="EFECTO FINAL\nDecisiones de conservación con menos evidencia\ny oportunidades perdidas en el turismo de naturaleza",
+        fillcolor="#BFDBFE", color="#1E3A8A", penwidth=2, fontname="Liberation Sans Bold", width=5];
+
+    CI1 -> C1;
+    CI2 -> C2;
+    CI3 -> C3;
+    CI4 -> C3;
+    CI5 -> C3;
+    CI6 -> C4;
+    C1 -> P; C2 -> P; C3 -> P; C4 -> P;
+    P -> E1; P -> E2; P -> E3; P -> E4;
+    E1 -> EF; E2 -> EF; E3 -> EF; E4 -> EF;
+}

@@ -1,0 +1,32 @@
+# Reglas generales del repositorio (cada entrega tiene además su propio .gitignore)
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Entornos y secretos
+.venv/
+venv/
+.env
+*.env
+
+# Audios, espectrogramas y modelos (no se versionan)
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.m4a
+*.npy
+*.pt
+*.pth
+*.ckpt
+
+# Sistema operativo / editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+~$*.xlsx

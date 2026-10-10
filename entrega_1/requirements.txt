@@ -1,0 +1,25 @@
+# Dependencias de la Entrega 1 — Identificación de especies por su canto (Grupo 4)
+# Instalar con:  pip install -r requirements.txt   (Python 3.10 – 3.12 recomendado)
+
+# Datos y cálculo
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.3
+requests>=2.31
+tqdm>=4.66
+
+# Audio
+librosa>=0.10
+soundfile>=0.12
+noisereduce>=3.0
+
+# Aprendizaje profundo (CPU por defecto; para GPU ver docs/instalacion.md)
+torch>=2.2
+torchvision>=0.17
+
+# Visualización y notebooks
+matplotlib>=3.7
+jupyter>=1.0
+
+# Pruebas
+pytest>=8.0
