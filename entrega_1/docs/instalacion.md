@@ -12,8 +12,8 @@
 ## 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/wilospe27/Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4.git
-cd Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4/entrega_1
+git clone https://github.com/wilospe27/Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4.git
+cd Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4/entrega_1
 ```
 
 > Todos los comandos del proyecto se ejecutan **desde la carpeta `entrega_1/`**.
@@ -81,8 +81,8 @@ python -m src.main download --species "Turdus fuscater" --max-per-species 5
 ## 5. Google Colab
 
 ```python
-!git clone https://github.com/wilospe27/Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4.git
-%cd Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4/entrega_1
+!git clone https://github.com/wilospe27/Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4.git
+%cd Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4/entrega_1
 !pip install -q librosa soundfile noisereduce
 
 import os

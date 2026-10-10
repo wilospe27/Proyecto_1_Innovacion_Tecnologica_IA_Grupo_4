@@ -84,7 +84,7 @@ Cada entrega vive en su propia carpeta con la estructura estándar del curso (`d
 ## 📁 Estructura del repositorio
 
 ```
-Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4/
+Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4/
 ├── README.md                 # Este archivo
 ├── LICENSE
 ├── .gitignore
@@ -106,8 +106,8 @@ Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4/
 
 ```bash
 # 1. Clonar el repositorio y entrar a la entrega
-git clone https://github.com/wilospe27/Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4.git
-cd Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4/entrega_1
+git clone https://github.com/wilospe27/Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4.git
+cd Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4/entrega_1
 
 # 2. Crear entorno virtual
 python -m venv .venv
