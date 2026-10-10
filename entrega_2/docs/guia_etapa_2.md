@@ -85,8 +85,8 @@ Los audios no van a GitHub. Dos opciones:
 from google.colab import drive, userdata
 drive.mount("/content/drive")
 
-!git clone -b entrega-2 https://github.com/wilospe27/Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4.git
-%cd Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4/entrega_2
+!git clone -b entrega-2 https://github.com/wilospe27/Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4.git
+%cd Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4/entrega_2
 !pip install -q -r requirements.txt
 
 import os

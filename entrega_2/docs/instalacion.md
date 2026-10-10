@@ -12,8 +12,8 @@
 ## 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/wilospe27/Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4.git
-cd Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4
+git clone https://github.com/wilospe27/Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4.git
+cd Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4
 git checkout entrega-2      # rama de trabajo de la Entrega 2 hasta que se una a main
 cd entrega_2
 ```
@@ -84,8 +84,8 @@ python -m src.main especies --max-paginas 1 --top 10
 ## 5. Google Colab
 
 ```python
-!git clone https://github.com/wilospe27/Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4.git
-%cd Proyecto_1_innovaci-n_tecnol-gica_IA_Grupo_4/entrega_2
+!git clone https://github.com/wilospe27/Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4.git
+%cd Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4/entrega_2
 !pip install -q librosa soundfile noisereduce
 
 import os
