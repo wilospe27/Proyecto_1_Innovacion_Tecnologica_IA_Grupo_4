@@ -17,10 +17,10 @@
 | Estado del arte: revisión bibliográfica y análisis de soluciones existentes | 5 % | Reporte, sección [V](reporte_entrega_1.md#v-estado-del-arte) |
 | Planeación: tareas y cronograma | 5 % | Reporte, sección [VII](reporte_entrega_1.md#vii-plan-de-actividades-y-cronograma), y [`cronograma.xlsx`](cronograma.xlsx) |
 
-## Convenciones de trabajo en equipo
+## Cómo trabajamos en equipo
 
-- **Ramas:** una rama por tarea (`feature/2.2-descarga`, `docs/reporte-2`) y *pull request* hacia `main` revisado por otro integrante.
-- **Mensajes de commit:** en español e imperativo (`Agrega EDA de metadatos`, `Corrige partición por grabación`).
-- **Datos y modelos:** no se suben audios, espectrogramas ni checkpoints (ver `.gitignore`); sí se versionan métricas, figuras y notebooks con sus salidas.
-- **Pruebas:** antes de cada *pull request*, `python -m pytest` desde `entrega_1/`.
-- **Cronograma:** actualizar *% avance* y *Responsable* en `cronograma.xlsx` cada semana.
+- **Ramas:** trabajamos con una rama por tarea (`feature/2.2-descarga`, `docs/reporte-2`) y abrimos un *pull request* hacia `main` que revisa otro integrante.
+- **Mensajes de commit:** los escribimos en español y en modo imperativo (`Agrega EDA de metadatos`, `Corrige partición por grabación`).
+- **Datos y modelos:** no subimos audios, espectrogramas ni checkpoints (ver `.gitignore`); sí versionamos métricas, figuras y notebooks con sus salidas.
+- **Pruebas:** antes de cada *pull request* corremos `python -m pytest` desde `entrega_1/`.
+- **Cronograma:** cada semana actualizamos *% avance* y *Responsable* en `cronograma.xlsx`.

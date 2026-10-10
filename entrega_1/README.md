@@ -2,7 +2,7 @@
 
 **Proyecto 1 · Innovación Tecnológica con IA · Grupo 4** — Reporte de la primera etapa (20 % de la nota) · Fecha de entrega: **19 de octubre de 2026**
 
-Sistema basado en aprendizaje profundo que, a partir de una grabación de audio, estima qué especie de fauna colombiana está vocalizando. Esta entrega contiene el **análisis del problema, el estado del arte y la planeación**, junto con la estructura del repositorio y un *pipeline* base ya probado.
+Estamos desarrollando un sistema basado en aprendizaje profundo que, a partir de una grabación de audio, estima qué especie de fauna colombiana está vocalizando. En esta entrega presentamos el **análisis del problema, el estado del arte y la planeación**, junto con la estructura del repositorio y un *pipeline* base que ya probamos.
 
 ## 📄 Qué contiene esta entrega
 
@@ -34,7 +34,7 @@ entrega_1/
 │   └── main.py                   # Punto de entrada (CLI)
 ├── notebooks/
 │   └── 01_exploracion_inicial.ipynb
-├── data/                         # raw/ · processed/ · metadata/ (no se versionan)
+├── data/                         # raw/ · processed/ · metadata/ (no los subimos a Git)
 ├── experiments/                  # logs/ · checkpoints/ · results/
 ├── tests/                        # Pruebas con pytest
 ├── requirements.txt
@@ -73,7 +73,7 @@ python -m src.main predict --audio mi_grabacion.wav --checkpoint experiments/che
 - [x] Cronograma y gestión de riesgos
 - [x] Estructura del repositorio, *pipeline* base y pruebas automáticas
 - [x] Cronograma ajustado a las fechas oficiales (19-oct, 19-nov y 1-dic-2026)
-- [ ] Revisión del reporte por todo el equipo (tarea 1.9, hasta el 15-oct)
+- [ ] Revisión del reporte entre todos los integrantes (tarea 1.9, hasta el 15-oct)
 - [ ] Asignar responsables a las tareas «Por asignar» en `docs/cronograma.xlsx`
 - [ ] Versión final y publicación (tarea 1.10, hasta el 18-oct)
 
@@ -83,4 +83,4 @@ Wilson Ospina Pérez · Santiago Osorio · Martín Pérez · Adriana Zapata
 
 ## 📄 Licencia
 
-Código y documentación bajo licencia [MIT](LICENSE). Las grabaciones conservan la licencia de sus autores y no se redistribuyen.
+Publicamos el código y la documentación bajo licencia [MIT](LICENSE). Las grabaciones conservan la licencia de sus autores y no las redistribuimos.

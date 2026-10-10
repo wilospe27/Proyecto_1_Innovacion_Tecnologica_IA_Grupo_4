@@ -9,7 +9,7 @@ Fecha: octubre de 2026
 
 ---
 
-**Resumen.** Colombia es el país con más especies de aves del mundo y uno de los más ricos en anfibios, pero buena parte de esa fauna se detecta con más facilidad por el oído que por la vista. Identificar especies por su canto exige expertos escasos, y el monitoreo acústico pasivo produce muchas más horas de audio de las que una persona puede escuchar. Este proyecto propone un sistema basado en aprendizaje profundo que, a partir de una grabación, estime qué especie está vocalizando y con qué probabilidad. En esta primera etapa se analiza el problema con un árbol de causas y efectos, se definen los objetivos y el alcance, se revisa el estado del arte —desde BirdNET hasta la competencia BirdCLEF+ 2025, evaluada con grabaciones del Magdalena Medio colombiano— y se planifican las actividades. La revisión muestra que las redes convolucionales sobre espectrogramas Mel y la transferencia de aprendizaje desde modelos bioacústicos preentrenados son el enfoque dominante, pero también que su desempeño cae con especies poco documentadas, grabaciones ruidosas y cambios de dominio, condiciones típicas del Neotrópico. Con base en ello se propone comparar una CNN entrenada desde cero, una EfficientNet preentrenada y clasificadores sobre *embeddings* bioacústicos, evaluados con particiones por grabación para evitar fuga de información.
+**Resumen.** Colombia es el país con más especies de aves del mundo y uno de los más ricos en anfibios, pero buena parte de esa fauna se detecta con más facilidad por el oído que por la vista. Identificar especies por su canto exige expertos escasos, y el monitoreo acústico pasivo produce muchas más horas de audio de las que una persona puede escuchar. En este proyecto proponemos un sistema basado en aprendizaje profundo que, a partir de una grabación, estime qué especie está vocalizando y con qué probabilidad. En esta primera etapa analizamos el problema con un árbol de causas y efectos, definimos los objetivos y el alcance, revisamos el estado del arte —desde BirdNET hasta la competencia BirdCLEF+ 2025, evaluada con grabaciones del Magdalena Medio colombiano— y planificamos las actividades. La revisión muestra que las redes convolucionales sobre espectrogramas Mel y la transferencia de aprendizaje desde modelos bioacústicos preentrenados son el enfoque dominante, pero también que su desempeño cae con especies poco documentadas, grabaciones ruidosas y cambios de dominio, condiciones típicas del Neotrópico. Con base en ello, proponemos comparar una CNN entrenada desde cero, una EfficientNet preentrenada y clasificadores sobre *embeddings* bioacústicos, evaluados con particiones por grabación para evitar la fuga de información.
 
 **Índice de términos.** Bioacústica, aprendizaje profundo, espectrograma Mel, monitoreo acústico pasivo, transferencia de aprendizaje, biodiversidad de Colombia.
 
@@ -34,7 +34,7 @@ Colombia ocupa el primer lugar mundial en diversidad de aves: el Sistema de Info
 
 La bioacústica computacional aprovecha esas vocalizaciones para monitorear la biodiversidad. Grabadoras autónomas instaladas en campo registran el paisaje sonoro durante semanas o meses, y los modelos de aprendizaje profundo —en particular las redes convolucionales aplicadas a espectrogramas— se han convertido en la herramienta estándar para detectar y clasificar especies en esos audios [3]. En Colombia, el Instituto Humboldt ya adapta modelos preentrenados para el monitoreo acústico, pero advierte que el Neotrópico está menos documentado que las regiones templadas y que los modelos cometen más errores con especies que tienen pocos ejemplos de entrenamiento [4].
 
-Este proyecto busca construir un sistema que, a partir de una grabación, identifique la especie que vocaliza, con énfasis en fauna colombiana. El presente reporte corresponde a la primera etapa: análisis del problema (secciones II a IV), estado del arte (sección V), metodología propuesta (sección VI) y planeación (sección VII).
+Con este proyecto buscamos construir un sistema que, a partir de una grabación, identifique la especie que vocaliza, con énfasis en la fauna colombiana. En este reporte presentamos la primera etapa: el análisis del problema (secciones II a IV), el estado del arte (sección V), la metodología que proponemos (sección VI) y la planeación (sección VII).
 
 ## II. Análisis del problema
 
@@ -56,13 +56,13 @@ La identificación auditiva depende de expertos escasos; el volumen de audio que
 | Comunidades, guías y operadores de aviturismo | Reconocer especies en campo y ofrecer mejores experiencias | Dependencia de expertos; herramientas con baja cobertura local |
 | Ciencia ciudadana (eBird, iNaturalist, xeno-canto) | Registrar observaciones correctamente identificadas | Errores de identificación y registros sin especie |
 | Docentes y estudiantes | Recursos de educación ambiental | Pocas herramientas en español adaptadas a la fauna local |
-| Equipo del proyecto (Grupo 4) | Aplicar IA a un problema real con datos abiertos | — |
+| Nuestro equipo (Grupo 4) | Aplicar IA a un problema real con datos abiertos | — |
 
 ### D. Pregunta de investigación
 
 ¿Puede un modelo de aprendizaje profundo, entrenado con grabaciones abiertas de especies de Colombia, identificar la especie que vocaliza en una grabación con un desempeño suficiente (meta preliminar: F1 macro ≥ 0,80 en grabaciones no vistas) para apoyar tareas de monitoreo, ciencia ciudadana y educación?
 
-**Hipótesis preliminares** (se formalizan en la Entrega 2 y se ponen a prueba en las Entregas 2 y 3):
+**Hipótesis preliminares** (las formalizaremos en la Entrega 2 y las pondremos a prueba en las Entregas 2 y 3):
 
 1. Los modelos que parten de representaciones preentrenadas —EfficientNet sobre ImageNet o *embeddings* de modelos bioacústicos— superan a una CNN entrenada desde cero cuando hay pocas grabaciones por especie [7], [8].
 2. La aumentación de datos (máscaras de tiempo y frecuencia, mezcla de ruido) mejora el desempeño en las especies con menos grabaciones [7], [9].
@@ -71,22 +71,22 @@ La identificación auditiva depende de expertos escasos; el volumen de audio que
 ### E. Justificación
 
 - **Relevancia:** la información acústica es una de las formas más costo-efectivas de monitorear fauna, y Colombia es un país prioritario para la conservación por su biodiversidad.
-- **Viabilidad técnica:** existen datos abiertos con licencias Creative Commons que varían por archivo (xeno-canto, iNaturalist) y colecciones científicas a las que se accede mediante solicitud (Macaulay Library, Colección de Sonidos Ambientales del Instituto Humboldt), además de modelos preentrenados de libre acceso y librerías maduras (PyTorch, librosa) [8], [10]–[12].
-- **Brecha:** los modelos globales tienen menor cobertura y desempeño variable para especies neotropicales poco documentadas [4], [5], [6]; un modelo enfocado en especies colombianas y evaluado con rigor aporta evidencia sobre ese vacío.
+- **Viabilidad técnica:** existen datos abiertos con licencias Creative Commons que varían por archivo (xeno-canto, iNaturalist) y colecciones científicas a las que podemos acceder mediante solicitud (Macaulay Library, Colección de Sonidos Ambientales del Instituto Humboldt), además de modelos preentrenados de libre acceso y librerías maduras (PyTorch, librosa) [8], [10]–[12].
+- **Brecha:** los modelos globales tienen menor cobertura y desempeño variable para especies neotropicales poco documentadas [4], [5], [6]; con un modelo enfocado en especies colombianas y evaluado con rigor, aportamos evidencia sobre ese vacío.
 - **Impacto social:** una herramienta en español, gratuita y fácil de usar apoya la ciencia ciudadana, la educación ambiental y el aviturismo.
 
 ### F. Alcance y delimitación
 
-El problema abarca toda la fauna que vocaliza, pero el proyecto se concentra en las **aves**: es el grupo con más grabaciones etiquetadas y con mejores resultados en el estado del arte, mientras que anfibios e insectos siguen siendo difíciles por falta de datos [13], [14].
+El problema abarca toda la fauna que vocaliza, pero en el proyecto nos concentramos en las **aves**: es el grupo con más grabaciones etiquetadas y con mejores resultados en el estado del arte, mientras que anfibios e insectos siguen siendo difíciles por falta de datos [13], [14].
 
 | Dentro del alcance | Fuera del alcance |
 |---|---|
-| Clasificación de **una especie principal por grabación** (ventanas de 5 s agregadas por grabación) | Detección de múltiples especies superpuestas en paisajes sonoros largos (se discute como trabajo futuro) |
+| Clasificación de **una especie principal por grabación** (ventanas de 5 s agregadas por grabación) | Detección de múltiples especies superpuestas en paisajes sonoros largos (la planteamos como trabajo futuro) |
 | **Aves** de Colombia como grupo principal; anfibios como extensión opcional si los datos lo permiten | Insectos y mamíferos |
 | Entre **20 y 30 especies objetivo** con al menos 30 grabaciones de buena calidad en fuentes abiertas (lista final en la Entrega 2) | Cobertura nacional de todas las especies |
 | Prototipo web de demostración (subir un audio y obtener las especies más probables) | Aplicación móvil en producción o despliegue en grabadoras de campo |
 
-> **Región prioritaria:** la lista final de especies se define en la tarea 2.1. La opción preferida es el Valle del Cauca (Cali y los Farallones), porque permitiría probar el modelo con grabaciones propias de la región.
+> **Región prioritaria:** definiremos la lista final de especies en la tarea 2.1. Nuestra opción preferida es el Valle del Cauca (Cali y los Farallones), porque nos permitiría probar el modelo con grabaciones propias de la región.
 
 ## III. Objetivos
 
@@ -166,7 +166,7 @@ flowchart BT
 
 ### Del árbol de problemas a los objetivos
 
-| Causa | Medio que propone el proyecto | Objetivo |
+| Causa | Medio que proponemos | Objetivo |
 |---|---|---|
 | C1. Dependencia de expertos | Modelo que sugiere las especies más probables para que el experto valide en lugar de escuchar todo | OE3, OE5 |
 | C2. Volumen de audio | *Pipeline* automático de segmentación y clasificación por ventanas | OE2 |
@@ -177,27 +177,27 @@ flowchart BT
 
 ### A. Criterios de la revisión
 
-Se priorizaron trabajos publicados desde 2020 sobre identificación automática de especies por sonido con aprendizaje profundo, con preferencia por estudios en el trópico o con datos de Colombia, revisiones de referencia, conjuntos de datos abiertos y herramientas de uso actual. Para cada trabajo se resumen el objetivo, los datos, el método, los resultados y las limitaciones relevantes para este proyecto.
+Priorizamos trabajos publicados desde 2020 sobre identificación automática de especies por sonido con aprendizaje profundo, con preferencia por estudios en el trópico o con datos de Colombia, revisiones de referencia, conjuntos de datos abiertos y herramientas de uso actual. Para cada trabajo resumimos el objetivo, los datos, el método, los resultados y las limitaciones relevantes para nuestro proyecto.
 
 ### B. Trabajos revisados
 
-**1. Revisión de bioacústica computacional con aprendizaje profundo [3].** Stowell revisó 162 trabajos publicados desde 2016 y describe la "receta estándar" del área: espectrogramas de magnitud en escala logarítmica, a menudo con eje de frecuencia pseudologarítmico (Mel o CQT) aunque sin consenso sobre el mejor formato, como entrada de redes convolucionales, en muchos casos arquitecturas genéricas como ResNet o VGG, con aumentación de datos y preentrenamiento como prácticas habituales. Las aves son el grupo más estudiado. Entre los retos abiertos señala los datos escasos y desbalanceados, la generalización ante cambios de dominio, el reconocimiento de especies no vistas, la calibración de las salidas y los sesgos taxonómicos y geográficos de los datos, con insectos y especies de agua dulce poco representados. *Relevancia:* define el enfoque base del proyecto (CNN sobre espectrogramas Mel) y los riesgos que hay que controlar.
+**1. Revisión de bioacústica computacional con aprendizaje profundo [3].** Stowell revisó 162 trabajos publicados desde 2016 y describe la "receta estándar" del área: espectrogramas de magnitud en escala logarítmica, a menudo con eje de frecuencia pseudologarítmico (Mel o CQT) aunque sin consenso sobre el mejor formato, como entrada de redes convolucionales, en muchos casos arquitecturas genéricas como ResNet o VGG, con aumentación de datos y preentrenamiento como prácticas habituales. Las aves son el grupo más estudiado. Entre los retos abiertos señala los datos escasos y desbalanceados, la generalización ante cambios de dominio, el reconocimiento de especies no vistas, la calibración de las salidas y los sesgos taxonómicos y geográficos de los datos, con insectos y especies de agua dulce poco representados. *Relevancia:* de aquí tomamos el enfoque base del proyecto (CNN sobre espectrogramas Mel) y los riesgos que debemos controlar.
 
-**2. BirdNET [10].** Kahl et al. entrenaron una ResNet ancha (alrededor de 27 millones de parámetros) con espectrogramas Mel de 3 s para reconocer 984 especies de aves de Norteamérica y Europa, a partir de grabaciones de xeno-canto y de la Macaulay Library, con aumentación (desplazamientos, ruido y *mixup*). En grabaciones focales alcanzó una precisión promedio media (mAP) de 0,791 y una exactitud top-1 de 0,777; en paisajes sonoros, una tarea más difícil evaluada con otra métrica, obtuvo un F0.5 de 0,414. Los autores identifican el cambio de dominio entre grabaciones focales y paisajes sonoros como un reto principal, junto con el ruido en las etiquetas y la calidad variable de los equipos de grabación. *Relevancia:* es el modelo de referencia del área; su menor desempeño en paisajes sonoros advierte que el proyecto debe evaluar también con grabaciones de campo.
+**2. BirdNET [10].** Kahl et al. entrenaron una ResNet ancha (alrededor de 27 millones de parámetros) con espectrogramas Mel de 3 s para reconocer 984 especies de aves de Norteamérica y Europa, a partir de grabaciones de xeno-canto y de la Macaulay Library, con aumentación (desplazamientos, ruido y *mixup*). En grabaciones focales alcanzó una precisión promedio media (mAP) de 0,791 y una exactitud top-1 de 0,777; en paisajes sonoros, una tarea más difícil evaluada con otra métrica, obtuvo un F0.5 de 0,414. Los autores identifican el cambio de dominio entre grabaciones focales y paisajes sonoros como un reto principal, junto con el ruido en las etiquetas y la calidad variable de los equipos de grabación. *Relevancia:* es el modelo de referencia del área; su menor desempeño en paisajes sonoros nos indica que debemos evaluar también con grabaciones de campo.
 
-**3. Aves y ranas en paisajes sonoros tropicales [15].** LeBien et al. propusieron un *pipeline* completo para entrenar una CNN multietiqueta con espectrogramas Mel y transferencia de aprendizaje, para 24 especies de aves y ranas de Puerto Rico. Las etiquetas de entrenamiento se obtuvieron de forma semiautomática con detección por plantillas y una interfaz de validación, lo que redujo el etiquetado manual. Con grabaciones de 749 sitios y una prueba sobre 1.000 grabaciones de un minuto en 17 sitios de El Yunque, obtuvieron un mAP de 0,893 entre especies. La mayoría de especies aparecía en menos del 5 % de las grabaciones, lo que muestra el desbalance típico del trópico. *Relevancia:* demuestra la viabilidad en un ecosistema tropical con aves y anfibios, y una estrategia para reducir el costo de etiquetado.
+**3. Aves y ranas en paisajes sonoros tropicales [15].** LeBien et al. propusieron un *pipeline* completo para entrenar una CNN multietiqueta con espectrogramas Mel y transferencia de aprendizaje, para 24 especies de aves y ranas de Puerto Rico. Las etiquetas de entrenamiento se obtuvieron de forma semiautomática con detección por plantillas y una interfaz de validación, lo que redujo el etiquetado manual. Con grabaciones de 749 sitios y una prueba sobre 1.000 grabaciones de un minuto en 17 sitios de El Yunque, obtuvieron un mAP de 0,893 entre especies. La mayoría de especies aparecía en menos del 5 % de las grabaciones, lo que muestra el desbalance típico del trópico. *Relevancia:* demuestra la viabilidad en un ecosistema tropical con aves y anfibios y nos ofrece una estrategia para reducir el costo de etiquetado.
 
-**4. Pocos datos en un bosque hiperdiverso [7].** Sun et al. clasificaron tipos de vocalización de aves, anfibios, insectos y mamíferos en bosques de Borneo con una VGG-19 preentrenada en ImageNet y aumentación (recortes, estiramientos en tiempo y frecuencia y mezcla con ruido de lluvia, motosierras y vehículos). En el experimento con seis tipos de sonido, la exactitud promedio fue de 31 % sin aumentación ni transferencia, 38 % solo con aumentación, 58 % solo con transferencia y 91 % combinando ambas, incluso con pocas muestras por clase. Como limitaciones, entrenamiento y prueba provenían de los mismos sitios y cada corrida usó solo seis clases. *Relevancia:* respalda la combinación de transferencia de aprendizaje y aumentación cuando hay pocas grabaciones por especie (hipótesis 1 y 2).
+**4. Pocos datos en un bosque hiperdiverso [7].** Sun et al. clasificaron tipos de vocalización de aves, anfibios, insectos y mamíferos en bosques de Borneo con una VGG-19 preentrenada en ImageNet y aumentación (recortes, estiramientos en tiempo y frecuencia y mezcla con ruido de lluvia, motosierras y vehículos). En el experimento con seis tipos de sonido, la exactitud promedio fue de 31 % sin aumentación ni transferencia, 38 % solo con aumentación, 58 % solo con transferencia y 91 % combinando ambas, incluso con pocas muestras por clase. Como limitaciones, entrenamiento y prueba provenían de los mismos sitios y cada corrida usó solo seis clases. *Relevancia:* respalda nuestra decisión de combinar transferencia de aprendizaje y aumentación cuando hay pocas grabaciones por especie (hipótesis 1 y 2).
 
-**5. *Embeddings* bioacústicos globales (Perch) [8].** Ghani et al. evaluaron qué tan bien se transfieren los *embeddings* de distintos modelos a tareas nuevas usando clasificadores lineales simples. El modelo Perch (EfficientNet-B1 entrenada con todo el corpus de aves de xeno-canto) y BirdNET superaron a modelos de audio general como YAMNet, VGGish y AudioMAE, incluso en grupos distintos a las aves: con 32 ejemplos por clase, Perch obtuvo un AUC de 0,96 en especies de ranas y de 0,97 en murciélagos, y el desempeño se mantuvo por encima del azar con solo 4 ejemplos por clase. Un modelo regional de 89 especies rindió peor que los modelos globales. *Relevancia:* sustenta el tercer enfoque del proyecto, clasificadores sobre *embeddings* bioacústicos, adecuado para especies con pocas grabaciones.
+**5. *Embeddings* bioacústicos globales (Perch) [8].** Ghani et al. evaluaron qué tan bien se transfieren los *embeddings* de distintos modelos a tareas nuevas usando clasificadores lineales simples. El modelo Perch (EfficientNet-B1 entrenada con todo el corpus de aves de xeno-canto) y BirdNET superaron a modelos de audio general como YAMNet, VGGish y AudioMAE, incluso en grupos distintos a las aves: con 32 ejemplos por clase, Perch obtuvo un AUC de 0,96 en especies de ranas y de 0,97 en murciélagos, y el desempeño se mantuvo por encima del azar con solo 4 ejemplos por clase. Un modelo regional de 89 especies rindió peor que los modelos globales. *Relevancia:* sustenta el tercer enfoque que proponemos, clasificadores sobre *embeddings* bioacústicos, adecuado para especies con pocas grabaciones.
 
-**6. Perch 2.0: modelo bioacústico multitaxón [16].** van Merriënboer et al. presentaron Perch 2.0, una EfficientNet-B3 de unos 12 millones de parámetros que recibe 5 s de audio a 32 kHz como espectrograma log-Mel y produce *embeddings* de 1.536 dimensiones. Se entrenó de forma supervisada con más de 1,5 millones de grabaciones de xeno-canto, iNaturalist, Tierstimmenarchiv y FSD50K, que cubren 14.597 especies de aves, anfibios, insectos y mamíferos. Supera a Perch 1.0 en el banco de pruebas BirdSet (ROC-AUC de 0,907 frente a 0,839) y en BEANS, y se transfiere bien con pocos ejemplos incluso a sonidos marinos, casi ausentes de su entrenamiento. Los autores concluyen que el aprendizaje supervisado a gran escala sigue siendo dominante en bioacústica y que sus *embeddings* son linealmente separables, lo que facilita entrenar clasificadores simples. Es un preprint, aún sin revisión por pares. *Relevancia:* es el candidato más reciente para el enfoque de *embeddings* del proyecto y, al incluir anfibios, para la posible extensión a ese grupo.
+**6. Perch 2.0: modelo bioacústico multitaxón [16].** van Merriënboer et al. presentaron Perch 2.0, una EfficientNet-B3 de unos 12 millones de parámetros que recibe 5 s de audio a 32 kHz como espectrograma log-Mel y produce *embeddings* de 1.536 dimensiones. Se entrenó de forma supervisada con más de 1,5 millones de grabaciones de xeno-canto, iNaturalist, Tierstimmenarchiv y FSD50K, que cubren 14.597 especies de aves, anfibios, insectos y mamíferos. Supera a Perch 1.0 en el banco de pruebas BirdSet (ROC-AUC de 0,907 frente a 0,839) y en BEANS, y se transfiere bien con pocos ejemplos incluso a sonidos marinos, casi ausentes de su entrenamiento. Los autores concluyen que el aprendizaje supervisado a gran escala sigue siendo dominante en bioacústica y que sus *embeddings* son linealmente separables, lo que facilita entrenar clasificadores simples. Es un preprint, aún sin revisión por pares. *Relevancia:* es nuestro candidato más reciente para el enfoque de *embeddings* y, al incluir anfibios, para la posible extensión a ese grupo.
 
-**7. AnuraSet: anuros neotropicales [13].** Cañas et al. publicaron un conjunto abierto de 1.612 grabaciones de un minuto (unas 27 horas) de monitoreo acústico pasivo en cuatro sitios del Cerrado y la Mata Atlántica de Brasil, con 42 especies de anuros y 93.378 muestras de 3 s. El mejor de sus modelos de referencia (ResNet-152 sobre espectrogramas Mel con SpecAugment) obtuvo un F1 macro de 37,8 % en total, de 68,4 % en especies frecuentes y de solo 15,7 % en especies raras, lo que evidencia el efecto del desbalance y de los coros superpuestos. *Relevancia:* muestra la dificultad de los anfibios neotropicales y justifica limitar el alcance inicial a aves, dejando los anfibios como extensión.
+**7. AnuraSet: anuros neotropicales [13].** Cañas et al. publicaron un conjunto abierto de 1.612 grabaciones de un minuto (unas 27 horas) de monitoreo acústico pasivo en cuatro sitios del Cerrado y la Mata Atlántica de Brasil, con 42 especies de anuros y 93.378 muestras de 3 s. El mejor de sus modelos de referencia (ResNet-152 sobre espectrogramas Mel con SpecAugment) obtuvo un F1 macro de 37,8 % en total, de 68,4 % en especies frecuentes y de solo 15,7 % en especies raras, lo que evidencia el efecto del desbalance y de los coros superpuestos. *Relevancia:* muestra la dificultad de los anfibios neotropicales y justifica que limitemos el alcance inicial a las aves y dejemos los anfibios como extensión.
 
-**8. BirdCLEF+ 2025 en el Magdalena Medio, Colombia [14].** La edición 2025 de BirdCLEF evaluó la identificación de 206 especies de aves, anfibios, mamíferos e insectos en 705 paisajes sonoros de un minuto grabados en la Reserva Natural El Silencio y la zona de Barbacoas, en el Magdalena Medio colombiano. Para entrenar se dispuso de más de 38.000 grabaciones etiquetadas, provenientes sobre todo de xeno-canto, iNaturalist y la Colección de Sonidos Ambientales del Instituto Humboldt. La mejor solución alcanzó un ROC-AUC macro de 0,930. Entre las soluciones mejor clasificadas predominaron la detección de eventos sonoros, las CNN como EfficientNet, el preentrenamiento con xeno-canto, el pseudoetiquetado de grabaciones sin etiquetar y la aumentación tipo *mixup*. Por grupo, el ROC-AUC promedio de los 25 mejores equipos fue alto en aves (0,936) y menor en anfibios (0,840) e insectos (0,667), por falta de datos e incertidumbre taxonómica. *Relevancia:* es el antecedente más cercano al proyecto por su ubicación en Colombia y confirma tanto la viabilidad para aves como la dificultad de otros grupos.
+**8. BirdCLEF+ 2025 en el Magdalena Medio, Colombia [14].** La edición 2025 de BirdCLEF evaluó la identificación de 206 especies de aves, anfibios, mamíferos e insectos en 705 paisajes sonoros de un minuto grabados en la Reserva Natural El Silencio y la zona de Barbacoas, en el Magdalena Medio colombiano. Para entrenar se dispuso de más de 38.000 grabaciones etiquetadas, provenientes sobre todo de xeno-canto, iNaturalist y la Colección de Sonidos Ambientales del Instituto Humboldt. La mejor solución alcanzó un ROC-AUC macro de 0,930. Entre las soluciones mejor clasificadas predominaron la detección de eventos sonoros, las CNN como EfficientNet, el preentrenamiento con xeno-canto, el pseudoetiquetado de grabaciones sin etiquetar y la aumentación tipo *mixup*. Por grupo, el ROC-AUC promedio de los 25 mejores equipos fue alto en aves (0,936) y menor en anfibios (0,840) e insectos (0,667), por falta de datos e incertidumbre taxonómica. *Relevancia:* es el antecedente más cercano a nuestro proyecto por su ubicación en Colombia y confirma tanto la viabilidad para aves como la dificultad de otros grupos.
 
-**9. Desempeño de BirdNET en el mundo [5], [17].** Pérez-Granados revisó las aplicaciones, el desempeño y las dificultades de BirdNET [17]. Después, Funosas et al. evaluaron BirdNET con 4.224 paisajes sonoros de un minuto (unas 70 horas) de 67 sitios en seis regiones continentales, anotados por expertos locales (1.102 especies), y compararon precisión y exhaustividad con distintos umbrales de confianza. Con un umbral de 0,1, la precisión fue relativamente estable entre regiones (0,57–0,71), mientras que la exhaustividad varió mucho: 0,24 en África, 0,46 en Centro y Suramérica y 0,52 en Norteamérica. El umbral óptimo cambió mucho entre especies; los autores relacionan los vacíos con la cobertura incompleta de especies y con la menor cantidad de datos de entrenamiento de algunas regiones, y recomiendan ajustar los umbrales por especie y validar manualmente los resultados [5]. *Relevancia:* confirma que un modelo global no garantiza buen desempeño para cualquier especie y que la evaluación por especie es indispensable.
+**9. Desempeño de BirdNET en el mundo [5], [17].** Pérez-Granados revisó las aplicaciones, el desempeño y las dificultades de BirdNET [17]. Después, Funosas et al. evaluaron BirdNET con 4.224 paisajes sonoros de un minuto (unas 70 horas) de 67 sitios en seis regiones continentales, anotados por expertos locales (1.102 especies), y compararon precisión y exhaustividad con distintos umbrales de confianza. Con un umbral de 0,1, la precisión fue relativamente estable entre regiones (0,57–0,71), mientras que la exhaustividad varió mucho: 0,24 en África, 0,46 en Centro y Suramérica y 0,52 en Norteamérica. El umbral óptimo cambió mucho entre especies; los autores relacionan los vacíos con la cobertura incompleta de especies y con la menor cantidad de datos de entrenamiento de algunas regiones, y recomiendan ajustar los umbrales por especie y validar manualmente los resultados [5]. *Relevancia:* confirma que un modelo global no garantiza buen desempeño para cualquier especie y que debemos evaluar especie por especie.
 
 ### C. Síntesis comparativa
 
@@ -215,7 +215,7 @@ Se priorizaron trabajos publicados desde 2020 sobre identificación automática 
 
 ### D. Análisis de soluciones existentes
 
-| Solución | Tipo | Fortalezas | Limitaciones para este proyecto |
+| Solución | Tipo | Fortalezas | Limitaciones para nuestro proyecto |
 |---|---|---|---|
 | **BirdNET** (BirdNET-Analyzer y app) [10], [18] | Modelo y aplicación de uso libre; el repositorio oficial reporta más de 6.500 especies | Amplia cobertura; procesamiento por lotes; base de muchos estudios | Modelos con licencia CC BY-NC-SA 4.0 (uso no comercial); desempeño variable por especie que exige validación [5] |
 | **Merlin Sound ID** (Cornell Lab) [6] | Aplicación móvil | Muy fácil de usar en campo; identificación en tiempo real | Requiere más de 150 grabaciones por especie para incluirla; en 2025 aún buscaba datos para ampliar especies en Colombia [6] |
@@ -226,15 +226,15 @@ Se priorizaron trabajos publicados desde 2020 sobre identificación automática 
 ### E. Brecha identificada y oportunidad
 
 1. **Cobertura y desempeño en especies colombianas:** los modelos globales dependen de la cantidad de grabaciones por especie y requieren validación experta [4], [5], [6]. Hace falta evidencia sobre especies colombianas concretas, evaluadas una por una.
-2. **Pocos datos por especie:** la combinación de transferencia de aprendizaje, *embeddings* bioacústicos y aumentación es la vía más prometedora cuando hay pocas grabaciones [7], [8], [16], pero se debe comparar contra una línea base.
-3. **Evaluación rigurosa:** muchos trabajos reportan resultados con datos de los mismos sitios o grabaciones [7]; el proyecto evaluará con particiones por grabación y analizará el cambio de dominio con grabaciones de campo [10].
-4. **Acceso:** las herramientas existentes son técnicas (Perch, scikit-maad) o de cobertura limitada para algunas especies (Merlin); se propone un prototipo en español, abierto y enfocado en especies locales.
+2. **Pocos datos por especie:** la combinación de transferencia de aprendizaje, *embeddings* bioacústicos y aumentación es la vía más prometedora cuando hay pocas grabaciones [7], [8], [16], pero debemos compararla contra una línea base.
+3. **Evaluación rigurosa:** muchos trabajos reportan resultados con datos de los mismos sitios o grabaciones [7]; nosotros evaluaremos con particiones por grabación y analizaremos el cambio de dominio con grabaciones de campo [10].
+4. **Acceso:** las herramientas existentes son técnicas (Perch, scikit-maad) o de cobertura limitada para algunas especies (Merlin); proponemos un prototipo en español, abierto y enfocado en especies locales.
 
 ## VI. Metodología propuesta
 
 ### A. Marco metodológico
 
-Se sigue una adaptación del ciclo CRISP-DM [20] alineada con las tres entregas del curso:
+Seguimos una adaptación del ciclo CRISP-DM [20] alineada con las tres entregas del curso:
 
 | Fase CRISP-DM | Actividades del proyecto | Entrega |
 |---|---|---|
@@ -263,12 +263,12 @@ flowchart LR
 ### B. Datos
 
 - **Fuente principal:** xeno-canto (API v3, consultas por especie y país) [11]. Complementos: iNaturalist (licencia variable por archivo) y, mediante solicitud de acceso, la Macaulay Library y la Colección de Sonidos Ambientales del Instituto Humboldt.
-- **Criterios de inclusión de especies:** presencia en Colombia (con prioridad para el Valle del Cauca), al menos 30 grabaciones de calidad A o B y diversidad de grabadores; se registran licencia y autor de cada archivo.
-- **Unidad de análisis:** ventanas de 5 s con 50 % de solapamiento; la predicción de una grabación se obtiene promediando las probabilidades de sus ventanas.
+- **Criterios de inclusión de especies:** presencia en Colombia (con prioridad para el Valle del Cauca), al menos 30 grabaciones de calidad A o B y diversidad de grabadores. De cada archivo registramos la licencia y el autor.
+- **Unidad de análisis:** ventanas de 5 s con 50 % de solapamiento; obtenemos la predicción de una grabación promediando las probabilidades de sus ventanas.
 
 ### C. Preprocesamiento
 
-Remuestreo a 32 kHz en mono, segmentación en ventanas de 5 s, reducción espectral de ruido opcional, espectrograma Mel de 128 bandas entre 50 Hz y 14 kHz en decibeles [12], y estandarización por ventana. Ya está implementado en `src/data/preprocess.py` y cubierto por pruebas automáticas.
+Remuestreamos el audio a 32 kHz en mono, lo segmentamos en ventanas de 5 s, aplicamos de forma opcional una reducción espectral de ruido, calculamos un espectrograma Mel de 128 bandas entre 50 Hz y 14 kHz en decibeles [12] y lo estandarizamos por ventana. Ya lo implementamos en `src/data/preprocess.py` y lo cubrimos con pruebas automáticas.
 
 ### D. Modelos a comparar
 
@@ -277,35 +277,35 @@ Remuestreo a 32 kHz en mono, segmentación en ventanas de 5 s, reducción espect
 3. **Transferencia de aprendizaje:** EfficientNet-B0 preentrenada en ImageNet y ajustada a espectrogramas [21].
 4. ***Embeddings* bioacústicos:** representaciones de BirdNET o Perch 2.0 con un clasificador lineal (por ejemplo, regresión logística) [8], [16].
 
-En todos los casos se usarán pesos por clase para el desbalance y aumentación tipo SpecAugment [9].
+En todos los casos usaremos pesos por clase para el desbalance y aumentación tipo SpecAugment [9].
 
 ### E. Protocolo de evaluación
 
-- Partición estratificada **por grabación** en entrenamiento, validación y prueba (70/15/15): ninguna grabación aporta ventanas a más de una partición.
+- Hacemos una partición estratificada **por grabación** en entrenamiento, validación y prueba (70/15/15): ninguna grabación aporta ventanas a más de una partición.
 - **Métrica principal:** F1 macro, que pondera por igual a todas las especies. Complementarias: exactitud, exactitud balanceada, exactitud top-3, matriz de confusión y reporte por especie.
-- **Prueba de cambio de dominio:** si es posible, un conjunto pequeño de grabaciones propias tomadas en campo.
-- **Validación con expertos:** revisión de una muestra de predicciones con ornitólogos o grupos de observación de aves.
+- **Prueba de cambio de dominio:** si es posible, evaluaremos con un pequeño conjunto de grabaciones que tomemos nosotros en campo.
+- **Validación con expertos:** revisaremos una muestra de predicciones con ornitólogos o grupos de observación de aves.
 
 ### F. Herramientas
 
-Python 3.11, PyTorch, librosa, scikit-learn, pandas, matplotlib, Jupyter o Google Colab (GPU), Git y GitHub para control de versiones, y Streamlit o Gradio para el prototipo.
+Usamos Python 3.11, PyTorch, librosa, scikit-learn, pandas, matplotlib, Jupyter o Google Colab (GPU), Git y GitHub para el control de versiones, y Streamlit o Gradio para el prototipo.
 
 ### G. Consideraciones éticas y de licencias
 
-- Uso académico y no comercial de las grabaciones; no se redistribuyen audios y se cita a cada autor según su licencia.
-- No se publicarán coordenadas precisas de especies amenazadas o sujetas a tráfico.
-- Si una grabación contiene voces humanas, se recorta o se excluye.
-- El prototipo comunicará que sus resultados son sugerencias que no reemplazan la identificación de un experto.
+- Usamos las grabaciones con fines académicos y no comerciales; no redistribuimos los audios y citamos a cada autor según su licencia.
+- No publicaremos coordenadas precisas de especies amenazadas o sujetas a tráfico.
+- Si una grabación contiene voces humanas, la recortamos o la excluimos.
+- En el prototipo indicaremos que los resultados son sugerencias que no reemplazan la identificación de un experto.
 
 ## VII. Plan de actividades y cronograma
 
-El plan cubre las tres entregas del curso, con sus fechas oficiales: **19 de octubre**, **19 de noviembre** y **1 de diciembre de 2026**. Las fechas de las actividades se calculan desde el inicio del proyecto (28 de septiembre) en el archivo [`cronograma.xlsx`](cronograma.xlsx), que contiene las mismas tareas con fechas, duraciones, avance, estado, holgura frente a cada entrega y diagrama de Gantt calculados con fórmulas; al cambiar una fecha o una duración, todo el plan se actualiza.
+Nuestro plan cubre las tres entregas del curso, con sus fechas oficiales: **19 de octubre**, **19 de noviembre** y **1 de diciembre de 2026**. Calculamos las fechas de las actividades desde el inicio del proyecto (28 de septiembre) en el archivo [`cronograma.xlsx`](cronograma.xlsx), que contiene las mismas tareas con fechas, duraciones, avance, estado, holgura frente a cada entrega y diagrama de Gantt calculados con fórmulas; al cambiar una fecha o una duración, todo el plan se actualiza.
 
-Como la Entrega 3 —que vale el 70 % de la nota— llega solo 12 días después de la Entrega 2, el plan adelanta trabajo: la Etapa 2 arranca el 12 de octubre, en paralelo con la revisión final del reporte 1, y el modelado de la Etapa 3 (transferencia de aprendizaje, *embeddings* y prototipo) inicia el 3 de noviembre, en paralelo con el cierre de la Etapa 2. Cada etapa termina con al menos un día de holgura antes de su entrega.
+Como la Entrega 3 —que vale el 70 % de la nota— llega solo 12 días después de la Entrega 2, adelantamos trabajo: arrancamos la Etapa 2 el 12 de octubre, en paralelo con la revisión final del reporte 1, e iniciamos el modelado de la Etapa 3 (transferencia de aprendizaje, *embeddings* y prototipo) el 3 de noviembre, en paralelo con el cierre de la Etapa 2. Cada etapa termina con al menos un día de holgura antes de su entrega.
 
 ### A. Estructura de trabajo
 
-Las dependencias admiten solapamiento: una actividad puede iniciar cuando su predecesora ya está avanzada (relación inicio-inicio con desfase), por eso las fechas se programan con un desfase en días desde el inicio del proyecto.
+Las dependencias admiten solapamiento: una actividad puede iniciar cuando su predecesora ya está avanzada (relación inicio-inicio con desfase); por eso programamos las fechas con un desfase en días desde el inicio del proyecto.
 
 <!-- INICIO:CRONOGRAMA_TABLA (generado desde cronograma; no editar a mano) -->
 **Etapa 1 · Planteamiento del problema — Entrega 1 (20 % de la nota)**
@@ -417,19 +417,19 @@ gantt
 
 | Riesgo | Probabilidad | Impacto | Mitigación |
 |---|---|---|---|
-| Solo 12 días entre la Entrega 2 y la Entrega 3 (70 % de la nota) | Alta | Alto | Iniciar el modelado de la Etapa 3 el 3 de noviembre, en paralelo con la Etapa 2; fijar temprano el alcance del prototipo; escribir el reporte final sobre la base del reporte 2 |
-| Pocas grabaciones para algunas especies objetivo | Alta | Alto | Elegir especies con ≥ 30 grabaciones; transferencia de aprendizaje y *embeddings*; aumentación |
-| Etiquetas débiles (otras especies de fondo en la grabación) | Media | Medio | Filtrar calidad A–B; descartar ventanas silenciosas; revisión manual de una muestra |
-| Desbalance entre especies | Alta | Medio | Pesos por clase, F1 macro como métrica principal, muestreo balanceado |
-| Cambio de dominio entre grabaciones focales y de campo | Media | Alto | Aumentación con ruido; prueba con grabaciones propias de campo |
-| Acceso a los datos: clave y límites de la API de xeno-canto; colecciones que requieren solicitud (Macaulay, Instituto Humboldt) | Media | Medio | Pedir la clave y los accesos al inicio de la Etapa 2; xeno-canto como fuente principal; guardar metadatos localmente; pausas entre solicitudes |
-| Capacidad de cómputo limitada | Media | Medio | Google Colab con GPU; modelos compactos; *embeddings* precalculados |
-| Disponibilidad del equipo frente a la carga académica | Media | Medio | Asignar al inicio de cada etapa un responsable a las tareas marcadas «Por asignar» en el Excel; reunión semanal corta; un día de holgura antes de cada hito |
-| Restricciones de licencia (CC BY-NC) | Baja | Medio | Uso académico no comercial; sin redistribución de audios; registro de atribución |
+| Solo 12 días entre la Entrega 2 y la Entrega 3 (70 % de la nota) | Alta | Alto | Iniciamos el modelado de la Etapa 3 el 3 de noviembre, en paralelo con la Etapa 2; fijamos temprano el alcance del prototipo y escribimos el reporte final sobre la base del reporte 2 |
+| Pocas grabaciones para algunas especies objetivo | Alta | Alto | Elegimos especies con ≥ 30 grabaciones y usamos transferencia de aprendizaje, *embeddings* y aumentación |
+| Etiquetas débiles (otras especies de fondo en la grabación) | Media | Medio | Filtramos por calidad A–B, descartamos ventanas silenciosas y revisamos manualmente una muestra |
+| Desbalance entre especies | Alta | Medio | Usamos pesos por clase, F1 macro como métrica principal y muestreo balanceado |
+| Cambio de dominio entre grabaciones focales y de campo | Media | Alto | Aumentamos los datos con ruido y probamos con grabaciones propias de campo |
+| Acceso a los datos: clave y límites de la API de xeno-canto; colecciones que requieren solicitud (Macaulay, Instituto Humboldt) | Media | Medio | Pedimos la clave y los accesos al inicio de la Etapa 2; usamos xeno-canto como fuente principal, guardamos los metadatos localmente y hacemos pausas entre solicitudes |
+| Capacidad de cómputo limitada | Media | Medio | Usamos Google Colab con GPU, modelos compactos y *embeddings* precalculados |
+| Nuestra disponibilidad frente a la carga académica | Media | Medio | Al inicio de cada etapa asignamos un responsable a las tareas marcadas «Por asignar» en el Excel; hacemos una reunión semanal corta y dejamos un día de holgura antes de cada hito |
+| Restricciones de licencia (CC BY-NC) | Baja | Medio | Hacemos un uso académico y no comercial, no redistribuimos los audios y registramos la atribución |
 
 ### E. Seguimiento
 
-El avance se actualiza semanalmente en [`cronograma.xlsx`](cronograma.xlsx) (columnas *% avance* y *Responsable*). El archivo calcula el estado de cada tarea (completada, en curso, pendiente o atrasada) frente a la fecha de corte, el avance ponderado de cada etapa y la holgura entre la última actividad de cada etapa y su fecha de entrega, que se marca en rojo si es menor de un día.
+Actualizamos el avance cada semana en [`cronograma.xlsx`](cronograma.xlsx) (columnas *% avance* y *Responsable*). El archivo calcula el estado de cada tarea (completada, en curso, pendiente o atrasada) frente a la fecha de corte, el avance ponderado de cada etapa y la holgura entre la última actividad de cada etapa y su fecha de entrega, que se marca en rojo si es menor de un día.
 
 ## VIII. Referencias
 
