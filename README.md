@@ -14,7 +14,7 @@
 
 Colombia es el país con mayor diversidad de aves del mundo (más de 1.900 especies registradas), además de una enorme riqueza de anfibios, insectos y mamíferos que se comunican mediante sonidos. Muchas de estas especies son difíciles de ver, pero fáciles de **escuchar**.
 
-Este proyecto desarrolla un sistema basado en **aprendizaje profundo** que, a partir de una grabación de audio, **identifica la especie que está cantando o vocalizando**. Su objetivo es apoyar el monitoreo de biodiversidad, la ciencia ciudadana, la educación ambiental y el ecoturismo.
+En este proyecto desarrollamos un sistema basado en **aprendizaje profundo** que, a partir de una grabación de audio, **identifica la especie que está cantando o vocalizando**. Con él buscamos apoyar el monitoreo de biodiversidad, la ciencia ciudadana, la educación ambiental y el ecoturismo.
 
 ## 🎯 Objetivos
 
@@ -57,9 +57,11 @@ Construir un modelo de IA capaz de clasificar especies de fauna colombiana a par
 | [Colección de Sonidos Ambientales – Instituto Humboldt](https://www.humboldt.org.co) | Grabaciones de fauna colombiana |
 | [iNaturalist](https://www.inaturalist.org) | Observaciones ciudadanas con audio |
 
-> ⚠️ Respetar la licencia de cada grabación (la mayoría Creative Commons) y citar a los autores.
+> ⚠️ Respetamos la licencia de cada grabación (la mayoría Creative Commons) y citamos a sus autores.
 
 ## 🛠️ Tecnologías
+
+Para desarrollar el proyecto usamos:
 
 - **Lenguaje:** Python 3.10+
 - **Audio:** `librosa`, `torchaudio`, `pydub`, `noisereduce`
@@ -71,11 +73,11 @@ Construir un modelo de IA capaz de clasificar especies de fauna colombiana a par
 
 ## 📦 Entregas
 
-Cada entrega vive en su propia carpeta con la estructura estándar del curso (`docs/`, `src/`, `notebooks/`, `experiments/`, `tests/`, `requirements.txt`, `README.md`).
+Organizamos cada entrega en su propia carpeta, con la estructura estándar del curso (`docs/`, `src/`, `notebooks/`, `experiments/`, `tests/`, `requirements.txt`, `README.md`).
 
 | Entrega | Fecha | Contenido | Peso | Carpeta | Estado |
 |---|---|---|---|---|---|
-| 1 | 19-oct-2026 | Análisis del problema, estado del arte y planeación | 20 % | [`entrega_1/`](entrega_1/) | ✅ Lista para revisión del equipo |
+| 1 | 19-oct-2026 | Análisis del problema, estado del arte y planeación | 20 % | [`entrega_1/`](entrega_1/) | ✅ En revisión final |
 | 2 | 19-nov-2026 | Análisis exploratorio de datos, modelos de referencia e hipótesis | 10 % | `entrega_2/` (rama `entrega-2`) | 🚧 En progreso |
 | 3 | 1-dic-2026 | Reporte final y video de 10 minutos | 70 % | `entrega_3/` | ⏳ Pendiente |
 
@@ -92,7 +94,7 @@ Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4/
     ├── docs/                 # Reporte, cronograma (Excel), arquitectura, API e instalación
     ├── src/                  # data/ · models/ · training/ · evaluation/ · inference/ · utils/ · main.py
     ├── notebooks/            # 01_exploracion_inicial.ipynb
-    ├── data/                 # raw/ · processed/ · metadata/ (no se versionan)
+    ├── data/                 # raw/ · processed/ · metadata/ (no los subimos a Git)
     ├── experiments/          # logs/ · checkpoints/ · results/
     ├── tests/                # Pruebas con pytest
     ├── requirements.txt
@@ -127,7 +129,7 @@ python -m src.main train --model cnn_baseline --epochs 30 --run-name cnn_v1
 python -m src.main predict --audio ruta/al/audio.wav --checkpoint experiments/checkpoints/cnn_v1.pt
 ```
 
-La interfaz web (Streamlit/Gradio) se desarrollará en la Entrega 3.
+Desarrollaremos la interfaz web (Streamlit o Gradio) en la Entrega 3.
 
 ## 📊 Resultados
 
@@ -137,7 +139,7 @@ La interfaz web (Streamlit/Gradio) se desarrollará en la Entrega 3.
 | Transfer learning (EfficientNet) | — | — | Pendiente |
 | BirdNET (referencia) | — | — | Pendiente |
 
-*Se actualizará a medida que avance el entrenamiento.*
+*Actualizaremos esta tabla a medida que avancemos en el entrenamiento.*
 
 ## 🌱 Impacto y aplicaciones
 
@@ -180,4 +182,4 @@ La interfaz web (Streamlit/Gradio) se desarrollará en la Entrega 3.
 
 ## 📄 Licencia
 
-Este proyecto se distribuye bajo la licencia **MIT**. Los audios usados conservan la licencia original de sus autores.
+Distribuimos este proyecto bajo la licencia **MIT**. Los audios que usamos conservan la licencia original de sus autores.

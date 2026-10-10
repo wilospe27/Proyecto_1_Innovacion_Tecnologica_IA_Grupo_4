@@ -1,6 +1,6 @@
 # 🔌 Interfaces del proyecto (CLI y funciones de Python)
 
-En la Entrega 1 el proyecto no expone una API web; la interfaz es la **línea de comandos** de `src/main.py` y las funciones de Python que esta usa. La interfaz web de demostración (Streamlit o Gradio) se documentará aquí en la Entrega 3.
+En la Entrega 1 todavía no exponemos una API web: la interfaz es la **línea de comandos** de `src/main.py` y las funciones de Python que esta usa. En la Entrega 3 documentaremos aquí la interfaz web de demostración (Streamlit o Gradio).
 
 ## Línea de comandos
 
