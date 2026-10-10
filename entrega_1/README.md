@@ -1,6 +1,6 @@
 # 🐦 Entrega 1 · Identificación de especies por su canto
 
-**Proyecto 1 · Innovación Tecnológica con IA · Grupo 4** — Reporte de la primera etapa (20 % de la nota)
+**Proyecto 1 · Innovación Tecnológica con IA · Grupo 4** — Reporte de la primera etapa (20 % de la nota) · Fecha de entrega: **19 de octubre de 2026**
 
 Sistema basado en aprendizaje profundo que, a partir de una grabación de audio, estima qué especie de fauna colombiana está vocalizando. Esta entrega contiene el **análisis del problema, el estado del arte y la planeación**, junto con la estructura del repositorio y un *pipeline* base ya probado.
 
@@ -72,8 +72,10 @@ python -m src.main predict --audio mi_grabacion.wav --checkpoint experiments/che
 - [x] Estado del arte y análisis de soluciones existentes
 - [x] Cronograma y gestión de riesgos
 - [x] Estructura del repositorio, *pipeline* base y pruebas automáticas
-- [ ] Revisión del reporte por todo el equipo (tarea 1.8)
-- [ ] Ajustar las fechas del cronograma al calendario oficial del curso
+- [x] Cronograma ajustado a las fechas oficiales (19-oct, 19-nov y 1-dic-2026)
+- [ ] Revisión del reporte por todo el equipo (tarea 1.9, hasta el 15-oct)
+- [ ] Asignar responsables a las tareas «Por asignar» en `docs/cronograma.xlsx`
+- [ ] Versión final y publicación (tarea 1.10, hasta el 18-oct)
 
 ## 👥 Equipo — Grupo 4
 

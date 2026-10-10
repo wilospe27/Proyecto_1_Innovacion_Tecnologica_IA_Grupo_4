@@ -299,12 +299,15 @@ Python 3.11, PyTorch, librosa, scikit-learn, pandas, matplotlib, Jupyter o Googl
 
 ## VII. Plan de actividades y cronograma
 
-El plan cubre las tres entregas del curso. Las fechas son **tentativas** y se calculan desde la fecha de inicio en el archivo [`cronograma.xlsx`](cronograma.xlsx), que contiene las mismas tareas con fechas, duraciones, avance, estado y diagrama de Gantt calculados con fórmulas; al cambiar la fecha de inicio o una duración, todo el plan se actualiza.
+El plan cubre las tres entregas del curso, con sus fechas oficiales: **19 de octubre**, **19 de noviembre** y **1 de diciembre de 2026**. Las fechas de las actividades se calculan desde el inicio del proyecto (28 de septiembre) en el archivo [`cronograma.xlsx`](cronograma.xlsx), que contiene las mismas tareas con fechas, duraciones, avance, estado, holgura frente a cada entrega y diagrama de Gantt calculados con fórmulas; al cambiar una fecha o una duración, todo el plan se actualiza.
+
+Como la Entrega 3 —que vale el 70 % de la nota— llega solo 12 días después de la Entrega 2, el plan adelanta trabajo: la Etapa 2 arranca el 12 de octubre, en paralelo con la revisión final del reporte 1, y el modelado de la Etapa 3 (transferencia de aprendizaje, *embeddings* y prototipo) inicia el 3 de noviembre, en paralelo con el cierre de la Etapa 2. Cada etapa termina con al menos un día de holgura antes de su entrega.
 
 ### A. Estructura de trabajo
 
 Las dependencias admiten solapamiento: una actividad puede iniciar cuando su predecesora ya está avanzada (relación inicio-inicio con desfase), por eso las fechas se programan con un desfase en días desde el inicio del proyecto.
 
+<!-- INICIO:CRONOGRAMA_TABLA (generado desde cronograma; no editar a mano) -->
 **Etapa 1 · Planteamiento del problema — Entrega 1 (20 % de la nota)**
 
 | ID | Actividad | Inicio | Fin | Días | Predecesora | Entregable |
@@ -316,93 +319,105 @@ Las dependencias admiten solapamiento: una actividad puede iniciar cuando su pre
 | 1.5 | Análisis de soluciones existentes y brecha | 05-oct | 08-oct | 4 | 1.4 | Secciones V.C a V.E |
 | 1.6 | Planeación: tareas, cronograma y riesgos | 06-oct | 08-oct | 3 | 1.3 | Sección VII y cronograma.xlsx |
 | 1.7 | Estructura del repositorio y entorno de trabajo | 07-oct | 09-oct | 3 | 1.1 | Carpeta entrega_1 en GitHub |
-| 1.8 | Redacción y revisión del reporte 1 | 08-oct | 10-oct | 3 | 1.3, 1.5, 1.6 | docs/reporte_entrega_1.md |
-| **H1** | **Entrega 1: reporte de la primera etapa (20 %)** | **11-oct** | — | — | 1.8 | Hito |
+| 1.8 | Redacción del reporte 1 | 08-oct | 09-oct | 2 | 1.3, 1.5, 1.6 | Borrador de docs/reporte_entrega_1.md |
+| 1.9 | Revisión del reporte por el equipo y ajustes | 10-oct | 15-oct | 6 | 1.8 | Comentarios incorporados |
+| 1.10 | Versión final y publicación de la Entrega 1 | 16-oct | 18-oct | 3 | 1.9 | Rama main actualizada |
+| **H1** | **Entrega 1: reporte de la primera etapa (20 %)** | **19-oct** | — | — | 1.10 | Hito oficial |
 
 **Etapa 2 · Datos y modelos de referencia — Entrega 2 (10 % de la nota)**
 
 | ID | Actividad | Inicio | Fin | Días | Predecesora | Entregable |
 |---|---|---|---|---|---|---|
-| 2.1 | Selección de especies objetivo y criterios de inclusión | 12-oct | 15-oct | 4 | H1 | Lista de especies |
-| 2.2 | Clave de API y descarga de grabaciones y metadatos | 14-oct | 20-oct | 7 | 2.1 | data/raw y metadatos |
+| 2.1 | Clave de API, metadatos de la región y selección de especies | 12-oct | 17-oct | 6 | 1.3 | Lista de especies objetivo |
+| 2.2 | Descarga de grabaciones y metadatos | 16-oct | 20-oct | 5 | 2.1 | data/raw y metadatos |
 | 2.3 | Depuración y control de calidad de los datos | 19-oct | 23-oct | 5 | 2.2 | Conjunto depurado |
-| 2.4 | Análisis exploratorio de datos (EDA) | 21-oct | 27-oct | 7 | 2.3 | Notebook de EDA |
-| 2.5 | Preprocesamiento: ventanas y espectrogramas Mel | 24-oct | 28-oct | 5 | 2.3 | data/processed + índice |
-| 2.6 | Hipótesis y diseño experimental | 26-oct | 29-oct | 4 | 2.4 | Sección de hipótesis |
-| 2.7 | Modelos de referencia y CNN base | 28-oct | 03-nov | 7 | 2.5 | Primeras métricas |
-| 2.8 | Redacción del reporte 2 | 03-nov | 07-nov | 5 | 2.6, 2.7 | Reporte de la segunda etapa |
-| **H2** | **Entrega 2: reporte de la segunda etapa (10 %)** | **08-nov** | — | — | 2.8 | Hito |
+| 2.4 | Análisis exploratorio de datos (EDA) | 20-oct | 28-oct | 9 | 2.3 | Notebook de EDA |
+| 2.5 | Preprocesamiento: ventanas y espectrogramas Mel | 23-oct | 27-oct | 5 | 2.3 | data/processed + índice |
+| 2.6 | Hipótesis y diseño experimental | 26-oct | 30-oct | 5 | 2.4 | Sección de hipótesis |
+| 2.7 | Modelos de referencia y CNN base | 27-oct | 07-nov | 12 | 2.5 | Primeras métricas |
+| 2.8 | Redacción del reporte 2 | 08-nov | 16-nov | 9 | 2.6, 2.7 | Reporte de la segunda etapa |
+| 2.9 | Revisión y publicación de la Entrega 2 | 16-nov | 18-nov | 3 | 2.8 | Carpeta entrega_2 en main |
+| **H2** | **Entrega 2: reporte de la segunda etapa (10 %)** | **19-nov** | — | — | 2.9 | Hito oficial |
 
 **Etapa 3 · Modelado, evaluación y comunicación — Entrega 3 (70 % de la nota)**
 
 | ID | Actividad | Inicio | Fin | Días | Predecesora | Entregable |
 |---|---|---|---|---|---|---|
-| 3.1 | Transferencia de aprendizaje con EfficientNet-B0 | 09-nov | 17-nov | 9 | H2 | Modelo entrenado |
-| 3.2 | Embeddings bioacústicos (BirdNET o Perch) + clasificador | 11-nov | 19-nov | 9 | H2 | Modelo entrenado |
-| 3.3 | Ajuste de hiperparámetros y aumentación de datos | 17-nov | 23-nov | 7 | 3.1 | Mejor configuración |
-| 3.4 | Evaluación comparativa y análisis de errores | 22-nov | 27-nov | 6 | 3.2, 3.3 | Tablas y figuras de resultados |
-| 3.5 | Validación con expertos | 24-nov | 30-nov | 7 | 3.4 | Muestra revisada por expertos |
-| 3.6 | Prototipo de interfaz (Streamlit o Gradio) | 22-nov | 30-nov | 9 | 3.1 | Aplicación de demostración |
-| 3.7 | Reporte final | 28-nov | 07-dic | 10 | 3.4 | Reporte final |
-| 3.8 | Video de 10 minutos | 05-dic | 09-dic | 5 | 3.7 | Video |
-| 3.9 | Revisión final y publicación en el repositorio | 08-dic | 11-dic | 4 | 3.7, 3.8 | Repositorio final |
-| **H3** | **Entrega 3: reporte final y video (70 %)** | **13-dic** | — | — | 3.9 | Hito |
+| 3.1 | Transferencia de aprendizaje con EfficientNet-B0 | 03-nov | 14-nov | 12 | 2.5 | Modelo entrenado |
+| 3.2 | Embeddings bioacústicos (BirdNET o Perch 2.0) + clasificador | 05-nov | 16-nov | 12 | 2.3 | Modelo entrenado |
+| 3.3 | Ajuste de hiperparámetros y aumentación de datos | 12-nov | 19-nov | 8 | 3.1 | Mejor configuración |
+| 3.4 | Evaluación comparativa y análisis de errores | 19-nov | 23-nov | 5 | 3.2, 3.3 | Tablas y figuras de resultados |
+| 3.5 | Validación con expertos | 21-nov | 25-nov | 5 | 3.4 | Muestra revisada por expertos |
+| 3.6 | Prototipo de interfaz (Streamlit o Gradio) | 12-nov | 21-nov | 10 | 3.1 | Aplicación de demostración |
+| 3.7 | Reporte final | 20-nov | 26-nov | 7 | 3.4 | Reporte final |
+| 3.8 | Video de 10 minutos | 25-nov | 28-nov | 4 | 3.7 | Video |
+| 3.9 | Revisión final y publicación en el repositorio | 28-nov | 30-nov | 3 | 3.7, 3.8 | Repositorio final |
+| **H3** | **Entrega 3: reporte final y video (70 %)** | **01-dic** | — | — | 3.9 | Hito oficial |
+<!-- FIN:CRONOGRAMA_TABLA -->
 
 ### B. Diagrama de Gantt
 
+<!-- INICIO:CRONOGRAMA_GANTT (generado desde cronograma; no editar a mano) -->
 ```mermaid
 gantt
-    title Cronograma tentativo del proyecto
+    title Cronograma del proyecto
     dateFormat YYYY-MM-DD
     axisFormat %d/%m
     todayMarker off
     section Etapa 1
-    1.1 Conformación del equipo y definición del tema :t11, 2026-09-28, 3d
-    1.2 Análisis del problema y árbol de problemas :t12, 2026-09-30, 6d
-    1.3 Objetivos alcance y pregunta de investigación :t13, 2026-10-03, 4d
-    1.4 Revisión bibliográfica (estado del arte) :t14, 2026-09-30, 9d
-    1.5 Análisis de soluciones existentes y brecha :t15, 2026-10-05, 4d
-    1.6 Planeación - tareas cronograma y riesgos :t16, 2026-10-06, 3d
-    1.7 Estructura del repositorio y entorno de trabajo :t17, 2026-10-07, 3d
-    1.8 Redacción y revisión del reporte 1 :t18, 2026-10-08, 3d
-    Entrega 1 :milestone, th1, 2026-10-11, 0d
+    1.1 Conformación del equipo y definición del tema :t1_1, 2026-09-28, 3d
+    1.2 Análisis del problema y árbol de problemas :t1_2, 2026-09-30, 6d
+    1.3 Objetivos alcance y pregunta de investigación :t1_3, 2026-10-03, 4d
+    1.4 Revisión bibliográfica (estado del arte) :t1_4, 2026-09-30, 9d
+    1.5 Análisis de soluciones existentes y brecha :t1_5, 2026-10-05, 4d
+    1.6 Planeación - tareas cronograma y riesgos :t1_6, 2026-10-06, 3d
+    1.7 Estructura del repositorio y entorno de trabajo :t1_7, 2026-10-07, 3d
+    1.8 Redacción del reporte 1 :t1_8, 2026-10-08, 2d
+    1.9 Revisión del reporte por el equipo y ajustes :t1_9, 2026-10-10, 6d
+    1.10 Versión final y publicación de la Entrega 1 :t1_10, 2026-10-16, 3d
+    Entrega 1 :milestone, th1, 2026-10-19, 0d
     section Etapa 2
-    2.1 Selección de especies objetivo y criterios de inclusión :t21, 2026-10-12, 4d
-    2.2 Clave de API y descarga de grabaciones y metadatos :t22, 2026-10-14, 7d
-    2.3 Depuración y control de calidad de los datos :t23, 2026-10-19, 5d
-    2.4 Análisis exploratorio de datos (EDA) :t24, 2026-10-21, 7d
-    2.5 Preprocesamiento - ventanas y espectrogramas Mel :t25, 2026-10-24, 5d
-    2.6 Hipótesis y diseño experimental :t26, 2026-10-26, 4d
-    2.7 Modelos de referencia y CNN base :t27, 2026-10-28, 7d
-    2.8 Redacción del reporte 2 :t28, 2026-11-03, 5d
-    Entrega 2 :milestone, th2, 2026-11-08, 0d
+    2.1 Clave de API metadatos de la región y selección de especies :t2_1, 2026-10-12, 6d
+    2.2 Descarga de grabaciones y metadatos :t2_2, 2026-10-16, 5d
+    2.3 Depuración y control de calidad de los datos :t2_3, 2026-10-19, 5d
+    2.4 Análisis exploratorio de datos (EDA) :t2_4, 2026-10-20, 9d
+    2.5 Preprocesamiento - ventanas y espectrogramas Mel :t2_5, 2026-10-23, 5d
+    2.6 Hipótesis y diseño experimental :t2_6, 2026-10-26, 5d
+    2.7 Modelos de referencia y CNN base :t2_7, 2026-10-27, 12d
+    2.8 Redacción del reporte 2 :t2_8, 2026-11-08, 9d
+    2.9 Revisión y publicación de la Entrega 2 :t2_9, 2026-11-16, 3d
+    Entrega 2 :milestone, th2, 2026-11-19, 0d
     section Etapa 3
-    3.1 Transferencia de aprendizaje con EfficientNet-B0 :t31, 2026-11-09, 9d
-    3.2 Embeddings bioacústicos (BirdNET o Perch) + clasificador :t32, 2026-11-11, 9d
-    3.3 Ajuste de hiperparámetros y aumentación de datos :t33, 2026-11-17, 7d
-    3.4 Evaluación comparativa y análisis de errores :t34, 2026-11-22, 6d
-    3.5 Validación con expertos :t35, 2026-11-24, 7d
-    3.6 Prototipo de interfaz (Streamlit o Gradio) :t36, 2026-11-22, 9d
-    3.7 Reporte final :t37, 2026-11-28, 10d
-    3.8 Video de 10 minutos :t38, 2026-12-05, 5d
-    3.9 Revisión final y publicación en el repositorio :t39, 2026-12-08, 4d
-    Entrega 3 :milestone, th3, 2026-12-13, 0d
+    3.1 Transferencia de aprendizaje con EfficientNet-B0 :t3_1, 2026-11-03, 12d
+    3.2 Embeddings bioacústicos (BirdNET o Perch 2.0) + clasificador :t3_2, 2026-11-05, 12d
+    3.3 Ajuste de hiperparámetros y aumentación de datos :t3_3, 2026-11-12, 8d
+    3.4 Evaluación comparativa y análisis de errores :t3_4, 2026-11-19, 5d
+    3.5 Validación con expertos :t3_5, 2026-11-21, 5d
+    3.6 Prototipo de interfaz (Streamlit o Gradio) :t3_6, 2026-11-12, 10d
+    3.7 Reporte final :t3_7, 2026-11-20, 7d
+    3.8 Video de 10 minutos :t3_8, 2026-11-25, 4d
+    3.9 Revisión final y publicación en el repositorio :t3_9, 2026-11-28, 3d
+    Entrega 3 :milestone, th3, 2026-12-01, 0d
 ```
+<!-- FIN:CRONOGRAMA_GANTT -->
 
 *Figura 3. Diagrama de Gantt del proyecto. Versión en imagen: [`figuras/cronograma_gantt.png`](figuras/cronograma_gantt.png).*
 
 ### C. Hitos y entregables
 
-| Hito | Fecha tentativa | Peso | Contenido evaluado |
+<!-- INICIO:CRONOGRAMA_HITOS (generado desde cronograma; no editar a mano) -->
+| Hito | Fecha oficial | Peso | Contenido evaluado |
 |---|---|---|---|
-| Entrega 1 | 11-oct-2026 | 20 % | Análisis del problema (10 %): problema, objetivos y árbol de problemas · Estado del arte (5 %) · Planeación (5 %) |
-| Entrega 2 | 08-nov-2026 | 10 % | Análisis exploratorio de datos (5 %) · Modelos de referencia, hipótesis y experimentos (5 %) |
-| Entrega 3 | 13-dic-2026 | 70 % | Reporte final (introducción, metodología, resultados, discusión, conclusiones y referencias) · Video de 10 minutos |
+| Entrega 1 | lunes 19-oct-2026 | 20 % | Análisis del problema (10 %): problema, objetivos y árbol de problemas · Estado del arte (5 %) · Planeación (5 %) |
+| Entrega 2 | jueves 19-nov-2026 | 10 % | Análisis exploratorio de datos (5 %) · Modelos de referencia, hipótesis y experimentos (5 %) |
+| Entrega 3 | martes 01-dic-2026 | 70 % | Reporte final (introducción, metodología, resultados, discusión, conclusiones y referencias) · Video de 10 minutos |
+<!-- FIN:CRONOGRAMA_HITOS -->
 
 ### D. Riesgos y mitigación
 
 | Riesgo | Probabilidad | Impacto | Mitigación |
 |---|---|---|---|
+| Solo 12 días entre la Entrega 2 y la Entrega 3 (70 % de la nota) | Alta | Alto | Iniciar el modelado de la Etapa 3 el 3 de noviembre, en paralelo con la Etapa 2; fijar temprano el alcance del prototipo; escribir el reporte final sobre la base del reporte 2 |
 | Pocas grabaciones para algunas especies objetivo | Alta | Alto | Elegir especies con ≥ 30 grabaciones; transferencia de aprendizaje y *embeddings*; aumentación |
 | Etiquetas débiles (otras especies de fondo en la grabación) | Media | Medio | Filtrar calidad A–B; descartar ventanas silenciosas; revisión manual de una muestra |
 | Desbalance entre especies | Alta | Medio | Pesos por clase, F1 macro como métrica principal, muestreo balanceado |
@@ -414,7 +429,7 @@ gantt
 
 ### E. Seguimiento
 
-El avance se actualiza semanalmente en [`cronograma.xlsx`](cronograma.xlsx) (columnas *% avance* y *Responsable*). El archivo calcula el estado de cada tarea (completada, en curso, pendiente o atrasada) frente a la fecha de corte y el avance ponderado de cada etapa.
+El avance se actualiza semanalmente en [`cronograma.xlsx`](cronograma.xlsx) (columnas *% avance* y *Responsable*). El archivo calcula el estado de cada tarea (completada, en curso, pendiente o atrasada) frente a la fecha de corte, el avance ponderado de cada etapa y la holgura entre la última actividad de cada etapa y su fecha de entrega, que se marca en rojo si es menor de un día.
 
 ## VIII. Referencias
 

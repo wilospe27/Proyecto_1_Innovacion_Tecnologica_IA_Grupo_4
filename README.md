@@ -73,11 +73,11 @@ Construir un modelo de IA capaz de clasificar especies de fauna colombiana a par
 
 Cada entrega vive en su propia carpeta con la estructura estándar del curso (`docs/`, `src/`, `notebooks/`, `experiments/`, `tests/`, `requirements.txt`, `README.md`).
 
-| Entrega | Contenido | Peso | Carpeta | Estado |
-|---|---|---|---|---|
-| 1 | Análisis del problema, estado del arte y planeación | 20 % | [`entrega_1/`](entrega_1/) | ✅ Lista para revisión del equipo |
-| 2 | Análisis exploratorio de datos, modelos de referencia e hipótesis | 10 % | `entrega_2/` | ⏳ Pendiente |
-| 3 | Reporte final y video de 10 minutos | 70 % | `entrega_3/` | ⏳ Pendiente |
+| Entrega | Fecha | Contenido | Peso | Carpeta | Estado |
+|---|---|---|---|---|---|
+| 1 | 19-oct-2026 | Análisis del problema, estado del arte y planeación | 20 % | [`entrega_1/`](entrega_1/) | ✅ Lista para revisión del equipo |
+| 2 | 19-nov-2026 | Análisis exploratorio de datos, modelos de referencia e hipótesis | 10 % | `entrega_2/` (rama `entrega-2`) | 🚧 En progreso |
+| 3 | 1-dic-2026 | Reporte final y video de 10 minutos | 70 % | `entrega_3/` | ⏳ Pendiente |
 
 📄 **Reporte de la Entrega 1:** [`entrega_1/docs/reporte_entrega_1.md`](entrega_1/docs/reporte_entrega_1.md) · 📅 **Cronograma:** [`entrega_1/docs/cronograma.xlsx`](entrega_1/docs/cronograma.xlsx)
 
