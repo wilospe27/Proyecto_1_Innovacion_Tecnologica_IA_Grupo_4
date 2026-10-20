@@ -10,11 +10,30 @@
 
 ---
 
+## 👥 Integrantes – Grupo 4
+
+| Integrante | Contacto |
+|---|---|
+| Wilson Ospina Pérez | wilospe27@gmail.com |
+| Santiago Osorio | Santiago.osorio@hotmail.es |
+| Martín Pérez | martinperez_lopez@hotmail.com |
+| Adriana Zapata | adriana.zapata.gomez.2021@gmail.com |
+
 ## 📌 Descripción
 
 Colombia es el país con mayor diversidad de aves del mundo (más de 1.900 especies registradas), además de una enorme riqueza de anfibios, insectos y mamíferos que se comunican mediante sonidos. Muchas de estas especies son difíciles de ver, pero fáciles de **escuchar**.
 
 En este proyecto desarrollamos un sistema basado en **aprendizaje profundo** que, a partir de una grabación de audio, **identifica la especie que está cantando o vocalizando**. Con él buscamos apoyar el monitoreo de biodiversidad, la ciencia ciudadana, la educación ambiental y el ecoturismo.
+
+## 🧩 Problema que abordamos
+
+> **Baja capacidad para identificar de forma rápida, confiable y escalable las especies de fauna colombiana a partir de sus vocalizaciones.**
+
+Identificar especies por su canto depende de expertos escasos, y las grabadoras de monitoreo producen muchas más horas de audio de las que una persona puede revisar. Las herramientas automáticas que existen, como BirdNET o Merlin Sound ID, tienen menor cobertura y exhaustividad para las especies neotropicales, y las grabaciones de campo tienen ruido y cantos superpuestos de varias especies. Como resultado, los inventarios son lentos y costosos, los datos acústicos ya recolectados se subutilizan y las personas no expertas (ciudadanos, docentes, guías de aviturismo) tienen pocas herramientas confiables para reconocer lo que escuchan.
+
+**Pregunta de investigación:** ¿puede un modelo de aprendizaje profundo, entrenado con grabaciones abiertas de especies de Colombia, identificar la especie que vocaliza en una grabación con un desempeño suficiente (meta preliminar: F1 macro ≥ 0,80 en grabaciones no vistas) para apoyar el monitoreo, la ciencia ciudadana y la educación?
+
+**Alcance:** nos concentramos en las **aves** de Colombia: según el planteamiento del curso trabajamos con un subconjunto de **10 a 20 especies objetivo** y clips cortos, con el Valle del Cauca como región preferida. Desarrollamos el análisis completo, con el árbol de problemas y el estado del arte, en el [reporte de la Entrega 1](entrega_1/docs/reporte_entrega_1.md).
 
 ## 🎯 Objetivos
 
@@ -77,7 +96,7 @@ Organizamos cada entrega en su propia carpeta, con la estructura estándar del c
 
 | Entrega | Fecha | Contenido | Peso | Carpeta | Estado |
 |---|---|---|---|---|---|
-| 1 | 19-oct-2026 | Análisis del problema, estado del arte y planeación | 20 % | [`entrega_1/`](entrega_1/) | ✅ En revisión final |
+| 1 | 19-oct-2026 | Análisis del problema, estado del arte y planeación | 20 % | [`entrega_1/`](entrega_1/) | ✅ Realizado |
 | 2 | 19-nov-2026 | Análisis exploratorio de datos, modelos de referencia e hipótesis | 10 % | `entrega_2/` (rama `entrega-2`) | 🚧 En progreso |
 | 3 | 1-dic-2026 | Reporte final y video de 10 minutos | 70 % | `entrega_3/` | ⏳ Pendiente |
 
@@ -164,15 +183,6 @@ Desarrollaremos la interfaz web (Streamlit o Gradio) en la Entrega 3.
 - [ ] Transfer learning y comparación de modelos
 - [ ] Interfaz web de demostración
 - [ ] Informe final y presentación
-
-## 👥 Equipo – Grupo 4
-
-| Integrante | Contacto |
-|---|---|
-| Wilson Ospina Pérez | wilospe27@gmail.com |
-| Santiago Osorio | Santiago.osorio@hotmail.es |
-| Martín Pérez | martinperez_lopez@hotmail.com |
-| Adriana Zapata | adriana.zapata.gomez.2021@gmail.com |
 
 ## 📚 Referencias
 

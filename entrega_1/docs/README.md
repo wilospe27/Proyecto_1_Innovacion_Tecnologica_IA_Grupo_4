@@ -24,3 +24,7 @@
 - **Datos y modelos:** no subimos audios, espectrogramas ni checkpoints (ver `.gitignore`); sí versionamos métricas, figuras y notebooks con sus salidas.
 - **Pruebas:** antes de cada *pull request* corremos `python -m pytest` desde `entrega_1/`.
 - **Cronograma:** cada semana actualizamos *% avance* y *Responsable* en `cronograma.xlsx`.
+
+Documentación del proyecto
+
+Organizamos la documentación técnica del proyecto para facilitar la instalación, comprender la arquitectura, consultar el cronograma y revisar los resultados de la Entrega 1.

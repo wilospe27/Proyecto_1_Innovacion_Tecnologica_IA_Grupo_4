@@ -29,3 +29,13 @@ python -m src.main preprocess
 | [iNaturalist](https://www.inaturalist.org) | Observaciones ciudadanas con audio | Creative Commons, según cada observación |
 
 > Conservamos siempre la licencia (`lic`) y el autor (`rec`) de cada grabación, porque los necesitamos para citar las fuentes en los reportes.
+
+## Organización de los datos de la Entrega 1
+
+Organizamos los datos del proyecto en tres carpetas principales:
+
+- `raw/`: almacenamos las grabaciones originales.
+- `processed/`: guardamos los datos procesados y los archivos preparados para el análisis.
+- `metadata/`: conservamos los metadatos, las licencias y la información de las fuentes.
+
+Mantenemos esta estructura para facilitar la trazabilidad y la reproducibilidad del proyecto.
