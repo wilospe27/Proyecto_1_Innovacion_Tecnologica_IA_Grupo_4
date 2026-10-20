@@ -33,7 +33,7 @@ Identificar especies por su canto depende de expertos escasos, y las grabadoras 
 
 **Pregunta de investigación:** ¿puede un modelo de aprendizaje profundo, entrenado con grabaciones abiertas de especies de Colombia, identificar la especie que vocaliza en una grabación con un desempeño suficiente (meta preliminar: F1 macro ≥ 0,80 en grabaciones no vistas) para apoyar el monitoreo, la ciencia ciudadana y la educación?
 
-**Alcance:** nos concentramos en las **aves** de Colombia: elegiremos entre 20 y 30 especies objetivo, con el Valle del Cauca como región preferida. Desarrollamos el análisis completo, con el árbol de problemas y el estado del arte, en el [reporte de la Entrega 1](entrega_1/docs/reporte_entrega_1.md).
+**Alcance:** nos concentramos en las **aves** de Colombia: según el planteamiento del curso trabajamos con un subconjunto de **10 a 20 especies objetivo** y clips cortos, con el Valle del Cauca como región preferida. Desarrollamos el análisis completo, con el árbol de problemas y el estado del arte, en el [reporte de la Entrega 1](entrega_1/docs/reporte_entrega_1.md).
 
 ## 🎯 Objetivos
 

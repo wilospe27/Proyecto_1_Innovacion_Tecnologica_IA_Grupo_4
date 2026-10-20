@@ -83,7 +83,7 @@ El problema abarca toda la fauna que vocaliza, pero en el proyecto nos concentra
 |---|---|
 | Clasificación de **una especie principal por grabación** (ventanas de 5 s agregadas por grabación) | Detección de múltiples especies superpuestas en paisajes sonoros largos (la planteamos como trabajo futuro) |
 | **Aves** de Colombia como grupo principal; anfibios como extensión opcional si los datos lo permiten | Insectos y mamíferos |
-| Entre **20 y 30 especies objetivo** con al menos 30 grabaciones de buena calidad en fuentes abiertas (lista final en la Entrega 2) | Cobertura nacional de todas las especies |
+| Un subconjunto de **10 a 20 especies objetivo** —el alcance definido por el curso— con al menos 30 grabaciones de buena calidad en fuentes abiertas (lista final en la Entrega 2) | Cobertura nacional de todas las especies |
 | Prototipo web de demostración (subir un audio y obtener las especies más probables) | Aplicación móvil en producción o despliegue en grabadoras de campo |
 
 > **Región prioritaria:** definiremos la lista final de especies en la tarea 2.1. Nuestra opción preferida es el Valle del Cauca (Cali y los Farallones), porque nos permitiría probar el modelo con grabaciones propias de la región.
@@ -98,7 +98,7 @@ Desarrollar un prototipo basado en aprendizaje profundo que identifique, a parti
 
 | # | Objetivo específico | Indicador de cumplimiento (meta) | Entrega |
 |---|---|---|---|
-| OE1 | Construir un conjunto de datos depurado de grabaciones etiquetadas de especies objetivo a partir de fuentes abiertas, documentando licencias y autores. | 20–30 especies con ≥ 30 grabaciones cada una; 100 % de las grabaciones con licencia y autor registrados | 2 |
+| OE1 | Construir un conjunto de datos depurado de grabaciones etiquetadas de especies objetivo a partir de fuentes abiertas, documentando licencias y autores. | 10–20 especies con ≥ 30 grabaciones cada una; 100 % de las grabaciones con licencia y autor registrados | 2 |
 | OE2 | Implementar un *pipeline* reproducible de preprocesamiento (remuestreo, ventanas de 5 s, reducción de ruido opcional y espectrogramas Mel). | Pipeline ejecutable con un solo comando y cubierto por pruebas automáticas | 1–2 |
 | OE3 | Entrenar y comparar al menos tres enfoques de clasificación: CNN base, EfficientNet preentrenada y *embeddings* bioacústicos con un clasificador. | Tres modelos entrenados con la misma partición y comparados con las mismas métricas | 2–3 |
 | OE4 | Evaluar los modelos con particiones por grabación y métricas estándar, y analizar los errores por especie. | F1 macro ≥ 0,80 y exactitud top-3 ≥ 0,90 en prueba (meta a recalibrar tras el EDA); matriz de confusión y análisis de errores | 3 |
@@ -272,12 +272,12 @@ Remuestreamos el audio a 32 kHz en mono, lo segmentamos en ventanas de 5 s, apli
 
 ### D. Modelos a comparar
 
-1. **Referencias simples (Entrega 2):** clasificador de la clase mayoritaria y regresión logística sobre estadísticas de MFCC.
+1. **Referencias clásicas (Entrega 2):** clasificador de la clase mayoritaria, regresión logística, máquinas de vectores de soporte (SVM) y ensambles (bosques aleatorios y potenciación de gradiente) sobre estadísticas de MFCC y de espectrogramas, como lo plantea el curso.
 2. **CNN base:** cuatro bloques convolucionales entrenados desde cero (`src/models/cnn_baseline.py`).
 3. **Transferencia de aprendizaje:** EfficientNet-B0 preentrenada en ImageNet y ajustada a espectrogramas [21].
 4. ***Embeddings* bioacústicos:** representaciones de BirdNET o Perch 2.0 con un clasificador lineal (por ejemplo, regresión logística) [8], [16].
 
-En todos los casos usaremos pesos por clase para el desbalance y aumentación tipo SpecAugment [9].
+En todos los casos usaremos pesos por clase para el desbalance y aumentación tipo SpecAugment [9]. Como parte del análisis exploratorio probaremos además un agrupamiento no supervisado (por ejemplo, k-means sobre las estadísticas de MFCC) para observar si las vocalizaciones se separan por especie sin usar las etiquetas.
 
 ### E. Protocolo de evaluación
 
