@@ -1,5 +1,21 @@
 # Especies objetivo del proyecto (tarea 2.1) — una especie por línea, nombre científico.
-# La llenamos después de revisar experiments/results/ranking_especies.csv (ver docs/guia_etapa_2.md).
-# Criterios: >= 30 grabaciones de calidad A o B en la región, varios grabadores, 20 a 30 especies.
-# Las líneas que empiezan con # se ignoran. Ejemplo de formato:
-# Turdus ignobilis
+# Alcance del curso: subconjunto de 10 a 20 especies.
+# Criterios: >= 30 grabaciones de calidad A/B en el ranking nacional, presencia en el
+# rectángulo del Valle del Cauca (>= 2 grabaciones A/B regionales) y varios grabadores.
+# Sustento: experiments/results/ranking_especies.csv (nacional) y ranking_especies_valle.csv (regional).
+# Las líneas que empiezan con # se ignoran.
+Henicorhina leucophrys
+Henicorhina leucosticta
+Troglodytes aedon
+Pheugopedius mystacalis
+Cyphorhinus thoracicus
+Synallaxis azarae
+Synallaxis albescens
+Scytalopus vicinior
+Scytalopus alvarezlopezi
+Ortalis columbiana
+Thamnophilus multistriatus
+Odontophorus hyperythrus
+Zonotrichia capensis
+Myadestes ralloides
+Rupornis magnirostris

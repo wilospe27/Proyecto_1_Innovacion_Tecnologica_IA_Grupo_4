@@ -32,7 +32,7 @@ Fecha de entrega: 19 de noviembre de 2026
 
 ### B. Selección de especies objetivo (tarea 2.1)
 
-*Criterios (≥ 30 grabaciones de calidad A/B, número de grabadores, 20–30 especies), tabla con el ranking resumido (`experiments/results/ranking_especies.csv`) y lista final con la razón de cada inclusión o exclusión relevante. Explicar por qué descargamos grabaciones de toda Colombia para las especies elegidas.*
+*Criterios (≥ 30 grabaciones de calidad A/B en el ranking nacional, presencia en la región, número de grabadores, 10–20 especies según el alcance del curso), tabla con el ranking resumido (`experiments/results/ranking_especies.csv`) y lista final con la razón de cada inclusión o exclusión relevante. Explicar por qué descargamos grabaciones de toda Colombia para las especies elegidas.*
 
 ### C. Descarga y depuración (tareas 2.2 y 2.3)
 
@@ -50,7 +50,7 @@ Fecha de entrega: 19 de noviembre de 2026
 
 ### C. Exploración acústica
 
-*Espectrogramas de ejemplo y promedio por especie, rangos de frecuencia dominantes y especies con cantos parecidos que podrían confundirse.*
+*Espectrogramas de ejemplo y promedio por especie, rangos de frecuencia dominantes y especies con cantos parecidos que podrían confundirse. Agrupamiento no supervisado exploratorio (k-means sobre las estadísticas de MFCC): ¿las vocalizaciones se separan por especie sin usar las etiquetas?*
 
 ### D. Justificación de la selección de datos y variables
 
@@ -65,6 +65,7 @@ Fecha de entrega: 19 de noviembre de 2026
 | H1. Las representaciones preentrenadas superan a una CNN entrenada desde cero con pocas grabaciones por especie | F1 macro mayor en prueba | CNN base (Entrega 2) frente a EfficientNet y *embeddings* (Entrega 3), misma partición | 2–3 |
 | H2. La aumentación mejora las especies con menos grabaciones | Mayor F1 en el tercio de especies con menos datos | CNN con y sin aumentación | 2 |
 | H3. Particionar por ventana sobrestima el desempeño | F1 por ventana aleatoria > F1 por grabación | Misma CNN con ambas particiones | 2 |
+| H4. La CNN sobre espectrogramas supera a los clasificadores clásicos (SVM y ensambles) sobre MFCC | Mayor F1 macro en prueba | CNN base frente a SVM y bosque aleatorio, con la misma partición | 2 |
 
 *Protocolo: partición estratificada por grabación 70/15/15, semilla fija, métrica principal F1 macro, métricas complementarias.*
 
@@ -72,7 +73,7 @@ Fecha de entrega: 19 de noviembre de 2026
 
 ### A. Modelos
 
-*Clase mayoritaria; regresión logística sobre estadísticas de MFCC; CNN base (`src/models/cnn_baseline.py`). Hiperparámetros usados.*
+*Clase mayoritaria; regresión logística, SVM y ensambles (bosques aleatorios y potenciación de gradiente) sobre estadísticas de MFCC y de espectrogramas; CNN base (`src/models/cnn_baseline.py`). Hiperparámetros usados.*
 
 ### B. Resultados iniciales
 
@@ -80,6 +81,8 @@ Fecha de entrega: 19 de noviembre de 2026
 |---|---|---|---|---|
 | Clase mayoritaria | | | | |
 | Regresión logística (MFCC) | | | | |
+| SVM (MFCC) | | | | |
+| Bosque aleatorio (MFCC) | | | | |
 | CNN base | | | | |
 
 *Incluir la matriz de confusión de la CNN base (`experiments/results/`).*

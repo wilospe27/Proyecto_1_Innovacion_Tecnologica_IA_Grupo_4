@@ -51,14 +51,16 @@ python -m src.main especies --region valle_del_cauca --filtrar-localidad "Valle 
 | `con_otras_especies` | Grabaciones A/B que mencionan especies de fondo (etiquetas débiles) |
 | `cumple` | `grabaciones` ≥ 30 |
 
+> **Lo que encontramos al correrlo (18-oct-2026):** en el rectángulo del Valle ninguna especie identificada alcanza las 30 grabaciones A/B. Por eso corrimos también un ranking **nacional** (`python -m src.main especies --box -4.3 -79.1 13.5 -66.8`), guardamos el regional como `ranking_especies_valle.csv`, y aplicamos el mínimo de 30 sobre el conteo nacional, usando el ranking regional solo para confirmar la presencia de la especie en el Valle.
+
 ## Paso 4 · Elegir las especies objetivo (reunión del equipo)
 
 Usamos los criterios que acordamos en el reporte 1 (sección VI.B) y dos más que sugerimos:
 
-1. Al menos **30 grabaciones de calidad A o B** (columna `cumple`).
+1. Al menos **30 grabaciones de calidad A o B en el ranking nacional** y presencia en el ranking regional (≥ 2 grabaciones A/B en el rectángulo del Valle).
 2. *Sugerido:* varios grabadores por especie (por ejemplo, 5 o más), para que el modelo no aprenda el equipo de una sola persona.
 3. *Sugerido:* incluir algunos pares de especies con cantos parecidos (por ejemplo, del mismo género), para que la evaluación sea exigente.
-4. Total de **20 a 30 especies**.
+4. Total de **10 a 20 especies**, el subconjunto que define el planteamiento del curso.
 
 Escribimos la lista en [`../data/especies_objetivo.txt`](../data/especies_objetivo.txt), una especie por línea, y registramos la decisión y sus razones en el reporte 2 (sección II.B).
 
