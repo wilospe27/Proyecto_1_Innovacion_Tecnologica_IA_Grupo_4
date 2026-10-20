@@ -45,7 +45,7 @@ Construir un modelo de IA capaz de clasificar especies de fauna colombiana a par
 
 - Recopilar y depurar un conjunto de datos de audios etiquetados de especies colombianas.
 - Transformar los audios en representaciones visuales (espectrogramas Mel) aptas para redes neuronales.
-- Entrenar y comparar modelos de clasificación (CNN propia, transfer learning y modelos preentrenados como BirdNET).
+- Entrenar y comparar cinco enfoques de clasificación: CNN propia, EfficientNet preentrenada (transfer learning), embeddings bioacústicos (BirdNET/Perch), máquinas de vectores de soporte (SVM) y Random Forest.
 - Evaluar el desempeño con métricas estándar (accuracy, precisión, recall, F1, matriz de confusión).
 - Ofrecer una interfaz sencilla donde el usuario suba o grabe un audio y obtenga la especie probable.
 
