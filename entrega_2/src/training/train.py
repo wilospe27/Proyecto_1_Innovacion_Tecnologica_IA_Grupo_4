@@ -27,7 +27,7 @@ import torch
 from torch import nn
 from torch.utils.data import DataLoader
 
-from src.data.dataset import SpectrogramDataset, assign_splits
+from src.data.dataset import SpectrogramDataset, ensure_splits
 from src.evaluation.evaluate import compute_metrics
 from src.models.cnn_baseline import build_model, count_parameters
 from src.utils.helpers import (
@@ -53,6 +53,7 @@ class TrainConfig:
     output_dir: str = str(EXPERIMENTS_DIR)
     model_name: str = "cnn_baseline"
     pretrained: bool = True  # solo aplica a modelos con pesos preentrenados
+    base_channels: int = 32  # canales del primer bloque de la CNN base (16 = versión liviana para CPU)
     epochs: int = 30
     batch_size: int = 32
     learning_rate: float = 1e-3
@@ -65,11 +66,15 @@ class TrainConfig:
     num_workers: int = 0
     seed: int = 42
     run_name: str | None = None
+    split_column: str = "split"  # "split" (por grabación) o "split_ventana" (al azar, H3)
+    torch_threads: int | None = None  # hilos de CPU; None = valor por defecto de PyTorch
 
 
-def model_kwargs(model_name: str, pretrained: bool) -> dict:
-    """Argumentos extra según el modelo (solo EfficientNet usa ``pretrained``)."""
-    return {"pretrained": pretrained} if model_name == "efficientnet_b0" else {}
+def model_kwargs(model_name: str, pretrained: bool, base_channels: int = 32) -> dict:
+    """Argumentos extra según el modelo (EfficientNet usa ``pretrained``; la CNN, ``base_channels``)."""
+    if model_name == "efficientnet_b0":
+        return {"pretrained": pretrained}
+    return {"base_channels": base_channels} if model_name == "cnn_baseline" else {}
 
 
 def class_weight_tensor(train_labels: pd.Series, labels: list[str], device: str) -> torch.Tensor:
@@ -130,6 +135,8 @@ def train(cfg: TrainConfig | None = None) -> dict:
     """Entrena el modelo indicado en ``cfg`` y guarda el mejor checkpoint."""
     cfg = cfg or TrainConfig()
     set_seed(cfg.seed)
+    if cfg.torch_threads:
+        torch.set_num_threads(cfg.torch_threads)
     run_name = cfg.run_name or f"{cfg.model_name}_{timestamp()}"
     output_dir = Path(cfg.output_dir)
     logs_dir = ensure_dir(output_dir / "logs")
@@ -140,16 +147,17 @@ def train(cfg: TrainConfig | None = None) -> dict:
     try:
         processed_dir = Path(cfg.processed_dir)
         index_path = processed_dir / cfg.index_file
-        index = pd.read_csv(index_path)
-        if "split" not in index.columns:
-            index = assign_splits(index, cfg.val_size, cfg.test_size, cfg.seed)
+        index, created = ensure_splits(
+            pd.read_csv(index_path), cfg.split_column, cfg.val_size, cfg.test_size, cfg.seed
+        )
+        if created:
             index.to_csv(index_path, index=False)
-            logger.info("Partición por grabación guardada en %s", index_path)
+            logger.info("Partición '%s' guardada en %s", cfg.split_column, index_path)
 
         labels = sorted(str(label) for label in index["label"].unique())
         label_to_idx = {label: i for i, label in enumerate(labels)}
-        train_df = index[index["split"] == "train"]
-        val_df = index[index["split"] == "val"]
+        train_df = index[index[cfg.split_column] == "train"]
+        val_df = index[index[cfg.split_column] == "val"]
         if train_df.empty or val_df.empty:
             raise ValueError("Las particiones de entrenamiento y validación no pueden estar vacías")
 
@@ -166,9 +174,8 @@ def train(cfg: TrainConfig | None = None) -> dict:
         )
 
         device = get_device()
-        model = build_model(
-            cfg.model_name, n_classes=len(labels), **model_kwargs(cfg.model_name, cfg.pretrained)
-        ).to(device)
+        extra = model_kwargs(cfg.model_name, cfg.pretrained, cfg.base_channels)
+        model = build_model(cfg.model_name, n_classes=len(labels), **extra).to(device)
         logger.info(
             "Modelo %s | %s parámetros | %d especies | dispositivo %s",
             cfg.model_name,
@@ -237,6 +244,8 @@ def train(cfg: TrainConfig | None = None) -> dict:
                     break
 
         pd.DataFrame(history).to_csv(logs_dir / f"{run_name}_history.csv", index=False)
+        # Copia en results/ (que sí se versiona) para graficar las curvas en el reporte.
+        pd.DataFrame(history).to_csv(results_dir / f"{run_name}_history.csv", index=False)
         summary = {
             "run_name": run_name,
             "checkpoint": str(checkpoint_path),

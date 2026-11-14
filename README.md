@@ -97,10 +97,10 @@ Organizamos cada entrega en su propia carpeta, con la estructura estándar del c
 | Entrega | Fecha | Contenido | Peso | Carpeta | Estado |
 |---|---|---|---|---|---|
 | 1 | 19-oct-2026 | Análisis del problema, estado del arte y planeación | 20 % | [`entrega_1/`](entrega_1/) | ✅ Realizado |
-| 2 | 19-nov-2026 | Análisis exploratorio de datos, modelos de referencia e hipótesis | 10 % | `entrega_2/` (rama `entrega-2`) | 🚧 En progreso |
+| 2 | 19-nov-2026 | Análisis exploratorio de datos, modelos de referencia e hipótesis | 10 % | [`entrega_2/`](entrega_2/) | ✅ Realizado |
 | 3 | 1-dic-2026 | Reporte final y video de 10 minutos | 70 % | `entrega_3/` | ⏳ Pendiente |
 
-📄 **Reporte de la Entrega 1:** [`entrega_1/docs/reporte_entrega_1.md`](entrega_1/docs/reporte_entrega_1.md) · 📅 **Cronograma:** [`entrega_1/docs/cronograma.xlsx`](entrega_1/docs/cronograma.xlsx)
+📄 **Reporte de la Entrega 1:** [`entrega_1/docs/reporte_entrega_1.md`](entrega_1/docs/reporte_entrega_1.md) · 📄 **Reporte de la Entrega 2:** [`entrega_2/docs/reporte_entrega_2.md`](entrega_2/docs/reporte_entrega_2.md) · 📅 **Cronograma:** [`entrega_1/docs/cronograma.xlsx`](entrega_1/docs/cronograma.xlsx)
 
 ## 📁 Estructura del repositorio
 
@@ -109,18 +109,19 @@ Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4/
 ├── README.md                 # Este archivo
 ├── LICENSE
 ├── .gitignore
-└── entrega_1/
-    ├── docs/                 # Reporte, cronograma (Excel), arquitectura, API e instalación
-    ├── src/                  # data/ · models/ · training/ · evaluation/ · inference/ · utils/ · main.py
-    ├── notebooks/            # 01_exploracion_inicial.ipynb
-    ├── data/                 # raw/ · processed/ · metadata/ (no los subimos a Git)
-    ├── experiments/          # logs/ · checkpoints/ · results/
-    ├── tests/                # Pruebas con pytest
-    ├── requirements.txt
-    ├── environment.yml
-    ├── .gitignore
-    ├── LICENSE
-    └── README.md
+├── entrega_1/
+│   ├── docs/                 # Reporte, cronograma (Excel), arquitectura, API e instalación
+│   ├── src/                  # data/ · models/ · training/ · evaluation/ · inference/ · utils/ · main.py
+│   ├── notebooks/            # 01_exploracion_inicial.ipynb
+│   ├── data/                 # raw/ · processed/ · metadata/ (no los subimos a Git)
+│   ├── experiments/          # logs/ · checkpoints/ · results/
+│   ├── tests/                # Pruebas con pytest
+│   └── requirements.txt · environment.yml · .gitignore · LICENSE · README.md
+└── entrega_2/                # Misma estructura, más:
+    ├── docs/                 # reporte_entrega_2.md · guia_etapa_2.md · figuras/
+    ├── src/                  # data/clean.py · analysis/eda.py · models/classical.py
+    ├── notebooks/            # 02_eda.ipynb · 03_modelos_referencia.ipynb
+    └── experiments/results/  # Tablas y métricas que cita el reporte
 ```
 
 ## 🚀 Instalación y uso
@@ -152,13 +153,17 @@ Desarrollaremos la interfaz web (Streamlit o Gradio) en la Entrega 3.
 
 ## 📊 Resultados
 
-| Modelo | Accuracy | F1-score | Observaciones |
-|---|---|---|---|
-| CNN base | — | — | Pendiente |
-| Transfer learning (EfficientNet) | — | — | Pendiente |
-| BirdNET (referencia) | — | — | Pendiente |
+Resultados de la Entrega 2 sobre el conjunto de prueba (15 especies, 119 grabaciones no vistas, partición por grabación):
 
-*Actualizaremos esta tabla a medida que avancemos en el entrenamiento.*
+| Modelo | Accuracy | F1 macro | Observaciones |
+|---|---|---|---|
+| SVM sobre MFCC | 0,620 | 0,623 | Mejor clasificador clásico |
+| Random Forest sobre MFCC | 0,610 | 0,608 | — |
+| CNN base | 0,734 | 0,735 | Versión liviana, 12 épocas en CPU; top-3 de 0,871 |
+| Transfer learning (EfficientNet) | — | — | Entrega 3 |
+| Embeddings bioacústicos (BirdNET/Perch) | — | — | Entrega 3 |
+
+Detalle en el [reporte de la Entrega 2](entrega_2/docs/reporte_entrega_2.md).
 
 ## 🌱 Impacto y aplicaciones
 
@@ -176,10 +181,10 @@ Desarrollaremos la interfaz web (Streamlit o Gradio) en la Entrega 3.
 
 ## 🗺️ Hoja de ruta
 
-- [ ] Definir la lista de especies objetivo
-- [ ] Descargar y depurar el dataset
-- [ ] Preprocesamiento y generación de espectrogramas
-- [ ] Entrenamiento del modelo base
+- [x] Definir la lista de especies objetivo
+- [x] Descargar y depurar el dataset
+- [x] Preprocesamiento y generación de espectrogramas
+- [x] Entrenamiento del modelo base
 - [ ] Transfer learning y comparación de modelos
 - [ ] Interfaz web de demostración
 - [ ] Informe final y presentación

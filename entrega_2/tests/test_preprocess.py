@@ -5,9 +5,13 @@ import pytest
 import soundfile as sf
 
 from src.data.preprocess import (
+    MFCC_FILE,
     AudioConfig,
     audio_to_features,
+    audio_to_window_features,
     mel_spectrogram,
+    mfcc_feature_names,
+    mfcc_statistics,
     preprocess_directory,
     segment_signal,
     standardize,
@@ -86,3 +90,32 @@ def test_preprocesar_directorio(tmp_path):
     assert all((processed / path).exists() for path in index["path"])
     assert (processed / "index.csv").exists()
     assert (processed / "audio_config.json").exists()
+    assert np.load(processed / MFCC_FILE).shape == (len(index), 4 * AudioConfig().n_mfcc)
+
+
+def test_estadisticas_de_mfcc():
+    cfg = AudioConfig()
+    spectrograms, statistics = audio_to_window_features(synthetic_call(12.0), cfg)
+    assert statistics.shape == (len(spectrograms), 4 * cfg.n_mfcc)
+    assert np.isfinite(statistics).all()
+    assert len(mfcc_feature_names(cfg.n_mfcc)) == 4 * cfg.n_mfcc
+    vector = mfcc_statistics(mel_spectrogram(synthetic_call(cfg.segment_seconds), cfg), cfg.n_mfcc)
+    assert vector.shape == (4 * cfg.n_mfcc,)
+
+
+def test_max_seconds_limita_las_ventanas():
+    cfg = AudioConfig(max_seconds=10.0)
+    assert audio_to_features(synthetic_call(30.0), cfg).shape[0] == 3  # ventanas en 0, 2,5 y 5 s
+
+
+def test_preprocesar_respeta_el_manifiesto(tmp_path):
+    raw, processed = tmp_path / "raw", tmp_path / "processed"
+    (raw / "Especie_a").mkdir(parents=True)
+    for name in ("XC1", "XC2"):
+        sf.write(raw / "Especie_a" / f"{name}.wav", synthetic_call(6.0), 32_000)
+    manifest = tmp_path / "depuracion.csv"
+    manifest.write_text("path,conservar\nEspecie_a/XC1.wav,True\nEspecie_a/XC2.wav,False\n", encoding="utf-8")
+
+    index = preprocess_directory(raw, processed, manifest_csv=manifest)
+
+    assert set(index["recording_id"]) == {"Especie_a/XC1"}

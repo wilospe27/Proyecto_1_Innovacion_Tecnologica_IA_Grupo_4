@@ -4,8 +4,10 @@ Ejecutar desde la carpeta ``entrega_2/``::
 
     python -m src.main --help
     python -m src.main especies   --region valle_del_cauca --filtrar-localidad "Valle del Cauca"
-    python -m src.main download   --lista data/metadata/especies_objetivo.txt --max-per-species 60
-    python -m src.main preprocess --raw-dir data/raw --out-dir data/processed
+    python -m src.main download   --lista data/especies_objetivo.txt --max-per-species 60
+    python -m src.main depurar
+    python -m src.main preprocess --manifest data/metadata/depuracion.csv --max-seconds 60
+    python -m src.main baselines
     python -m src.main train      --model cnn_baseline --epochs 30
     python -m src.main evaluate   --checkpoint experiments/checkpoints/<corrida>.pt --split test
     python -m src.main predict    --audio grabacion.wav --checkpoint experiments/checkpoints/<corrida>.pt
@@ -20,7 +22,7 @@ import argparse
 import json
 from pathlib import Path
 
-from src.utils.helpers import METADATA_DIR, PROCESSED_DIR, RAW_DIR, RESULTS_DIR
+from src.utils.helpers import DATA_DIR, METADATA_DIR, PROCESSED_DIR, RAW_DIR, RESULTS_DIR
 
 
 def read_species_list(path: str | Path) -> list[str]:
@@ -90,6 +92,39 @@ def build_parser() -> argparse.ArgumentParser:
     preprocess.add_argument("--hop-seconds", type=float, default=2.5)
     preprocess.add_argument("--n-mels", type=int, default=128)
     preprocess.add_argument("--reduce-noise", action="store_true", help="Aplica noisereduce.")
+    preprocess.add_argument(
+        "--max-seconds", type=float, default=None,
+        help="Usa solo los primeros segundos de cada grabación (limita el peso de las grabaciones largas).",
+    )
+    preprocess.add_argument(
+        "--manifest", default=None,
+        help="Manifiesto de la depuración; si se indica, solo procesa los archivos conservados.",
+    )
+
+    clean = commands.add_parser(
+        "depurar", help="Revisa los audios descargados y genera el manifiesto de depuración (no borra nada)."
+    )
+    clean.add_argument("--raw-dir", default=str(RAW_DIR))
+    clean.add_argument("--metadata", default=str(METADATA_DIR / "xeno_canto.csv"))
+    clean.add_argument("--lista", default=str(DATA_DIR / "especies_objetivo.txt"))
+    clean.add_argument("--min-seconds", type=float, default=1.0)
+    clean.add_argument("--manifest", default=str(METADATA_DIR / "depuracion.csv"))
+    clean.add_argument(
+        "--resumen", default=str(RESULTS_DIR / "depuracion_resumen.csv"),
+        help="Resumen por especie (se versiona: sustenta la sección II.C del reporte 2).",
+    )
+
+    eda = commands.add_parser("eda", help="Genera las tablas y figuras del análisis exploratorio.")
+    eda.add_argument("--metadata", default=str(METADATA_DIR / "xeno_canto.csv"))
+    eda.add_argument("--manifest", default=str(METADATA_DIR / "depuracion.csv"))
+    eda.add_argument("--processed-dir", default=str(PROCESSED_DIR))
+
+    baselines = commands.add_parser(
+        "baselines", help="Evalúa los modelos clásicos de referencia sobre estadísticas de MFCC."
+    )
+    baselines.add_argument("--processed-dir", default=str(PROCESSED_DIR))
+    baselines.add_argument("--split-column", default="split", choices=["split", "split_ventana"])
+    baselines.add_argument("--seed", type=int, default=42)
 
     train = commands.add_parser("train", help="Entrena un modelo sobre las ventanas procesadas.")
     train.add_argument("--processed-dir", default=str(PROCESSED_DIR))
@@ -103,11 +138,23 @@ def build_parser() -> argparse.ArgumentParser:
     train.add_argument("--no-pretrained", action="store_true", help="EfficientNet sin ImageNet.")
     train.add_argument("--seed", type=int, default=42)
     train.add_argument("--run-name", default=None)
+    train.add_argument(
+        "--split-column", default="split", choices=["split", "split_ventana"],
+        help="split = por grabación (correcta); split_ventana = al azar por ventana (solo para H3).",
+    )
+    train.add_argument("--threads", type=int, default=None, help="Hilos de CPU para PyTorch.")
+    train.add_argument(
+        "--base-channels", type=int, default=32,
+        help="Canales del primer bloque de la CNN base (16 = versión liviana para entrenar en CPU).",
+    )
 
     evaluate = commands.add_parser("evaluate", help="Evalúa un checkpoint en una partición.")
     evaluate.add_argument("--checkpoint", required=True)
     evaluate.add_argument("--processed-dir", default=str(PROCESSED_DIR))
     evaluate.add_argument("--split", default="test", choices=["train", "val", "test"])
+    evaluate.add_argument(
+        "--split-column", default=None, help="Columna de partición (por defecto, la del entrenamiento)."
+    )
     evaluate.add_argument("--batch-size", type=int, default=64)
 
     predict = commands.add_parser("predict", help="Predice la especie de un archivo de audio.")
@@ -161,8 +208,36 @@ def main(argv: list[str] | None = None) -> int:
             hop_seconds=args.hop_seconds,
             n_mels=args.n_mels,
             reduce_noise=args.reduce_noise,
+            max_seconds=args.max_seconds,
         )
-        preprocess_directory(args.raw_dir, args.out_dir, cfg)
+        preprocess_directory(args.raw_dir, args.out_dir, cfg, manifest_csv=args.manifest)
+
+    elif args.command == "depurar":
+        from src.data.clean import clean_dataset, summarize_manifest
+
+        manifest = clean_dataset(
+            args.raw_dir,
+            metadata_csv=args.metadata,
+            manifest_csv=args.manifest,
+            summary_csv=args.resumen,
+            target_species=read_species_list(args.lista),
+            min_seconds=args.min_seconds,
+        )
+        print(summarize_manifest(manifest).to_string(index=False))
+        print(f"\nManifiesto: {args.manifest}")
+
+    elif args.command == "eda":
+        from src.analysis.eda import run_eda
+
+        result = run_eda(args.metadata, args.manifest, args.processed_dir)
+        print(json.dumps(result["general"], indent=2, ensure_ascii=False))
+
+    elif args.command == "baselines":
+        from src.models.classical import run_baselines
+
+        metrics = run_baselines(args.processed_dir, split_column=args.split_column, seed=args.seed)
+        columns = ["modelo", "conjunto", "accuracy", "balanced_accuracy", "f1_macro", "top3_accuracy"]
+        print(metrics[columns].round(3).to_string(index=False))
 
     elif args.command == "train":
         from src.training.train import TrainConfig, train
@@ -180,6 +255,9 @@ def main(argv: list[str] | None = None) -> int:
                 class_weights=not args.no_class_weights,
                 seed=args.seed,
                 run_name=args.run_name,
+                split_column=args.split_column,
+                torch_threads=args.threads,
+                base_channels=args.base_channels,
             )
         )
         print(json.dumps({k: v for k, v in summary.items() if k != "config"}, indent=2))
@@ -192,6 +270,7 @@ def main(argv: list[str] | None = None) -> int:
             processed_dir=args.processed_dir,
             split=args.split,
             batch_size=args.batch_size,
+            split_column=args.split_column,
         )
         print(json.dumps(metrics, indent=2))
 

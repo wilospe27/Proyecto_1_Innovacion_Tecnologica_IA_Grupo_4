@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import torch
-from sklearn.model_selection import StratifiedGroupKFold
+from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold
 from torch.utils.data import Dataset
 
 
@@ -61,6 +61,27 @@ class SpectrogramDataset(Dataset):
         return tensor, self.label_to_idx[row["label"]]
 
 
+WINDOW_SPLIT_COLUMN = "split_ventana"  # partición al azar por ventana (solo para H3)
+
+
+def ensure_splits(
+    index: pd.DataFrame,
+    column: str = "split",
+    val_size: float = 0.15,
+    test_size: float = 0.15,
+    seed: int = 42,
+) -> tuple[pd.DataFrame, bool]:
+    """Garantiza que el índice tenga la partición ``column``.
+
+    Retorna ``(índice, creada)``. La columna ``split_ventana`` se crea al azar
+    por ventana; cualquier otra, agrupando por grabación.
+    """
+    if column in index.columns:
+        return index, False
+    by_recording = column != WINDOW_SPLIT_COLUMN
+    return assign_splits(index, val_size, test_size, seed, by_recording=by_recording, column=column), True
+
+
 def _held_out_rows(frame: pd.DataFrame, fraction: float, seed: int) -> pd.Index:
     """Selecciona ~``fraction`` de las filas sin partir ninguna grabación."""
     n_splits = max(2, int(round(1.0 / fraction)))
@@ -69,23 +90,36 @@ def _held_out_rows(frame: pd.DataFrame, fraction: float, seed: int) -> pd.Index:
     return frame.index[held]
 
 
+def _held_out_windows(frame: pd.DataFrame, fraction: float, seed: int) -> pd.Index:
+    """Selecciona ~``fraction`` de las ventanas al azar, estratificando solo por especie."""
+    n_splits = max(2, int(round(1.0 / fraction)))
+    splitter = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
+    _, held = next(splitter.split(frame, frame["label"]))
+    return frame.index[held]
+
+
 def assign_splits(
     index: pd.DataFrame,
     val_size: float = 0.15,
     test_size: float = 0.15,
     seed: int = 42,
+    by_recording: bool = True,
+    column: str = "split",
 ) -> pd.DataFrame:
-    """Agrega la columna ``split`` (train/val/test) agrupando por grabación.
+    """Agrega la columna ``column`` (train/val/test), estratificada por especie.
 
-    Todas las ventanas de una misma grabación quedan en la misma partición, lo
-    que evita que el modelo se evalúe con fragmentos de audios que ya vio.
-    La partición se estratifica por especie en la medida de lo posible.
+    Con ``by_recording=True`` (lo correcto) todas las ventanas de una misma
+    grabación quedan en la misma partición, lo que evita que el modelo se
+    evalúe con fragmentos de audios que ya vio. Con ``by_recording=False`` las
+    ventanas se reparten al azar sin importar su grabación: solo lo usamos para
+    medir cuánto sobrestima el desempeño esa fuga de información (hipótesis H3).
     """
     if not 0 < val_size < 1 or not 0 < test_size < 1 or val_size + test_size >= 1:
         raise ValueError("val_size y test_size deben estar en (0, 1) y sumar menos de 1")
+    held_out = _held_out_rows if by_recording else _held_out_windows
     result = index.copy()
-    result["split"] = "train"
-    result.loc[_held_out_rows(result, test_size, seed), "split"] = "test"
-    remaining = result[result["split"] == "train"]
-    result.loc[_held_out_rows(remaining, val_size / (1 - test_size), seed), "split"] = "val"
+    result[column] = "train"
+    result.loc[held_out(result, test_size, seed), column] = "test"
+    remaining = result[result[column] == "train"]
+    result.loc[held_out(remaining, val_size / (1 - test_size), seed), column] = "val"
     return result

@@ -13,6 +13,10 @@ Cada ventana procesada se guarda como ``.npy`` y se registra en un índice CSV
 con las columnas ``path, label, recording_id, segment``. La columna
 ``recording_id`` permite hacer particiones por grabación y evitar fuga de
 información entre entrenamiento y validación.
+
+Para los modelos clásicos se guarda además ``mfcc_stats.npy``: una fila por
+ventana (en el mismo orden del índice) con la media y la desviación estándar
+en el tiempo de los MFCC y de sus deltas.
 """
 
 from __future__ import annotations
@@ -27,6 +31,7 @@ from src.utils.helpers import get_logger, save_json
 
 AUDIO_EXTENSIONS = {".wav", ".mp3", ".flac", ".ogg", ".m4a"}
 INDEX_COLUMNS = ["path", "label", "recording_id", "segment"]
+MFCC_FILE = "mfcc_stats.npy"
 
 logger = get_logger("preprocess")
 
@@ -46,6 +51,8 @@ class AudioConfig:
     top_db: float = 80.0
     reduce_noise: bool = False  # reducción espectral de ruido con `noisereduce`
     min_rms_db: float | None = None  # descarta ventanas casi silenciosas si se define
+    max_seconds: float | None = None  # usa solo el inicio de cada grabación si se define
+    n_mfcc: int = 20  # coeficientes MFCC para las características de los modelos clásicos
 
     @property
     def segment_samples(self) -> int:
@@ -141,19 +148,62 @@ def rms_db(segment: np.ndarray) -> float:
     return float(20.0 * np.log10(rms + 1e-12))
 
 
-def audio_to_features(signal: np.ndarray, cfg: AudioConfig | None = None) -> np.ndarray:
-    """Convierte una señal completa en ``(n_ventanas, n_mels, n_frames)``."""
+def mfcc_statistics(mel_db: np.ndarray, n_mfcc: int = 20) -> np.ndarray:
+    """Resume una ventana en un vector de ``4 * n_mfcc`` valores.
+
+    A partir del espectrograma Mel en dB calcula los MFCC y sus deltas, y
+    retorna la media y la desviación estándar en el tiempo de cada coeficiente:
+    ``[media MFCC, desviación MFCC, media delta, desviación delta]``.
+    """
+    import librosa
+
+    mfcc = librosa.feature.mfcc(S=mel_db, n_mfcc=n_mfcc)
+    delta = librosa.feature.delta(mfcc)
+    return np.concatenate(
+        [mfcc.mean(axis=1), mfcc.std(axis=1), delta.mean(axis=1), delta.std(axis=1)]
+    ).astype(np.float32)
+
+
+def mfcc_feature_names(n_mfcc: int = 20) -> list[str]:
+    """Nombres de las columnas de ``mfcc_statistics``."""
+    return [
+        f"{group}_{stat}_{i:02d}"
+        for group, stat in [("mfcc", "media"), ("mfcc", "desv"), ("delta", "media"), ("delta", "desv")]
+        for i in range(n_mfcc)
+    ]
+
+
+def audio_to_window_features(
+    signal: np.ndarray, cfg: AudioConfig | None = None
+) -> tuple[np.ndarray, np.ndarray]:
+    """Convierte una señal en espectrogramas estandarizados y estadísticas de MFCC.
+
+    Retorna ``(espectrogramas, mfcc)`` de formas ``(n_ventanas, n_mels, n_frames)``
+    y ``(n_ventanas, 4 * n_mfcc)``.
+    """
     cfg = cfg or AudioConfig()
+    if cfg.max_seconds is not None:
+        signal = signal[: int(round(cfg.max_seconds * cfg.sample_rate))]
     if cfg.reduce_noise:
         signal = reduce_noise(signal, cfg.sample_rate)
-    features = [
-        standardize(mel_spectrogram(segment, cfg))
-        for segment in segment_signal(signal, cfg.segment_samples, cfg.hop_samples)
-        if cfg.min_rms_db is None or rms_db(segment) >= cfg.min_rms_db
-    ]
-    if not features:
-        return np.empty((0, cfg.n_mels, cfg.n_frames), dtype=np.float32)
-    return np.stack(features)
+    spectrograms, statistics = [], []
+    for segment in segment_signal(signal, cfg.segment_samples, cfg.hop_samples):
+        if cfg.min_rms_db is not None and rms_db(segment) < cfg.min_rms_db:
+            continue
+        mel_db = mel_spectrogram(segment, cfg)
+        spectrograms.append(standardize(mel_db))
+        statistics.append(mfcc_statistics(mel_db, cfg.n_mfcc))
+    if not spectrograms:
+        return (
+            np.empty((0, cfg.n_mels, cfg.n_frames), dtype=np.float32),
+            np.empty((0, 4 * cfg.n_mfcc), dtype=np.float32),
+        )
+    return np.stack(spectrograms), np.stack(statistics)
+
+
+def audio_to_features(signal: np.ndarray, cfg: AudioConfig | None = None) -> np.ndarray:
+    """Convierte una señal completa en ``(n_ventanas, n_mels, n_frames)``."""
+    return audio_to_window_features(signal, cfg)[0]
 
 
 def list_audio_files(raw_dir: str | Path) -> list[Path]:
@@ -168,22 +218,30 @@ def preprocess_directory(
     output_dir: str | Path,
     cfg: AudioConfig | None = None,
     index_name: str = "index.csv",
+    manifest_csv: str | Path | None = None,
 ) -> pd.DataFrame:
     """Procesa todas las grabaciones de ``raw_dir`` y guarda cada ventana como ``.npy``.
 
     Retorna (y guarda en ``output_dir/index_name``) el índice de ventanas.
     También guarda ``audio_config.json`` para reutilizar los mismos parámetros
-    en la inferencia.
+    en la inferencia y ``mfcc_stats.npy`` con las características de los
+    modelos clásicos. Si se indica ``manifest_csv`` (salida de la depuración),
+    solo procesa los archivos marcados con ``conservar``.
     """
     from tqdm import tqdm
 
     cfg = cfg or AudioConfig()
     raw_dir, output_dir = Path(raw_dir), Path(output_dir)
     files = list_audio_files(raw_dir)
+    if manifest_csv is not None:
+        manifest = pd.read_csv(manifest_csv)
+        kept = set(manifest.loc[manifest["conservar"].astype(bool), "path"])
+        files = [path for path in files if path.relative_to(raw_dir).as_posix() in kept]
     if not files:
         raise FileNotFoundError(f"No se encontraron audios en {raw_dir}")
 
     rows: list[dict] = []
+    statistics: list[np.ndarray] = []
     for audio_path in tqdm(files, desc="Preprocesando", unit="audio"):
         label = audio_path.parent.name
         recording_id = audio_path.relative_to(raw_dir).with_suffix("").as_posix()
@@ -193,11 +251,12 @@ def preprocess_directory(
             logger.warning("No se pudo leer %s: %s", audio_path, exc)
             continue
 
-        features = audio_to_features(signal, cfg)
+        features, window_statistics = audio_to_window_features(signal, cfg)
         (output_dir / label).mkdir(parents=True, exist_ok=True)
         for i, spectrogram in enumerate(features):
             relative = Path(label) / f"{audio_path.stem}_{i:03d}.npy"
             np.save(output_dir / relative, spectrogram)
+            statistics.append(window_statistics[i])
             rows.append(
                 {
                     "path": relative.as_posix(),
@@ -209,6 +268,10 @@ def preprocess_directory(
 
     index = pd.DataFrame(rows, columns=INDEX_COLUMNS)
     index.to_csv(output_dir / index_name, index=False)
+    np.save(
+        output_dir / MFCC_FILE,
+        np.stack(statistics) if statistics else np.empty((0, 4 * cfg.n_mfcc), dtype=np.float32),
+    )
     save_json(cfg.to_dict(), output_dir / "audio_config.json")
     logger.info(
         "%d ventanas de %d grabaciones (%d especies) guardadas en %s",

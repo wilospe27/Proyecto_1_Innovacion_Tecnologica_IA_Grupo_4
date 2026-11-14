@@ -121,7 +121,12 @@ def load_checkpoint(path: str | Path, device: str = "cpu") -> tuple[nn.Module, d
 
     checkpoint = torch.load(path, map_location=device, weights_only=True)
     name = checkpoint["model_name"]
-    extra = {"pretrained": False} if name == "efficientnet_b0" else {}
+    if name == "efficientnet_b0":
+        extra = {"pretrained": False}
+    elif name == "cnn_baseline":
+        extra = {"base_channels": (checkpoint.get("train_config") or {}).get("base_channels", 32)}
+    else:
+        extra = {}
     model = build_model(name, n_classes=len(checkpoint["labels"]), **extra)
     model.load_state_dict(checkpoint["model_state"])
     return model.to(device).eval(), checkpoint
@@ -134,8 +139,13 @@ def evaluate_checkpoint(
     split: str = "test",
     batch_size: int = 64,
     output_dir: str | Path | None = None,
+    split_column: str | None = None,
 ) -> dict[str, float]:
-    """Evalúa un checkpoint sobre una partición y guarda métricas, reporte y matriz."""
+    """Evalúa un checkpoint sobre una partición y guarda métricas, reporte y matriz.
+
+    ``split_column`` indica la columna de partición del índice; por defecto usa
+    la misma con la que se entrenó el checkpoint.
+    """
     from torch.utils.data import DataLoader
 
     from src.data.dataset import SpectrogramDataset
@@ -147,8 +157,9 @@ def evaluate_checkpoint(
 
     processed_dir = Path(processed_dir)
     index = pd.read_csv(processed_dir / index_file)
-    if "split" in index.columns:
-        index = index[index["split"] == split]
+    split_column = split_column or (ckpt.get("train_config") or {}).get("split_column", "split")
+    if split_column in index.columns:
+        index = index[index[split_column] == split]
     index = index[index["label"].isin(labels)]
     if index.empty:
         raise ValueError(f"No hay ventanas para evaluar en la partición '{split}'")

@@ -1,0 +1,19 @@
+,precision,recall,f1-score,support
+Cyphorhinus_thoracicus,0.08281053952321205,1.0,0.15295480880648898,132.0
+Henicorhina_leucophrys,0.0,0.0,0.0,102.0
+Henicorhina_leucosticta,0.0,0.0,0.0,116.0
+Myadestes_ralloides,0.0,0.0,0.0,111.0
+Odontophorus_hyperythrus,0.0,0.0,0.0,84.0
+Ortalis_columbiana,0.0,0.0,0.0,124.0
+Pheugopedius_mystacalis,0.0,0.0,0.0,107.0
+Rupornis_magnirostris,0.0,0.0,0.0,119.0
+Scytalopus_alvarezlopezi,0.0,0.0,0.0,98.0
+Scytalopus_vicinior,0.0,0.0,0.0,106.0
+Synallaxis_albescens,0.0,0.0,0.0,103.0
+Synallaxis_azarae,0.0,0.0,0.0,99.0
+Thamnophilus_multistriatus,0.0,0.0,0.0,99.0
+Troglodytes_aedon,0.0,0.0,0.0,94.0
+Zonotrichia_capensis,0.0,0.0,0.0,100.0
+accuracy,0.08281053952321205,0.08281053952321205,0.08281053952321205,0.08281053952321205
+macro avg,0.005520702634880803,0.06666666666666667,0.010196987253765933,1594.0
+weighted avg,0.006857585456125465,0.08281053952321205,0.012666270239935096,1594.0

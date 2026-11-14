@@ -1,6 +1,6 @@
-# 🧭 Guía de la Etapa 2 · Datos y selección de especies
+# 🧭 Guía de la Etapa 2 · De los datos a los modelos de referencia
 
-Este es nuestro paso a paso para las tareas **2.1** (clave de API y selección de especies, 12–17 oct) y **2.2** (descarga, 16–20 oct) del cronograma.
+Este es nuestro paso a paso para reproducir la Entrega 2: selección de especies (tarea 2.1), descarga (2.2), depuración (2.3), análisis exploratorio (2.4), preprocesamiento (2.5) y modelos de referencia (2.7).
 
 > Estos comandos los ejecutamos en nuestros computadores o en Google Colab: la descarga necesita la clave personal de xeno-canto y conexión directa a xeno-canto.org.
 
@@ -71,7 +71,7 @@ python -m src.main download --lista data/especies_objetivo.txt --max-per-species
 ```
 
 - Descarga grabaciones de **toda Colombia** para las especies elegidas: más datos y más variación regional. Prioriza calidad A, luego B.
-- Hace una solicitud por segundo para respetar el servidor: unas 1.500 grabaciones pueden tardar más de media hora y ocupar varios GB.
+- Hace una pausa de un segundo entre descargas para respetar el servidor: nuestras 870 grabaciones tardaron 27 minutos y ocupan 2,1 GB.
 - Resultado: `data/raw/<Genero_especie>/XC<id>.mp3` y `data/metadata/xeno_canto.csv` (con licencia y autor de cada archivo).
 
 ## Paso 6 · Compartir los datos en el equipo
@@ -80,6 +80,55 @@ Los audios no van a GitHub. Tenemos dos opciones:
 
 - **Carpeta compartida** (Google Drive u OneDrive) con `data/raw/` comprimido.
 - **Repetir la descarga** con la misma lista: cada integrante obtiene los mismos archivos, salvo grabaciones publicadas después.
+
+## Paso 7 · Depurar (tarea 2.3)
+
+```bash
+python -m src.main depurar
+```
+
+Revisa cada archivo (ilegible, duplicado, menor de 1 s u otra especie objetivo al fondo) y **no borra nada**: escribe el manifiesto `data/metadata/depuracion.csv` con la decisión y el motivo, y el resumen por especie `experiments/results/depuracion_resumen.csv`, que sí versionamos.
+
+## Paso 8 · Preprocesar (tarea 2.5)
+
+```bash
+python -m src.main preprocess --manifest data/metadata/depuracion.csv --max-seconds 60
+```
+
+Procesa solo los archivos conservados y usa los primeros 60 s de cada grabación. Genera en `data/processed/` un espectrograma `.npy` por ventana, `index.csv`, `mfcc_stats.npy` (características de los modelos clásicos) y `audio_config.json`. Con 822 grabaciones tarda unos 7 minutos y ocupa cerca de 3 GB.
+
+## Paso 9 · Análisis exploratorio (tarea 2.4)
+
+```bash
+python -m src.main eda
+```
+
+Escribe las tablas `experiments/results/eda_*.csv` y las figuras `docs/figuras/eda_*.png` que usa el reporte.
+
+## Paso 10 · Modelos de referencia (tarea 2.7)
+
+```bash
+# Clásicos sobre MFCC: crean y guardan la partición por grabación (y la de ventana, para H3)
+python -m src.main baselines
+python -m src.main baselines --split-column split_ventana
+
+# CNN base, versión liviana para CPU (unas 4 horas las tres corridas en paralelo, sin GPU)
+python -m src.main train --base-channels 16 --epochs 12 --patience 4 --run-name cnn_base
+python -m src.main train --base-channels 16 --epochs 12 --patience 4 --run-name cnn_sin_aug --no-augment
+python -m src.main train --base-channels 16 --epochs 12 --patience 4 --run-name cnn_split_ventana --split-column split_ventana
+
+python -m src.main evaluate --checkpoint experiments/checkpoints/cnn_base.pt
+python -m src.main evaluate --checkpoint experiments/checkpoints/cnn_sin_aug.pt
+python -m src.main evaluate --checkpoint experiments/checkpoints/cnn_split_ventana.pt
+```
+
+## Paso 11 · Notebooks
+
+```bash
+python notebooks/_construir_notebooks.py
+```
+
+Genera y ejecuta `02_eda.ipynb` y `03_modelos_referencia.ipynb` con los resultados anteriores.
 
 ## Alternativa: Google Colab
 

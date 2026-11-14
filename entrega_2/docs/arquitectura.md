@@ -1,6 +1,6 @@
 # 🏗️ Arquitectura y diseño del modelo
 
-Este es el diseño técnico de nuestro sistema, versión de la Entrega 2 (en construcción). Partimos del diseño de la Entrega 1 y lo ajustaremos con los resultados del análisis exploratorio y de los modelos de referencia.
+Este es el diseño técnico de nuestro sistema, versión de la Entrega 2. Partimos del diseño de la Entrega 1 y lo ajustamos con los resultados del análisis exploratorio y de los modelos de referencia (ver [`reporte_entrega_2.md`](reporte_entrega_2.md)).
 
 ## 1. Flujo de extremo a extremo
 
@@ -26,7 +26,10 @@ flowchart LR
 |---|---|---|
 | Ranking de especies de la región | `src/data/download.py` | `python -m src.main especies --region valle_del_cauca` |
 | Descarga | `src/data/download.py` | `python -m src.main download --lista data/especies_objetivo.txt` |
-| Preprocesamiento | `src/data/preprocess.py` | `python -m src.main preprocess` |
+| Depuración | `src/data/clean.py` | `python -m src.main depurar` |
+| Preprocesamiento | `src/data/preprocess.py` | `python -m src.main preprocess --manifest data/metadata/depuracion.csv --max-seconds 60` |
+| Análisis exploratorio | `src/analysis/eda.py` | `python -m src.main eda` |
+| Modelos clásicos | `src/models/classical.py` | `python -m src.main baselines` |
 | Dataset y particiones | `src/data/dataset.py` | (lo usa el entrenamiento) |
 | Modelos | `src/models/cnn_baseline.py` | — |
 | Entrenamiento | `src/training/train.py` | `python -m src.main train` |
@@ -39,13 +42,19 @@ flowchart LR
 ```
 data/raw/<Genero_especie>/<id>.mp3          # la carpeta define la etiqueta
 data/processed/<Genero_especie>/<id>_000.npy  # una ventana = un espectrograma
-data/processed/index.csv                      # path, label, recording_id, segment[, split]
+data/processed/index.csv                      # path, label, recording_id, segment, split, split_ventana
+data/processed/mfcc_stats.npy                 # 80 estadísticas de MFCC por ventana (mismo orden del índice)
 data/processed/audio_config.json              # parámetros usados (se reutilizan en la inferencia)
+data/metadata/depuracion.csv                  # manifiesto: qué archivos conservamos y por qué descartamos el resto
 ```
+
+- **Depuración:** descartamos archivos ilegibles, duplicados, menores de 1 s o con otra especie objetivo al fondo. No borramos archivos: el preprocesamiento lee el manifiesto.
+- **Tope por grabación:** usamos los primeros 60 s de cada grabación para que las grabaciones largas no dominen su especie.
 
 - **Etiqueta:** nombre de la carpeta de la especie (`Turdus_fuscater`).
 - **`recording_id`:** identifica la grabación de origen de cada ventana; la usamos para agrupar en la partición.
-- **`split`:** lo agrega el entrenamiento la primera vez (`train` / `val` / `test`) y queda guardado para que todas las corridas comparen sobre la misma partición.
+- **`split`:** partición por grabación (`train` / `val` / `test`). La crea el primer comando que la necesita (`baselines` o `train`) y queda guardada para que todos los modelos comparen sobre la misma partición.
+- **`split_ventana`:** partición al azar por ventana. Solo la usamos para medir la fuga de información (hipótesis H3); nunca para reportar desempeño.
 
 ## 3. Preprocesamiento
 
@@ -77,6 +86,12 @@ Forma de cada ventana: **128 × 501** (bandas Mel × cuadros de tiempo).
 | Dropout 0,3 + capa lineal | N especies |
 
 ≈ 1,2 millones de parámetros con 20 especies. El *pooling* global permite procesar ventanas de distinta duración.
+
+**Versión liviana (`--base-channels 16`).** Con 16, 32, 64 y 128 canales tiene 295.647 parámetros (15 especies) y entrena unas 2,5 veces más rápido en CPU. Es la que usamos en las pruebas iniciales de la Entrega 2, porque entrenamos sin GPU.
+
+### 4.0 Modelos clásicos de referencia (`src/models/classical.py`)
+
+Clase mayoritaria, regresión logística, SVM (RBF), bosque aleatorio y potenciación de gradiente sobre 80 estadísticas de MFCC por ventana (media y desviación estándar en el tiempo de 20 MFCC y de sus deltas). Usan la misma partición y las mismas métricas que la CNN.
 
 ### 4.2 Transferencia de aprendizaje (`efficientnet_b0`)
 
@@ -112,9 +127,15 @@ Salidas de cada corrida (en `experiments/`): `checkpoints/<corrida>.pt`, `logs/<
 2. Lo dividimos en ventanas de 5 s y calculamos la probabilidad de cada especie por ventana.
 3. Promediamos las probabilidades y devolvemos las N especies más probables.
 
-## 8. Decisiones pendientes (Entrega 2)
+## 8. Decisiones tomadas en la Entrega 2
 
-- Lista final de especies y región priorizada.
+- **Especies:** 15 especies objetivo con datos de toda Colombia; el Valle del Cauca solo confirma la presencia regional.
+- **Datos:** calidades A y B, máximo 60 grabaciones por especie, tope de 60 s por grabación y descarte de grabaciones con otra especie objetivo al fondo.
+- **Evaluación:** partición por grabación como única forma válida de reportar desempeño.
+
+## 9. Decisiones pendientes (Entrega 3)
+
+- Filtro pasa-altos o frecuencia mínima mayor del espectrograma: el análisis exploratorio mostró ruido de baja frecuencia asociado a algunas especies.
 - Efecto de la reducción de ruido y del descarte de ventanas silenciosas.
 - Agregación por grabación: promedio frente a máximo de probabilidades.
 - Modelo bioacústico para los *embeddings* (BirdNET o Perch 2.0) según licencia y facilidad de uso.
