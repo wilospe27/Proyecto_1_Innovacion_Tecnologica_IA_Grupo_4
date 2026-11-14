@@ -20,6 +20,7 @@ python -m src.main <comando> [opciones]
 | `baselines` | Evalúa los modelos clásicos (clase mayoritaria, regresión logística, SVM, bosque aleatorio y potenciación de gradiente) sobre estadísticas de MFCC | `--processed-dir`, `--split-column` (`split` \| `split_ventana`), `--seed` |
 | `train` | Entrena un modelo y guarda el mejor checkpoint | `--model` (`cnn_baseline` \| `efficientnet_b0`), `--epochs` (30), `--batch-size` (32), `--lr` (0.001), `--patience` (5), `--no-augment`, `--no-class-weights`, `--no-pretrained`, `--split-column`, `--threads`, `--seed`, `--run-name` |
 | `evaluate` | Calcula métricas, reporte por especie y matriz de confusión | `--checkpoint` (obligatoria), `--split` (`train` \| `val` \| `test`), `--split-column`, `--processed-dir`, `--batch-size` |
+| `intervalos` | F1 macro por ventana y por grabación, con intervalo de confianza por *bootstrap* | `--checkpoint` (obligatoria), `--split`, `--n-boot`, `--umbral`, `--seed` |
 | `predict` | Retorna las especies más probables para un audio | `--audio` y `--checkpoint` (obligatorias), `--top-k` (5) |
 
 ### Flujo de la Etapa 2
@@ -56,7 +57,8 @@ El paso a paso está en [`guia_etapa_2.md`](guia_etapa_2.md).
 | `src.models.classical` | `build_classical_models`, `evaluate_classical`, `run_baselines` | Modelos clásicos de referencia sobre estadísticas de MFCC |
 | `src.models.cnn_baseline` | `build_model(name, n_classes, **kwargs)` | Fábrica de modelos (`cnn_baseline`, `efficientnet_b0`) |
 | `src.training.train` | `TrainConfig`, `train(cfg)` | Configuración y bucle de entrenamiento |
-| `src.evaluation.evaluate` | `compute_metrics`, `top_k_accuracy`, `evaluate_checkpoint` | Métricas y evaluación de un checkpoint |
+| `src.evaluation.evaluate` | `compute_metrics`, `top_k_accuracy`, `predict_split`, `evaluate_checkpoint` | Métricas y evaluación de un checkpoint |
+| `src.evaluation.uncertainty` | `aggregate_by_recording`, `bootstrap_f1_macro`, `evaluate_with_intervals` | F1 por grabación e intervalos de confianza |
 | `src.inference.predict` | `predict_file(audio_path, checkpoint, top_k)` | Predicción para un archivo de audio |
 
 ## Clave de la API

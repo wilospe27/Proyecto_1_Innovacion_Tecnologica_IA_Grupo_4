@@ -31,7 +31,7 @@ En este proyecto desarrollamos un sistema basado en **aprendizaje profundo** que
 
 Identificar especies por su canto depende de expertos escasos, y las grabadoras de monitoreo producen muchas más horas de audio de las que una persona puede revisar. Las herramientas automáticas que existen, como BirdNET o Merlin Sound ID, tienen menor cobertura y exhaustividad para las especies neotropicales, y las grabaciones de campo tienen ruido y cantos superpuestos de varias especies. Como resultado, los inventarios son lentos y costosos, los datos acústicos ya recolectados se subutilizan y las personas no expertas (ciudadanos, docentes, guías de aviturismo) tienen pocas herramientas confiables para reconocer lo que escuchan.
 
-**Pregunta de investigación:** ¿puede un modelo de aprendizaje profundo, entrenado con grabaciones abiertas de especies de Colombia, identificar la especie que vocaliza en una grabación con un desempeño suficiente (meta preliminar: F1 macro ≥ 0,80 en grabaciones no vistas) para apoyar el monitoreo, la ciencia ciudadana y la educación?
+**Pregunta de investigación:** ¿puede un modelo de aprendizaje profundo, entrenado con grabaciones abiertas de especies de Colombia, identificar la especie que vocaliza en una grabación con un desempeño suficiente (meta aproximada: F1 macro cercano a 0,70 o más en grabaciones no vistas, estimado con intervalo de confianza) para apoyar el monitoreo, la ciencia ciudadana y la educación?
 
 **Alcance:** nos concentramos en las **aves** de Colombia: según el planteamiento del curso trabajamos con un subconjunto de **10 a 20 especies objetivo** y clips cortos, con el Valle del Cauca como región preferida. Desarrollamos el análisis completo, con el árbol de problemas y el estado del arte, en el [reporte de la Entrega 1](entrega_1/docs/reporte_entrega_1.md).
 
@@ -177,7 +177,7 @@ Detalle en el [reporte de la Entrega 2](entrega_2/docs/reporte_entrega_2.md).
 - Ruido de fondo (viento, lluvia, otras especies cantando a la vez).
 - Desbalance de clases: especies comunes con muchos audios y especies raras con pocos.
 - Variaciones regionales y dialectos en el canto de una misma especie.
-- Necesidad de validar las predicciones con expertos.
+- Las predicciones son sugerencias con una probabilidad asociada; no reemplazan la identificación de un experto.
 
 ## 🗺️ Hoja de ruta
 

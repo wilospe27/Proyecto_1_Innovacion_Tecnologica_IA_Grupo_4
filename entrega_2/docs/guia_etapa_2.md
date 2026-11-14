@@ -120,6 +120,9 @@ python -m src.main train --base-channels 16 --epochs 12 --patience 4 --run-name 
 python -m src.main evaluate --checkpoint experiments/checkpoints/cnn_base.pt
 python -m src.main evaluate --checkpoint experiments/checkpoints/cnn_sin_aug.pt
 python -m src.main evaluate --checkpoint experiments/checkpoints/cnn_split_ventana.pt
+
+# F1 macro por ventana y por grabación, con intervalo de confianza (bootstrap)
+python -m src.main intervalos --checkpoint experiments/checkpoints/cnn_base.pt
 ```
 
 ## Paso 11 · Notebooks

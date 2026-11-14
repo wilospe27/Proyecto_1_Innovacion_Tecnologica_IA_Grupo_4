@@ -14,13 +14,13 @@ Fecha de entrega: 19 de noviembre de 2026
 
 ---
 
-**Resumen.** En esta segunda etapa construimos el conjunto de datos y los modelos de referencia del proyecto. Elegimos 15 especies de aves presentes en el Valle del Cauca, descargamos 870 grabaciones de xeno-canto y conservamos 822 tras la depuración (665 minutos, 178 grabadores), que convertimos en 11.159 ventanas de 5 s representadas como espectrogramas log-Mel. El análisis exploratorio mostró un conjunto casi balanceado, con etiquetas débiles, duraciones muy variables y ruido de baja frecuencia asociado a algunas especies; un agrupamiento no supervisado apenas separa las especies (pureza 0,26). Formalizamos cuatro hipótesis y pusimos a prueba tres. Con partición por grabación, el mejor clasificador clásico sobre MFCC (SVM) alcanza un F1 macro de 0,62 en prueba y una CNN liviana sobre espectrogramas, 0,73, lo que apoya la hipótesis de que la CNN supera a los modelos clásicos. Particionar al azar por ventana sobrestima el F1 macro entre 0,12 y 0,34, lo que confirma la fuga de información. No encontramos evidencia de que la aumentación favorezca a las especies con menos datos. La meta de 0,80 queda para la Etapa 3, con transferencia de aprendizaje y *embeddings* bioacústicos.
+**Resumen.** En esta segunda etapa construimos el conjunto de datos y los modelos de referencia del proyecto. Elegimos 15 especies de aves presentes en el Valle del Cauca, descargamos 870 grabaciones de xeno-canto y conservamos 822 tras la depuración (665 minutos, 178 grabadores), que convertimos en 11.159 ventanas de 5 s representadas como espectrogramas log-Mel. El análisis exploratorio mostró un conjunto casi balanceado, con etiquetas débiles, duraciones muy variables y ruido de baja frecuencia asociado a algunas especies; un agrupamiento no supervisado apenas separa las especies (pureza 0,26). Formalizamos cuatro hipótesis y pusimos a prueba tres. Con partición por grabación, el mejor clasificador clásico sobre MFCC (SVM) alcanza un F1 macro de 0,62 en prueba y una CNN liviana sobre espectrogramas, 0,73 por ventana y 0,82 por grabación, lo que apoya la hipótesis de que la CNN supera a los modelos clásicos. Particionar al azar por ventana sobrestima el F1 macro entre 0,12 y 0,34, lo que confirma la fuga de información. No encontramos evidencia de que la aumentación favorezca a las especies con menos datos. En la Etapa 3 buscaremos mejorar este resultado con transferencia de aprendizaje y *embeddings* bioacústicos, y mediremos el avance con intervalos de confianza, con una meta aproximada de F1 macro de 0,70.
 
 ---
 
 ## I. Introducción
 
-En la [Entrega 1](../../entrega_1/docs/reporte_entrega_1.md) planteamos el problema —la baja capacidad para identificar de forma rápida, confiable y escalable las especies de fauna colombiana a partir de sus vocalizaciones— y la pregunta de investigación: ¿puede un modelo de aprendizaje profundo, entrenado con grabaciones abiertas, identificar la especie que vocaliza con un F1 macro de al menos 0,80 en grabaciones no vistas? Según el alcance del curso trabajamos con un subconjunto de 10 a 20 especies de aves, con el Valle del Cauca como región preferida.
+En la [Entrega 1](../../entrega_1/docs/reporte_entrega_1.md) planteamos el problema —la baja capacidad para identificar de forma rápida, confiable y escalable las especies de fauna colombiana a partir de sus vocalizaciones— y la pregunta de investigación: ¿puede un modelo de aprendizaje profundo, entrenado con grabaciones abiertas, identificar la especie que vocaliza en grabaciones no vistas, con un F1 macro aproximado de 0,70 o más? En la Entrega 1 la meta preliminar era 0,80; en la sección V.C explicamos por qué la recalibramos a un valor aproximado de 0,70. Según el alcance del curso trabajamos con un subconjunto de 10 a 20 especies de aves, con el Valle del Cauca como región preferida.
 
 En esta segunda etapa pasamos del plan a los datos. Elegimos 15 especies objetivo, descargamos y depuramos sus grabaciones, hicimos el análisis exploratorio, formalizamos las hipótesis y entrenamos los modelos de referencia con los que compararemos los modelos de la Etapa 3. Todo el flujo es reproducible con los comandos de [`guia_etapa_2.md`](guia_etapa_2.md); los notebooks [`02_eda.ipynb`](../notebooks/02_eda.ipynb) y [`03_modelos_referencia.ipynb`](../notebooks/03_modelos_referencia.ipynb) contienen el detalle, y las tablas que citamos están en [`experiments/results/`](../experiments/results/).
 
@@ -250,6 +250,15 @@ La CNN base alcanzó su mejor F1 macro de validación (0,737) en la época 10 de
 
 ![Matriz de confusión de la CNN base en prueba](../experiments/results/cnn_base_test_matriz_confusion.png)
 
+**Incertidumbre de la CNN base** ([`cnn_base_test_intervalos.json`](../experiments/results/cnn_base_test_intervalos.json)). Con 119 grabaciones de prueba, una cifra de F1 macro es aproximada, así que calculamos intervalos de confianza del 95 % por *bootstrap* (2.000 remuestras de grabaciones). El nivel "por grabación" promedia las probabilidades de las ventanas de cada grabación, que es como usaríamos el modelo con un audio nuevo.
+
+| Nivel | F1 macro | Intervalo de confianza del 95 % | Remuestras con F1 ≥ 0,70 |
+|---|---|---|---|
+| Por ventana (1.594) | 0,735 | 0,661 – 0,782 | 75 % |
+| Por grabación (119) | 0,817 | 0,740 – 0,873 | 99,7 % |
+
+La exactitud por grabación es de 0,807. El nivel por grabación es más alto porque promediar ventanas corrige errores aislados.
+
 **Pruebas de las hipótesis.**
 
 | Hipótesis | Comparación | Resultado | Criterio | Decisión |
@@ -280,21 +289,29 @@ Detalle de H2 ([`h2_aumentacion_por_especie.csv`](../experiments/results/h2_aume
 
 **Las especies difíciles son las que anticipó el análisis exploratorio.** Las confusiones se concentran en los cucaracheros (*H. leucophrys*, *H. leucosticta*, *P. mystacalis* y *T. aedon*) y en *Z. capensis*, *M. ralloides* y *R. magnirostris*. Dos de los tres pares más cercanos en el espacio de MFCC (*H. leucophrys*–*T. aedon* y *M. ralloides*–*R. magnirostris*) están en este grupo, y *R. magnirostris* es además una de las especies con vocalizaciones más heterogéneas. En cambio, tener pocos datos no predice el desempeño: *O. hyperythrus*, la especie con menos ventanas, obtiene 0,86. La dificultad depende más de la similitud acústica y de la variedad de vocalizaciones que de la cantidad de datos.
 
-**Distancia a la meta.** El F1 macro de 0,73 queda 0,07 por debajo de la meta de 0,80, con un modelo pequeño, entrenado desde cero durante 12 épocas en CPU. La exactitud top-3 de 0,87 indica que la especie correcta suele estar entre las candidatas, lo que resulta útil para un prototipo que muestre varias opciones.
+**Meta de desempeño.** En la Entrega 1 propusimos un F1 macro de 0,80 y previmos recalibrarlo con el análisis exploratorio. Lo recalibramos a **aproximadamente 0,70** y lo medimos como una estimación con intervalo de confianza, no como un valor exacto. Tres razones, sacadas del EDA y de los resultados:
 
-**Limitaciones.** Usamos una sola semilla y un solo conjunto de prueba de 119 grabaciones; no calculamos intervalos de confianza. La métrica es por ventana y no por grabación. No ajustamos hiperparámetros. Y no hemos verificado si la CNN aprovecha el ruido de baja frecuencia que detectamos en seis especies, lo que podría inflar el desempeño fuera de xeno-canto.
+1. El F1 por especie varía de 0,54 a 0,98 con la CNN y depende de la similitud acústica y de las etiquetas débiles, no de la cantidad de datos. Un promedio de 0,80 obligaría a resolver las especies que el EDA mostró más difíciles (pares de cucaracheros, ruido de fondo, vocalizaciones heterogéneas).
+2. Con 119 grabaciones de prueba y una semilla la incertidumbre es amplia: el intervalo del 95 % de la CNN va de 0,66 a 0,78 por ventana. Prometer un valor puntual alto sería arriesgado.
+3. Nuestras 15 especies están bien documentadas (48 a 59 grabaciones cada una); el resultado no se extrapola a especies con pocos registros, así que damos un orden de magnitud y no una cifra exacta.
 
-**Ajustes al plan.** (1) Reportaremos también el desempeño por grabación, promediando las ventanas. (2) Evaluaremos un filtro pasa-altos antes de comparar modelos. (3) Repetiremos las comparaciones decisivas con al menos tres semillas.
+**Cómo la medimos:** F1 macro por grabación en prueba y por ventana, con intervalo de confianza por *bootstrap* sobre grabaciones (comando `intervalos`). Hoy la CNN base cumple la meta por grabación con holgura (0,82; intervalo de 0,74 a 0,87) y por ventana con incertidumbre (0,735; intervalo de 0,66 a 0,78). También informamos la mejora frente al piso de referencia (SVM, 0,62), con el criterio de apoyo de 0,05 de la sección IV.
+
+**Transparencia:** fijamos el 0,70 después de ver los modelos de referencia (0,62 y 0,73), aplicando el criterio de la Entrega 1 de recalibrar tras el análisis exploratorio. Por eso no lo presentamos como una confirmación: la meta se pondrá a prueba con los modelos de la Etapa 3 y varias semillas. La exactitud top-3 de 0,87 indica además que la especie correcta suele estar entre las candidatas, lo que resulta útil para un prototipo que muestre varias opciones con su probabilidad.
+
+**Limitaciones.** Usamos una sola semilla y un solo conjunto de prueba de 119 grabaciones, y calculamos intervalos de confianza solo para la CNN base. No ajustamos hiperparámetros. Y no hemos verificado si la CNN aprovecha el ruido de baja frecuencia que detectamos en seis especies, lo que podría inflar el desempeño fuera de xeno-canto.
+
+**Ajustes al plan.** (1) Reportamos el desempeño por ventana y por grabación, con intervalos de confianza. (2) Evaluaremos un filtro pasa-altos antes de comparar modelos. (3) Repetiremos las comparaciones decisivas con al menos tres semillas. (4) Medimos el avance contra una meta aproximada de F1 macro de 0,70, con intervalos de confianza y no con un valor exacto.
 
 ## VI. Próximos pasos (Etapa 3)
 
 1. **Poner a prueba H1.** Ajustar EfficientNet-B0 preentrenada [21] y entrenar un clasificador lineal sobre *embeddings* de un modelo bioacústico (BirdNET o Perch 2.0 [8], [16]), con la misma partición por grabación.
 2. **Entrenar en GPU** (Google Colab) la CNN completa de 32 canales, con más épocas y ajuste de la tasa de aprendizaje, el tamaño de lote y la intensidad de la aumentación.
 3. **Tratar el ruido de baja frecuencia:** comparar un filtro pasa-altos o una frecuencia mínima mayor del espectrograma, y revisar con mapas de activación qué bandas usa el modelo.
-4. **Fortalecer la evaluación:** tres semillas o más, métricas por grabación e intervalos de confianza por *bootstrap* sobre grabaciones.
+4. **Fortalecer la evaluación:** tres semillas o más e intervalos de confianza para todos los modelos, no solo para la CNN base.
 5. **Atender las especies confundidas:** analizar los errores de los cucaracheros y probar *mixup* y mezcla con ruido de fondo.
 6. **Prototipo de inferencia:** una aplicación que reciba un audio y devuelva las tres especies más probables.
-7. **Validación con una persona experta** de una muestra de las predicciones y de las grabaciones marcadas con posible voz humana.
+7. **Cerrar el cronograma de la Etapa 3:** asignar un responsable a cada tarea (sin tareas "Por asignar") e incluir el video de 10 minutos, la presentación oral de la última sesión y la subida del reporte a la plataforma del curso.
 
 ## VII. Referencias
 

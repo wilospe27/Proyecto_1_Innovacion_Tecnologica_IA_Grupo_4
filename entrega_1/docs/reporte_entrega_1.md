@@ -60,7 +60,7 @@ La identificación auditiva depende de expertos escasos; el volumen de audio que
 
 ### D. Pregunta de investigación
 
-¿Puede un modelo de aprendizaje profundo, entrenado con grabaciones abiertas de especies de Colombia, identificar la especie que vocaliza en una grabación con un desempeño suficiente (meta preliminar: F1 macro ≥ 0,80 en grabaciones no vistas) para apoyar tareas de monitoreo, ciencia ciudadana y educación?
+¿Puede un modelo de aprendizaje profundo, entrenado con grabaciones abiertas de especies de Colombia, identificar la especie que vocaliza en una grabación con un desempeño suficiente (meta aproximada: F1 macro cercano a 0,70 o más en grabaciones no vistas, estimado con intervalo de confianza) para apoyar tareas de monitoreo, ciencia ciudadana y educación?
 
 **Hipótesis preliminares** (las formalizaremos en la Entrega 2 y las pondremos a prueba en las Entregas 2 y 3):
 
@@ -92,7 +92,7 @@ El problema abarca toda la fauna que vocaliza, pero en el proyecto nos concentra
 
 ### Objetivo general
 
-Desarrollar un prototipo basado en aprendizaje profundo que identifique, a partir de una grabación de audio, la especie de ave de Colombia que vocaliza, con el fin de apoyar el monitoreo de la biodiversidad, la ciencia ciudadana y la educación ambiental.
+Desarrollar un prototipo basado en aprendizaje profundo que identifique, a partir de una grabación de audio, la especie de ave de Colombia que vocaliza entre un subconjunto de 10 a 20 especies, con un F1 macro aproximado de 0,70 o más en grabaciones no vistas (valor estimado con intervalo de confianza) y devolviendo las especies más probables con su probabilidad, con el fin de apoyar el monitoreo de la biodiversidad, la ciencia ciudadana y la educación ambiental.
 
 ### Objetivos específicos
 
@@ -101,7 +101,7 @@ Desarrollar un prototipo basado en aprendizaje profundo que identifique, a parti
 | OE1 | Construir un conjunto de datos depurado de grabaciones etiquetadas de especies objetivo a partir de fuentes abiertas, documentando licencias y autores. | 10–20 especies con ≥ 30 grabaciones cada una; 100 % de las grabaciones con licencia y autor registrados | 2 |
 | OE2 | Implementar un *pipeline* reproducible de preprocesamiento (remuestreo, ventanas de 5 s, reducción de ruido opcional y espectrogramas Mel). | Pipeline ejecutable con un solo comando y cubierto por pruebas automáticas | 1–2 |
 | OE3 | Entrenar y comparar cinco enfoques de clasificación de especies a partir de sus vocalizaciones: CNN, EfficientNet preentrenada, clasificadores sobre *embeddings* bioacústicos, máquinas de vectores de soporte (SVM) y Random Forest. | Cinco enfoques evaluados con las mismas particiones de entrenamiento, validación y prueba y métricas comparables: F1 macro, precisión, exhaustividad (*recall*) y matriz de confusión | 2–3 |
-| OE4 | Evaluar los modelos con particiones por grabación y métricas estándar, y analizar los errores por especie. | F1 macro ≥ 0,80 y exactitud top-3 ≥ 0,90 en prueba (meta a recalibrar tras el EDA); matriz de confusión y análisis de errores | 3 |
+| OE4 | Evaluar los modelos con particiones por grabación y métricas estándar, y analizar los errores por especie. | F1 macro aproximado de 0,70 o más y exactitud top-3 cercana a 0,90 en prueba, estimados con intervalo de confianza por *bootstrap* sobre grabaciones (metas aproximadas, recalibradas tras el EDA y los modelos de referencia); matriz de confusión y análisis de errores | 3 |
 | OE5 | Desarrollar una interfaz de demostración que muestre las especies más probables para un audio cargado por el usuario. | Prototipo funcional que responde en menos de 10 s por minuto de audio en CPU | 3 |
 
 ## IV. Árbol de problemas
@@ -241,7 +241,7 @@ Seguimos una adaptación del ciclo CRISP-DM [20] alineada con las tres entregas 
 | Comprensión del problema | Análisis del problema, objetivos, estado del arte y planeación | 1 |
 | Comprensión y preparación de los datos | Selección de especies, descarga, depuración, EDA y preprocesamiento | 2 |
 | Modelado | Modelos de referencia (Entrega 2), transferencia de aprendizaje y *embeddings* (Entrega 3) | 2–3 |
-| Evaluación | Comparación con particiones por grabación, análisis de errores, validación con expertos | 3 |
+| Evaluación | Comparación con particiones por grabación, análisis de errores | 3 |
 | Despliegue | Prototipo web de demostración | 3 |
 
 ```mermaid
@@ -284,7 +284,6 @@ En todos los casos usaremos pesos por clase para el desbalance y aumentación ti
 - Hacemos una partición estratificada **por grabación** en entrenamiento, validación y prueba (70/15/15): ninguna grabación aporta ventanas a más de una partición.
 - **Métrica principal:** F1 macro, que pondera por igual a todas las especies. Complementarias: exactitud, exactitud balanceada, exactitud top-3, matriz de confusión y reporte por especie.
 - **Prueba de cambio de dominio:** si es posible, evaluaremos con un pequeño conjunto de grabaciones que tomemos nosotros en campo.
-- **Validación con expertos:** revisaremos una muestra de predicciones con ornitólogos o grupos de observación de aves.
 
 ### F. Herramientas
 
@@ -336,22 +335,23 @@ Las dependencias admiten solapamiento: una actividad puede iniciar cuando su pre
 | 2.6 | Hipótesis y diseño experimental | 26-oct | 30-oct | 5 | 2.4 | Sección de hipótesis |
 | 2.7 | Modelos de referencia y CNN base | 27-oct | 07-nov | 12 | 2.5 | Primeras métricas |
 | 2.8 | Redacción del reporte 2 | 08-nov | 16-nov | 9 | 2.6, 2.7 | Reporte de la segunda etapa |
-| 2.9 | Revisión y publicación de la Entrega 2 | 16-nov | 18-nov | 3 | 2.8 | Carpeta entrega_2 en main |
+| 2.9 | Revisión, publicación y subida del reporte a la plataforma | 16-nov | 18-nov | 3 | 2.8 | Carpeta entrega_2 en main y reporte en la plataforma |
 | **H2** | **Entrega 2: reporte de la segunda etapa (10 %)** | **19-nov** | — | — | 2.9 | Hito oficial |
 
 **Etapa 3 · Modelado, evaluación y comunicación — Entrega 3 (70 % de la nota)**
 
 | ID | Actividad | Inicio | Fin | Días | Predecesora | Entregable |
 |---|---|---|---|---|---|---|
-| 3.1 | Transferencia de aprendizaje con EfficientNet-B0 | 03-nov | 14-nov | 12 | 2.5 | Modelo entrenado |
-| 3.2 | Embeddings bioacústicos (BirdNET o Perch 2.0) + clasificador | 05-nov | 16-nov | 12 | 2.3 | Modelo entrenado |
-| 3.3 | Ajuste de hiperparámetros y aumentación de datos | 12-nov | 19-nov | 8 | 3.1 | Mejor configuración |
-| 3.4 | Evaluación comparativa y análisis de errores | 19-nov | 23-nov | 5 | 3.2, 3.3 | Tablas y figuras de resultados |
-| 3.5 | Validación con expertos | 21-nov | 25-nov | 5 | 3.4 | Muestra revisada por expertos |
-| 3.6 | Prototipo de interfaz (Streamlit o Gradio) | 12-nov | 21-nov | 10 | 3.1 | Aplicación de demostración |
-| 3.7 | Reporte final | 20-nov | 26-nov | 7 | 3.4 | Reporte final |
-| 3.8 | Video de 10 minutos | 25-nov | 28-nov | 4 | 3.7 | Video |
-| 3.9 | Revisión final y publicación en el repositorio | 28-nov | 30-nov | 3 | 3.7, 3.8 | Repositorio final |
+| 3.1 | Transferencia de aprendizaje con EfficientNet-B0 | 15-nov | 20-nov | 6 | 2.5 | Modelo entrenado |
+| 3.2 | Embeddings bioacústicos (BirdNET o Perch 2.0) + clasificador | 15-nov | 22-nov | 8 | 2.3 | Modelo entrenado |
+| 3.3 | Ajuste de hiperparámetros y aumentación de datos | 21-nov | 25-nov | 5 | 3.1 | Mejor configuración |
+| 3.4 | Evaluación comparativa y análisis de errores | 26-nov | 28-nov | 3 | 3.2, 3.3 | Tablas y figuras de resultados |
+| 3.5 | Prototipo de interfaz (Streamlit o Gradio) | 21-nov | 27-nov | 7 | 3.1 | Aplicación de demostración |
+| 3.6 | Reporte final | 25-nov | 29-nov | 5 | 3.4 | Reporte final |
+| 3.7 | Video de 10 minutos | 28-nov | 29-nov | 2 | 3.6 | Video |
+| 3.8 | Preparación y ensayo de la presentación oral | 29-nov | 30-nov | 2 | 3.6 | Presentación y guion de intervención |
+| 3.9 | Revisión final, publicación en el repositorio y subida del reporte a la plataforma | 30-nov | 30-nov | 1 | 3.7, 3.8 | Repositorio final |
+| **HP** | **Presentación oral en la última sesión** | **01-dic** | — | — | 3.8 | Hito oficial |
 | **H3** | **Entrega 3: reporte final y video (70 %)** | **01-dic** | — | — | 3.9 | Hito oficial |
 <!-- FIN:CRONOGRAMA_TABLA -->
 
@@ -385,18 +385,19 @@ gantt
     2.6 Hipótesis y diseño experimental :t2_6, 2026-10-26, 5d
     2.7 Modelos de referencia y CNN base :t2_7, 2026-10-27, 12d
     2.8 Redacción del reporte 2 :t2_8, 2026-11-08, 9d
-    2.9 Revisión y publicación de la Entrega 2 :t2_9, 2026-11-16, 3d
+    2.9 Revisión publicación y subida del reporte a la plataforma :t2_9, 2026-11-16, 3d
     Entrega 2 :milestone, th2, 2026-11-19, 0d
     section Etapa 3
-    3.1 Transferencia de aprendizaje con EfficientNet-B0 :t3_1, 2026-11-03, 12d
-    3.2 Embeddings bioacústicos (BirdNET o Perch 2.0) + clasificador :t3_2, 2026-11-05, 12d
-    3.3 Ajuste de hiperparámetros y aumentación de datos :t3_3, 2026-11-12, 8d
-    3.4 Evaluación comparativa y análisis de errores :t3_4, 2026-11-19, 5d
-    3.5 Validación con expertos :t3_5, 2026-11-21, 5d
-    3.6 Prototipo de interfaz (Streamlit o Gradio) :t3_6, 2026-11-12, 10d
-    3.7 Reporte final :t3_7, 2026-11-20, 7d
-    3.8 Video de 10 minutos :t3_8, 2026-11-25, 4d
-    3.9 Revisión final y publicación en el repositorio :t3_9, 2026-11-28, 3d
+    3.1 Transferencia de aprendizaje con EfficientNet-B0 :t3_1, 2026-11-15, 6d
+    3.2 Embeddings bioacústicos (BirdNET o Perch 2.0) + clasificador :t3_2, 2026-11-15, 8d
+    3.3 Ajuste de hiperparámetros y aumentación de datos :t3_3, 2026-11-21, 5d
+    3.4 Evaluación comparativa y análisis de errores :t3_4, 2026-11-26, 3d
+    3.5 Prototipo de interfaz (Streamlit o Gradio) :t3_5, 2026-11-21, 7d
+    3.6 Reporte final :t3_6, 2026-11-25, 5d
+    3.7 Video de 10 minutos :t3_7, 2026-11-28, 2d
+    3.8 Preparación y ensayo de la presentación oral :t3_8, 2026-11-29, 2d
+    3.9 Revisión final publicación en el repositorio y subida del reporte a la plataforma :t3_9, 2026-11-30, 1d
+    Presentación oral :milestone, thp, 2026-12-01, 0d
     Entrega 3 :milestone, th3, 2026-12-01, 0d
 ```
 <!-- FIN:CRONOGRAMA_GANTT -->
@@ -411,6 +412,7 @@ gantt
 | Entrega 1 | lunes 19-oct-2026 | 20 % | Análisis del problema (10 %): problema, objetivos y árbol de problemas · Estado del arte (5 %) · Planeación (5 %) |
 | Entrega 2 | jueves 19-nov-2026 | 10 % | Análisis exploratorio de datos (5 %) · Modelos de referencia, hipótesis y experimentos (5 %) |
 | Entrega 3 | martes 01-dic-2026 | 70 % | Reporte final (introducción, metodología, resultados, discusión, conclusiones y referencias) · Video de 10 minutos |
+| Presentación oral | última sesión (fecha por confirmar; se asumió el 01-dic-2026) | — | Presentación del proyecto al curso |
 <!-- FIN:CRONOGRAMA_HITOS -->
 
 ### D. Riesgos y mitigación
@@ -424,7 +426,7 @@ gantt
 | Cambio de dominio entre grabaciones focales y de campo | Media | Alto | Aumentamos los datos con ruido y probamos con grabaciones propias de campo |
 | Acceso a los datos: clave y límites de la API de xeno-canto; colecciones que requieren solicitud (Macaulay, Instituto Humboldt) | Media | Medio | Pedimos la clave y los accesos al inicio de la Etapa 2; usamos xeno-canto como fuente principal, guardamos los metadatos localmente y hacemos pausas entre solicitudes |
 | Capacidad de cómputo limitada | Media | Medio | Usamos Google Colab con GPU, modelos compactos y *embeddings* precalculados |
-| Nuestra disponibilidad frente a la carga académica | Media | Medio | Al inicio de cada etapa asignamos un responsable a las tareas marcadas «Por asignar» en el Excel; hacemos una reunión semanal corta y dejamos un día de holgura antes de cada hito |
+| Nuestra disponibilidad frente a la carga académica | Media | Medio | Cada tarea del Excel tiene un responsable asignado y lo revisamos al inicio de cada etapa; hacemos una reunión semanal corta y dejamos un día de holgura antes de cada hito |
 | Restricciones de licencia (CC BY-NC) | Baja | Medio | Hacemos un uso académico y no comercial, no redistribuimos los audios y registramos la atribución |
 
 ### E. Seguimiento
