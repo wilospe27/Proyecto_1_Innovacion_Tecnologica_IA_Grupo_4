@@ -132,19 +132,19 @@ def load_checkpoint(path: str | Path, device: str = "cpu") -> tuple[nn.Module, d
     return model.to(device).eval(), checkpoint
 
 
-def evaluate_checkpoint(
+def predict_split(
     checkpoint: str | Path,
     processed_dir: str | Path = PROCESSED_DIR,
     index_file: str = "index.csv",
     split: str = "test",
     batch_size: int = 64,
-    output_dir: str | Path | None = None,
     split_column: str | None = None,
-) -> dict[str, float]:
-    """Evalúa un checkpoint sobre una partición y guarda métricas, reporte y matriz.
+) -> tuple[np.ndarray, np.ndarray, pd.DataFrame, list[str]]:
+    """Predice todas las ventanas de una partición.
 
-    ``split_column`` indica la columna de partición del índice; por defecto usa
-    la misma con la que se entrenó el checkpoint.
+    Retorna (etiquetas reales, probabilidades, índice de las ventanas evaluadas,
+    nombres de las especies). ``split_column`` indica la columna de partición del
+    índice; por defecto usa la misma con la que se entrenó el checkpoint.
     """
     from torch.utils.data import DataLoader
 
@@ -160,7 +160,7 @@ def evaluate_checkpoint(
     split_column = split_column or (ckpt.get("train_config") or {}).get("split_column", "split")
     if split_column in index.columns:
         index = index[index[split_column] == split]
-    index = index[index["label"].isin(labels)]
+    index = index[index["label"].isin(labels)].reset_index(drop=True)
     if index.empty:
         raise ValueError(f"No hay ventanas para evaluar en la partición '{split}'")
 
@@ -168,6 +168,26 @@ def evaluate_checkpoint(
         SpectrogramDataset(index, processed_dir, label_to_idx), batch_size=batch_size
     )
     y_true, probabilities = predict_loader(model, loader, device)
+    return y_true, probabilities, index, labels
+
+
+def evaluate_checkpoint(
+    checkpoint: str | Path,
+    processed_dir: str | Path = PROCESSED_DIR,
+    index_file: str = "index.csv",
+    split: str = "test",
+    batch_size: int = 64,
+    output_dir: str | Path | None = None,
+    split_column: str | None = None,
+) -> dict[str, float]:
+    """Evalúa un checkpoint sobre una partición y guarda métricas, reporte y matriz.
+
+    ``split_column`` indica la columna de partición del índice; por defecto usa
+    la misma con la que se entrenó el checkpoint.
+    """
+    y_true, probabilities, _, labels = predict_split(
+        checkpoint, processed_dir, index_file, split, batch_size, split_column
+    )
     y_pred = probabilities.argmax(axis=1)
 
     metrics = compute_metrics(y_true, y_pred)

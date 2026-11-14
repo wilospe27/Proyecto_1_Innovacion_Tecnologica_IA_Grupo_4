@@ -10,6 +10,7 @@ Ejecutar desde la carpeta ``entrega_2/``::
     python -m src.main baselines
     python -m src.main train      --model cnn_baseline --epochs 30
     python -m src.main evaluate   --checkpoint experiments/checkpoints/<corrida>.pt --split test
+    python -m src.main intervalos --checkpoint experiments/checkpoints/<corrida>.pt
     python -m src.main predict    --audio grabacion.wav --checkpoint experiments/checkpoints/<corrida>.pt
 
 Las importaciones pesadas (PyTorch, librosa) se hacen dentro de cada comando
@@ -157,6 +158,18 @@ def build_parser() -> argparse.ArgumentParser:
     )
     evaluate.add_argument("--batch-size", type=int, default=64)
 
+    intervals = commands.add_parser(
+        "intervalos",
+        help="F1 macro por ventana y por grabación con intervalo de confianza (bootstrap).",
+    )
+    intervals.add_argument("--checkpoint", required=True)
+    intervals.add_argument("--processed-dir", default=str(PROCESSED_DIR))
+    intervals.add_argument("--split", default="test", choices=["train", "val", "test"])
+    intervals.add_argument("--split-column", default=None)
+    intervals.add_argument("--n-boot", type=int, default=2000, help="Número de remuestras.")
+    intervals.add_argument("--umbral", type=float, default=0.70, help="F1 macro de referencia.")
+    intervals.add_argument("--seed", type=int, default=42)
+
     predict = commands.add_parser("predict", help="Predice la especie de un archivo de audio.")
     predict.add_argument("--audio", required=True)
     predict.add_argument("--checkpoint", required=True)
@@ -273,6 +286,20 @@ def main(argv: list[str] | None = None) -> int:
             split_column=args.split_column,
         )
         print(json.dumps(metrics, indent=2))
+
+    elif args.command == "intervalos":
+        from src.evaluation.uncertainty import evaluate_with_intervals
+
+        result = evaluate_with_intervals(
+            args.checkpoint,
+            processed_dir=args.processed_dir,
+            split=args.split,
+            split_column=args.split_column,
+            n_boot=args.n_boot,
+            seed=args.seed,
+            threshold=args.umbral,
+        )
+        print(json.dumps(result, indent=2, ensure_ascii=False))
 
     elif args.command == "predict":
         from src.inference.predict import predict_file

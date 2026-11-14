@@ -14,11 +14,16 @@ flowchart LR
         B --> C["Mono · 32 kHz"] --> D["Ventanas de 5 s<br/>50 % de solapamiento"] --> E["log-Mel 128 × 501<br/>estandarizado"]
     end
     subgraph Modelo["3 · Modelado"]
-        E --> F["Partición por grabación<br/>70 / 15 / 15"] --> G["CNN base · EfficientNet-B0<br/>embeddings bioacústicos"]
+        E --> F["Partición por grabación<br/>70 / 15 / 15"]
+        F --> G1["SVM<br/>sobre MFCC"]
+        F --> G2["Random Forest<br/>sobre MFCC"]
+        F --> G3["CNN base<br/>sobre espectrograma"]
+        F --> G4["EfficientNet-B0<br/>(transferencia)"]
+        F --> G5["Embeddings bioacústicos<br/>BirdNET / Perch + clasificador lineal"]
     end
     subgraph Salida["4 · Evaluación e inferencia"]
-        G --> H["F1 macro · top-3<br/>matriz de confusión"]
-        G --> I["Audio nuevo → promedio de ventanas<br/>→ top-N especies"]
+        G1 & G2 & G3 & G4 & G5 --> H["F1 macro · top-3<br/>matriz de confusión"]
+        G1 & G2 & G3 & G4 & G5 --> I["Audio nuevo → promedio de ventanas<br/>→ top-N especies"]
     end
 ```
 
