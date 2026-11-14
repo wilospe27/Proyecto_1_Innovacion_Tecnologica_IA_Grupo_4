@@ -1,0 +1,10 @@
+# Alternativa con conda:  conda env create -f environment.yml  &&  conda activate cantos-ia
+name: cantos-ia
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - ffmpeg          # decodificación de mp3/m4a si soundfile no los soporta en su sistema
+  - pip:
+      - -r requirements.txt

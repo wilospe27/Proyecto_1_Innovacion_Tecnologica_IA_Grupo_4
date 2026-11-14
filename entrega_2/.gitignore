@@ -1,0 +1,45 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Entornos virtuales y secretos ---
+.venv/
+venv/
+env/
+.env
+*.env
+
+# --- Notebooks ---
+.ipynb_checkpoints/
+
+# --- Datos (no se versionan: pesan mucho y tienen licencias propias) ---
+data/raw/*
+data/processed/*
+data/metadata/*
+!data/**/.gitkeep
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.m4a
+*.npy
+
+# --- Experimentos (se versionan solo métricas y gráficas livianas) ---
+experiments/checkpoints/*
+experiments/logs/*
+!experiments/**/.gitkeep
+*.pt
+*.pth
+*.ckpt
+
+# --- Sistema operativo / editores ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+~$*.xlsx

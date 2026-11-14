@@ -1,0 +1,367 @@
+especie,nombre_en,grabaciones,grabaciones_total,grabadores,minutos,con_otras_especies,cumple
+Mystery mystery,Identity unknown,31,57,10,12.1,1,True
+Cyphorhinus thoracicus,Chestnut-breasted Wren,26,27,7,47.2,3,False
+Thamnophilus multistriatus,Bar-crested Antshrike,13,14,7,9.8,2,False
+Ramphocaenus melanurus,Trilling Gnatwren,13,13,6,6.2,1,False
+Myiozetetes cayanensis,Rusty-margined Flycatcher,11,12,5,1.6,1,False
+Odontophorus hyperythrus,Chestnut Wood Quail,11,23,3,13.5,5,False
+Troglodytes aedon,House Wren,10,12,5,2.8,2,False
+Henicorhina negreti,Munchique Wood Wren,10,11,4,12.7,1,False
+Scytalopus vicinior,Narino Tapaculo,10,13,2,19.4,0,False
+Pitangus sulphuratus,Great Kiskadee,9,10,6,2.9,2,False
+Camptostoma obsoletum,Southern Beardless Tyrannulet,9,10,5,2.4,1,False
+Spatula discors,Blue-winged Teal,9,9,1,0.8,0,False
+Crypturellus soui,Little Tinamou,8,14,7,14.8,3,False
+Forpus conspicillatus,Spectacled Parrotlet,8,10,6,4.3,1,False
+Cranioleuca erythrops,Red-faced Spinetail,8,8,5,5.9,1,False
+Milvago chimachima,Yellow-headed Caracara,8,8,4,3.8,1,False
+Megascops choliba,Tropical Screech Owl,8,10,3,2.1,0,False
+Hylopezus dives,Thicket Antpitta,7,9,6,5.0,0,False
+Ortalis columbiana,Colombian Chachalaca,7,11,6,6.6,2,False
+Rupornis magnirostris,Roadside Hawk,7,10,6,11.8,0,False
+Synallaxis albescens,Pale-breasted Spinetail,7,7,4,2.0,0,False
+Todirostrum cinereum,Common Tody-Flycatcher,7,8,4,1.2,1,False
+Aulacorhynchus haematopygus,Crimson-rumped Toucanet,7,11,3,12.2,6,False
+Diglossa albilatera,White-sided Flowerpiercer,7,9,3,9.0,2,False
+Melanerpes formicivorus,Acorn Woodpecker,7,10,3,2.3,0,False
+Saltator striatipectus,Streaked Saltator,7,10,3,1.6,1,False
+Sicalis flaveola,Saffron Finch,7,7,3,2.2,0,False
+Icterus nigrogularis,Yellow Oriole,7,10,2,2.4,1,False
+Cacicus chrysonotus,Southern Mountain Cacique,7,7,1,3.4,1,False
+Myadestes ralloides,Andean Solitaire,6,11,6,3.5,0,False
+Empidonax virescens,Acadian Flycatcher,6,6,4,3.3,3,False
+Sporophila nigricollis,Yellow-bellied Seedeater,6,8,4,1.1,1,False
+Ara severus,Chestnut-fronted Macaw,6,6,3,3.3,3,False
+Cyanolyca pulchra,Beautiful Jay,6,6,3,4.2,0,False
+Melanerpes rubricapillus,Red-crowned Woodpecker,6,6,3,0.2,0,False
+Saucerottia saucerottei,Steely-vented Hummingbird,6,8,3,0.8,0,False
+Turdus serranus,Glossy-black Thrush,6,6,3,22.9,0,False
+Zonotrichia capensis,Rufous-collared Sparrow,6,7,3,0.3,1,False
+Thraupis episcopus,Blue-grey Tanager,6,6,2,0.6,1,False
+Dendrocygna viduata,White-faced Whistling Duck,6,6,1,0.8,0,False
+Arremon aurantiirostris,Orange-billed Sparrow,5,5,5,2.9,1,False
+Cyclarhis nigrirostris,Black-billed Peppershrike,5,6,5,2.7,2,False
+Coereba flaveola,Bananaquit,5,5,4,1.9,1,False
+Henicorhina leucophrys,Grey-breasted Wood Wren,5,15,4,6.0,0,False
+Manacus vitellinus,Golden-collared Manakin,5,5,4,7.0,1,False
+Momotus aequatorialis,Andean Motmot,5,6,4,3.0,1,False
+Percnostola zeledoni,Zeledon's Antbird,5,6,4,2.2,0,False
+Sclerurus obscurior,Dusky Leaftosser,5,5,4,4.3,1,False
+Thripadectes virgaticeps,Streak-capped Treehunter,5,5,4,3.9,0,False
+Basileuterus tristriatus,Three-striped Warbler,5,7,3,3.2,0,False
+Cercomacra nigricans,Jet Antbird,5,5,3,1.5,0,False
+Pheugopedius mystacalis,Whiskered Wren,5,5,3,1.9,1,False
+Synallaxis brachyura,Slaty Spinetail,5,7,3,2.4,0,False
+Theristicus caudatus,Buff-necked Ibis,5,5,3,2.6,1,False
+Vireo chivi,Chivi Vireo,5,5,3,2.2,1,False
+Molothrus bonariensis,Shiny Cowbird,5,5,2,1.0,0,False
+Strix virgata,Mottled Owl,5,5,2,2.6,0,False
+Dendrocygna autumnalis,Black-bellied Whistling Duck,5,6,1,0.5,0,False
+Egretta thula,Snowy Egret,5,5,1,0.2,0,False
+Gallinula galeata,Common Gallinule,5,5,1,0.5,0,False
+Hemithraupis guira,Guira Tanager,5,5,1,0.5,0,False
+Micrastur ruficollis,Barred Forest Falcon,5,7,1,10.8,2,False
+Phimosus infuscatus,Bare-faced Ibis,5,5,1,0.2,0,False
+Sporophila minuta,Ruddy-breasted Seedeater,5,5,1,0.5,0,False
+Tachybaptus dominicus,Least Grebe,5,5,1,1.7,0,False
+Microbates cinereiventris,Tawny-faced Gnatwren,4,5,4,2.2,0,False
+Amazilia tzacatl,Rufous-tailed Hummingbird,4,5,3,0.6,0,False
+Crypturellus berlepschi,Berlepsch's Tinamou,4,4,3,1.0,0,False
+Grallaria flavotincta,Yellow-breasted Antpitta,4,6,3,4.5,1,False
+Rupicola peruvianus,Andean Cock-of-the-rock,4,5,3,2.8,0,False
+Sipia berlepschi,Stub-tailed Antbird,4,7,3,3.5,0,False
+Sporophila intermedia,Grey Seedeater,4,4,3,1.5,1,False
+Ammodramus humeralis,Grassland Sparrow,4,5,2,0.9,0,False
+Attila spadiceus,Bright-rumped Attila,4,9,2,1.2,0,False
+Chrysomus icterocephalus,Yellow-hooded Blackbird,4,4,2,0.3,0,False
+Cyanoloxia brissonii,Ultramarine Grosbeak,4,4,2,1.4,0,False
+Fluvicola pica,Pied Water Tyrant,4,4,2,0.8,0,False
+Gampsonyx swainsonii,Pearl Kite,4,4,2,1.4,0,False
+Himantopus mexicanus,Black-necked Stilt,4,4,2,0.7,0,False
+Poecilotriccus sylvia,Slaty-headed Tody-Flycatcher,4,6,2,1.1,0,False
+Progne chalybea,Grey-breasted Martin,4,4,2,0.7,0,False
+Tapera naevia,Striped Cuckoo,4,5,2,3.2,0,False
+Vanellus chilensis,Southern Lapwing,4,4,2,3.3,0,False
+Volatinia jacarina,Blue-black Grassquit,4,4,2,1.2,0,False
+Dysithamnus mentalis,Plain Antvireo,4,7,1,2.4,0,False
+Elaenia flavogaster,Yellow-bellied Elaenia,4,5,1,0.2,0,False
+Gymnomystax mexicanus,Oriole Blackbird,4,4,1,0.4,0,False
+Nycticorax nycticorax,Black-crowned Night Heron,4,4,1,0.4,0,False
+Pipreola jucunda,Orange-breasted Fruiteater,4,5,1,1.4,0,False
+Tyrannus melancholicus,Tropical Kingbird,4,4,1,0.1,0,False
+Androdon aequatorialis,Tooth-billed Hummingbird,3,4,3,3.5,0,False
+Colibri delphinae,Brown Violetear,3,4,3,2.1,0,False
+Myiodynastes chrysocephalus,Golden-crowned Flycatcher,3,3,3,0.8,0,False
+Myiothlypis fulvicauda,Buff-rumped Warbler,3,6,3,3.0,1,False
+Oreothraupis arremonops,Tanager Finch,3,3,3,1.9,0,False
+Phaeomyias murina,Mouse-colored Tyrannulet,3,6,3,1.2,2,False
+Setophaga pitiayumi,Tropical Parula,3,5,3,3.0,2,False
+Synallaxis azarae,Azara's Spinetail,3,4,3,2.1,0,False
+Cantorchilus nigricapillus,Bay Wren,3,4,2,1.0,0,False
+Cercomacroides parkeri,Parker's Antbird,3,3,2,3.1,0,False
+Chlorochrysa nitidissima,Multicolored Tanager,3,3,2,0.8,0,False
+Dysithamnus puncticeps,Spot-crowned Antvireo,3,5,2,2.8,1,False
+Epinecrophylla fulviventris,Checker-throated Stipplethroat,3,4,2,1.4,0,False
+Euphonia laniirostris,Thick-billed Euphonia,3,3,2,1.8,0,False
+Galbula ruficauda,Rufous-tailed Jacamar,3,6,2,2.2,0,False
+Habia cristata,Crested Ant Tanager,3,5,2,4.8,1,False
+Henicorhina leucosticta,White-breasted Wood Wren,3,3,2,2.4,1,False
+Iridosornis porphyrocephalus,Purplish-mantled Tanager,3,3,2,2.0,0,False
+Nyctibius griseus,Common Potoo,3,5,2,0.8,0,False
+Picumnus granadensis,Greyish Piculet,3,4,2,0.8,2,False
+Pyrrhomyias cinnamomeus,Cinnamon Flycatcher,3,4,2,1.2,0,False
+Stelgidopteryx ruficollis,Southern Rough-winged Swallow,3,3,2,0.8,0,False
+Syndactyla subalaris,Lineated Foliage-gleaner,3,5,2,2.4,0,False
+Anhinga anhinga,Anhinga,3,4,1,0.1,0,False
+Butorides striata,Striated Heron,3,3,1,0.4,0,False
+Cinnycerthia olivascens,Sepia-brown Wren,3,5,1,4.1,0,False
+Cyanocorax yncas,Inca Jay,3,3,1,1.3,0,False
+Dendrocolaptes sanctithomae,Northern Barred Woodcreeper,3,3,1,3.2,0,False
+Dryocopus lineatus,Lineated Woodpecker,3,4,1,0.4,0,False
+Heliodoxa rubinoides,Fawn-breasted Brilliant,3,3,1,4.2,2,False
+Jacana jacana,Wattled Jacana,3,3,1,0.4,0,False
+Myiarchus apicalis,Apical Flycatcher,3,3,1,1.9,0,False
+Myiarchus tuberculifer,Dusky-capped Flycatcher,3,3,1,0.1,0,False
+Percnostola immaculata,Blue-lored Antbird,3,3,1,0.8,0,False
+Pionus menstruus,Blue-headed Parrot,3,3,1,0.5,0,False
+Pyrocephalus rubinus,Scarlet Flycatcher,3,3,1,0.6,0,False
+Stilpnia vitriolina,Scrub Tanager,3,3,1,1.0,0,False
+Aramides cajaneus,Grey-cowled Wood Rail,2,2,2,0.7,0,False
+Asemospiza obscura,Dull-colored Grassquit,2,3,2,0.4,1,False
+Chlorothraupis olivacea,Lemon-spectacled Tanager,2,2,2,0.8,0,False
+Colaptes punctigula,Spot-breasted Woodpecker,2,4,2,0.6,0,False
+Colinus cristatus,Crested Bobwhite,2,3,2,1.3,0,False
+Cyanoloxia cyanoides,Blue-black Grosbeak,2,2,2,1.2,0,False
+Falco femoralis,Aplomado Falcon,2,2,2,2.1,0,False
+Gymnopithys bicolor,Bicolored Antbird,2,4,2,2.0,0,False
+Hydropsalis maculicaudus,Spot-tailed Nightjar,2,2,2,5.2,0,False
+Lophostrix cristata,Crested Owl,2,3,2,1.4,0,False
+Megascops centralis,Choco Screech Owl,2,6,2,0.5,0,False
+Myiodynastes maculatus,Streaked Flycatcher,2,2,2,0.8,0,False
+Myiothlypis chlorophrys,Choco Warbler,2,2,2,3.2,2,False
+Nyctiphrynus rosenbergi,Choco Poorwill,2,5,2,1.4,0,False
+Pachysylvia semibrunnea,Rufous-naped Greenlet,2,2,2,0.9,0,False
+Pheugopedius sclateri,Speckle-breasted Wren,2,2,2,0.9,0,False
+Pipreola riefferii,Green-and-black Fruiteater,2,4,2,1.8,0,False
+Poliocrania exsul,Chestnut-backed Antbird,2,3,2,1.4,0,False
+Psarocolius wagleri,Chestnut-headed Oropendola,2,3,2,0.3,0,False
+Querula purpurata,Purple-throated Fruitcrow,2,3,2,1.8,1,False
+Ramphastos ambiguus,Yellow-throated Toucan,2,6,2,1.5,0,False
+Ramphastos brevis,Choco Toucan,2,2,2,1.2,0,False
+Saltator grossus,Slate-colored Grosbeak,2,2,2,1.9,0,False
+Sapayoa aenigma,Sapayoa,2,2,2,2.4,0,False
+Setophaga petechia,Mangrove Warbler,2,2,2,0.8,1,False
+Sipia nigricauda,Esmeraldas Antbird,2,5,2,0.8,0,False
+Tachyphonus delatrii,Tawny-crested Tanager,2,2,2,3.1,0,False
+Tangara nigroviridis,Beryl-spangled Tanager,2,2,2,1.6,0,False
+Thraupis palmarum,Palm Tanager,2,2,2,0.6,0,False
+Tiaris olivaceus,Yellow-faced Grassquit,2,3,2,0.8,0,False
+Xenops rutilans,Streaked Xenops,2,2,2,1.4,1,False
+Xiphorhynchus susurrans,Cocoa Woodcreeper,2,2,2,0.5,1,False
+Aulacorhynchus albivitta,White-throated Toucanet,2,2,1,7.0,2,False
+Bubulcus ibis,Western Cattle Egret,2,2,1,0.1,0,False
+Chalcothraupis ruficervix,Golden-naped Tanager,2,2,1,0.2,0,False
+Coccycua pumila,Dwarf Cuckoo,2,2,1,0.2,0,False
+Columbina passerina,Common Ground Dove,2,2,1,0.2,0,False
+Columbina talpacoti,Ruddy Ground Dove,2,2,1,0.4,0,False
+Conopias albovittatus,White-ringed Flycatcher,2,3,1,1.3,1,False
+Coragyps atratus,Black Vulture,2,2,1,0.6,2,False
+Crotophaga ani,Smooth-billed Ani,2,4,1,0.6,0,False
+Emberizoides herbicola,Wedge-tailed Grass Finch,2,2,1,13.1,2,False
+Falco sparverius,American Kestrel,2,2,1,0.3,0,False
+Glaucidium nubicola,Cloud-forest Pygmy Owl,2,2,1,0.6,0,False
+Herpetotheres cachinnans,Laughing Falcon,2,3,1,0.5,0,False
+Machetornis rixosa,Cattle Tyrant,2,2,1,0.6,0,False
+Mimus gilvus,Tropical Mockingbird,2,2,1,0.3,0,False
+Myiophobus fasciatus,Bran-colored Flycatcher,2,2,1,0.6,0,False
+Myrmotherula schisticolor,Slaty Antwren,2,2,1,3.9,1,False
+Pardirallus nigricans,Blackish Rail,2,2,1,0.1,0,False
+Pheugopedius spadix,Sooty-headed Wren,2,2,1,0.6,0,False
+Plegadis falcinellus,Glossy Ibis,2,2,1,0.0,0,False
+Podilymbus podiceps,Pied-billed Grebe,2,2,1,0.1,0,False
+Premnoplex brunnescens,Spotted Barbtail,2,2,1,0.9,0,False
+Pteroglossus sanguineus,Stripe-billed Aracari,2,3,1,1.2,0,False
+Scytalopus alvarezlopezi,Tatama Tapaculo,2,8,1,2.8,0,False
+Scytalopus chocoensis,Choco Tapaculo,2,3,1,2.6,0,False
+Spatula cyanoptera,Cinnamon Teal,2,2,1,0.3,0,False
+Spizaetus ornatus,Ornate Hawk-Eagle,2,2,1,1.0,0,False
+Streptoprocne zonaris,White-collared Swift,2,2,1,0.5,0,False
+Turdus leucops,Pale-eyed Thrush,2,2,1,5.1,0,False
+Tyrannus savana,Fork-tailed Flycatcher,2,2,1,0.0,0,False
+Zentrygon frenata,White-throated Quail-Dove,2,2,1,1.3,1,False
+Actitis macularius,Spotted Sandpiper,1,1,1,0.0,0,False
+Amazona amazonica,Orange-winged Amazon,1,1,1,0.6,0,False
+Amazona autumnalis,Red-lored Amazon,1,1,1,0.2,0,False
+Amazona ochrocephala,Yellow-crowned Amazon,1,2,1,0.3,0,False
+Anabacerthia variegaticeps,Scaly-throated Foliage-gleaner,1,1,1,0.1,0,False
+Andigena hypoglauca,Grey-breasted Mountain Toucan,1,1,1,0.8,0,False
+Andigena nigrirostris,Black-billed Mountain Toucan,1,1,1,0.6,0,False
+Anhima cornuta,Horned Screamer,1,1,1,0.9,1,False
+Anisognathus somptuosus,Blue-winged Mountain Tanager,1,1,1,0.2,0,False
+Anthracothorax nigricollis,Black-throated Mango,1,1,1,0.1,1,False
+Aramus guarauna,Limpkin,1,1,1,0.4,1,False
+Ardea alba,Great Egret,1,1,1,0.2,0,False
+Arremon atricapillus,Black-headed Brushfinch,1,2,1,0.6,0,False
+Arremon brunneinucha,Chestnut-capped Brushfinch,1,3,1,0.4,0,False
+Arremonops conirostris,Black-striped Sparrow,1,1,1,0.5,1,False
+Asio clamator,Striped Owl,1,1,1,0.8,0,False
+Atlapetes albinucha,White-naped Brushfinch,1,1,1,0.6,0,False
+Atlapetes schistaceus,Slaty Brushfinch,1,1,1,0.4,0,False
+Bangsia aureocincta,Gold-ringed Tanager,1,2,1,1.1,1,False
+Bangsia rothschildi,Golden-chested Tanager,1,1,1,0.4,0,False
+Baryphthengus martii,Rufous Motmot,1,3,1,0.1,0,False
+Brotogeris jugularis,Orange-chinned Parakeet,1,1,1,0.0,0,False
+Buteo platypterus,Broad-winged Hawk,1,1,1,0.4,0,False
+Campephilus melanoleucos,Crimson-crested Woodpecker,1,1,1,0.5,1,False
+Cantorchilus leucopogon,Stripe-throated Wren,1,1,1,0.5,0,False
+Capito maculicoronatus,Spot-crowned Barbet,1,1,1,0.1,0,False
+Cardellina canadensis,Canada Warbler,1,2,1,0.4,1,False
+Catharus aurantiirostris,Orange-billed Nightingale-Thrush,1,2,1,0.8,0,False
+Chamaepetes goudotii,Sickle-winged Guan,1,3,1,0.6,1,False
+Chloroceryle americana,Green Kingfisher,1,1,1,0.0,0,False
+Chlorophonia cyanocephala,Golden-rumped Euphonia,1,2,1,0.6,0,False
+Chlorornis riefferii,Grass-green Tanager,1,1,1,1.8,0,False
+Chlorothraupis stolzmanni,Ochre-breasted Tanager,1,1,1,0.6,1,False
+Clibanornis rubiginosus,Ruddy Foliage-gleaner,1,1,1,0.6,0,False
+Colaptes rivolii,Crimson-mantled Woodpecker,1,1,1,0.4,0,False
+Colibri coruscans,Sparkling Violetear,1,1,1,4.0,1,False
+Columbina minuta,Plain-breasted Ground Dove,1,1,1,0.1,0,False
+Contopus virens,Eastern Wood Pewee,1,2,1,0.0,0,False
+Cyanocorax luxuosus,Green Jay,1,2,1,0.4,0,False
+Cyanolyca armillata,Black-collared Jay,1,3,1,0.3,0,False
+Dubusia taeniata,Buff-breasted Mountain Tanager,1,1,1,0.8,0,False
+Dysithamnus occidentalis,Bicolored Antvireo,1,1,1,1.4,0,False
+Euphonia saturata,Orange-crowned Euphonia,1,2,1,0.9,0,False
+Euphonia xanthogaster,Orange-bellied Euphonia,1,1,1,0.3,0,False
+Geothlypis semiflava,Olive-crowned Yellowthroat,1,1,1,0.3,0,False
+Grallaria guatimalensis,Scaled Antpitta,1,2,1,0.7,0,False
+Grallaria haplonota,Plain-backed Antpitta,1,1,1,0.5,0,False
+Hapaloptila castanea,White-faced Nunbird,1,2,1,0.6,0,False
+Haplophaedia aureliae,Greenish Puffleg,1,2,1,0.2,1,False
+Hirundo rustica,Barn Swallow,1,1,1,0.0,0,False
+Hylopezus perspicillatus,Streak-chested Antpitta,1,2,1,0.7,0,False
+Hylophylax naevioides,Spotted Antbird,1,1,1,0.5,0,False
+Ixothraupis rufigula,Rufous-throated Tanager,1,1,1,1.5,0,False
+Leistes militaris,Red-breasted Blackbird,1,1,1,0.1,0,False
+Lochmias nematura,Sharp-tailed Streamcreeper,1,3,1,0.3,0,False
+Lophotriccus pileatus,Scale-crested Pygmy Tyrant,1,6,1,0.2,0,False
+Lurocalis semitorquatus,Short-tailed Nighthawk,1,1,1,0.0,0,False
+Machaeropterus striolatus,Striolated Manakin,1,2,1,0.4,0,False
+Masius chrysopterus,Golden-winged Manakin,1,1,1,0.6,0,False
+Megascops ingens,Rufescent Screech Owl,1,1,1,4.5,0,False
+Melopsittacus undulatus,Budgerigar,1,1,1,0.4,0,False
+Microcerculus marginatus,Southern Nightingale-Wren,1,2,1,2.0,1,False
+Mionectes oleagineus,Ochre-bellied Flycatcher,1,2,1,0.6,0,False
+Mitrospingus cassinii,Dusky-faced Tanager,1,3,1,1.3,1,False
+Mustelirallus albicollis,Ash-throated Crake,1,1,1,0.3,0,False
+Myiarchus crinitus,Great Crested Flycatcher,1,1,1,0.2,1,False
+Myiothlypis nigrocristata,Black-crested Warbler,1,1,1,0.2,0,False
+Myrmotherula axillaris,White-flanked Antwren,1,1,1,0.9,0,False
+Myrmotherula pacifica,Pacific Antwren,1,2,1,0.6,0,False
+Nothocercus julius,Tawny-breasted Tinamou,1,1,1,0.6,0,False
+Nyctidromus albicollis,Pauraque,1,3,1,1.0,0,False
+Ochthoeca cinnamomeiventris,Slaty-backed Chat-Tyrant,1,1,1,0.1,0,False
+Pachyramphus versicolor,Barred Becard,1,2,1,0.6,0,False
+Paroaria gularis,Red-capped Cardinal,1,1,1,0.9,0,False
+Patagioenas goodsoni,Dusky Pigeon,1,3,1,0.6,0,False
+Patagioenas plumbea,Plumbeous Pigeon,1,1,1,0.3,0,False
+Penelope perspicax,Cauca Guan,1,3,1,2.8,1,False
+Phaethornis syrmatophorus,Tawny-bellied Hermit,1,1,1,5.5,0,False
+Phyllomyias cinereiceps,Ashy-headed Tyrannulet,1,2,1,0.2,1,False
+Phyllomyias griseiceps,Sooty-headed Tyrannulet,1,2,1,0.4,0,False
+Phyllomyias nigrocapillus,Black-capped Tyrannulet,1,1,1,0.2,0,False
+Picumnus olivaceus,Olivaceous Piculet,1,1,1,0.7,0,False
+Pipraeidea melanonota,Fawn-breasted Tanager,1,1,1,0.4,0,False
+Piranga rubra,Summer Tanager,1,1,1,0.6,0,False
+Platyrinchus mystaceus,White-throated Spadebill,1,1,1,0.5,0,False
+Poecilostreptus palmeri,Grey-and-gold Tanager,1,1,1,1.7,0,False
+Pogonotriccus poecilotis,Variegated Bristle Tyrant,1,1,1,0.2,0,False
+Premnornis guttuliger,Rusty-winged Barbtail,1,1,1,0.5,1,False
+Pseudotriccus ruficeps,Rufous-headed Pygmy Tyrant,1,1,1,4.0,0,False
+Psittacara wagleri,Scarlet-fronted Parakeet,1,1,1,0.7,1,False
+Ramphastos tucanus,White-throated Toucan,1,1,1,0.1,0,False
+Ramphocelus icteronotus,Lemon-rumped Tanager,1,1,1,0.2,0,False
+Rostrhamus sociabilis,Snail Kite,1,1,1,2.2,0,False
+Sphenopsis frontalis,Oleaginous Hemispingus,1,2,1,0.5,0,False
+Spinus psaltria,Lesser Goldfinch,1,1,1,0.5,0,False
+Stilpnia larvata,Golden-hooded Tanager,1,1,1,0.2,0,False
+Tachyphonus rufus,White-lined Tanager,1,1,1,0.2,0,False
+Tangara arthus,Golden Tanager,1,2,1,0.9,1,False
+Tangara labradorides,Metallic-green Tanager,1,2,1,0.4,0,False
+Taraba major,Great Antshrike,1,5,1,0.6,0,False
+Thamnistes anabatinus,Russet Antshrike,1,1,1,0.4,0,False
+Thripadectes ignobilis,Uniform Treehunter,1,2,1,0.8,0,False
+Tinamus major,Great Tinamou,1,1,1,0.2,0,False
+Todirostrum nigriceps,Black-headed Tody-Flycatcher,1,1,1,0.2,0,False
+Tolmomyias sulphurescens,Yellow-olive Flatbill,1,1,1,0.4,1,False
+Trogon chionurus,White-tailed Trogon,1,1,1,0.5,0,False
+Trogon personatus,Masked Trogon,1,8,1,0.2,0,False
+Turdus ignobilis,Black-billed Thrush,1,5,1,0.7,0,False
+Turdus leucomelas,Pale-breasted Thrush,1,1,1,0.4,0,False
+Tyrannulus elatus,Yellow-crowned Tyrannulet,1,2,1,0.1,0,False
+Tyto furcata,American Barn Owl,1,1,1,0.2,0,False
+Vireo flavoviridis,Yellow-green Vireo,1,1,1,0.4,1,False
+Vireolanius leucotis,Slaty-capped Shrike-Vireo,1,4,1,0.4,0,False
+Adelomyia melanogenys,Speckled Hummingbird,0,2,0,0.0,0,False
+Amazona farinosa,Southern Mealy Amazon,0,1,0,0.0,0,False
+Ampelioides tschudii,Scaled Fruiteater,0,1,0,0.0,0,False
+Anisognathus notabilis,Black-chinned Mountain Tanager,0,2,0,0.0,0,False
+Atlapetes tricolor,Tricolored Brushfinch,0,1,0,0.0,0,False
+Basileuterus culicivorus,Golden-crowned Warbler,0,1,0,0.0,0,False
+Bolborhynchus lineola,Barred Parakeet,0,2,0,0.0,0,False
+Cacicus microrhynchus,Scarlet-rumped Cacique,0,1,0,0.0,0,False
+Cacicus uropygialis,Subtropical Cacique,0,1,0,0.0,0,False
+Carpodectes hopkei,Black-tipped Cotinga,0,1,0,0.0,0,False
+Catharus ustulatus,Swainson's Thrush,0,1,0,0.0,0,False
+Celeus loricatus,Cinnamon Woodpecker,0,1,0,0.0,0,False
+Chlorophonia cyanea,Blue-naped Chlorophonia,0,1,0,0.0,0,False
+Chlorospingus semifuscus,Dusky Bush Tanager,0,1,0,0.0,0,False
+Colaptes rubiginosus,Golden-olive Woodpecker,0,1,0,0.0,0,False
+Cryptoleucopteryx plumbea,Plumbeous Hawk,0,1,0,0.0,0,False
+Cyanocorax affinis,Black-chested Jay,0,2,0,0.0,0,False
+Diglossa indigotica,Indigo Flowerpiercer,0,1,0,0.0,0,False
+Formicarius nigricapillus,Black-headed Antthrush,0,1,0,0.0,0,False
+Gallus gallus,Red Junglefowl,0,1,0,0.0,0,False
+Grallaria nuchalis,Chestnut-naped Antpitta,0,1,0,0.0,0,False
+Grallaria rufocinerea,Bicolored Antpitta,0,1,0,0.0,0,False
+Heliodoxa jacula,Green-crowned Brilliant,0,1,0,0.0,0,False
+Icterus chrysater,Yellow-backed Oriole,0,2,0,0.0,0,False
+Leptopogon rufipectus,Rufous-breasted Flycatcher,0,1,0,0.0,0,False
+Leptotila pallida,Pallid Dove,0,1,0,0.0,0,False
+Lonchura malacca,Tricolored Munia,0,1,0,0.0,0,False
+Lurocalis rufiventris,Rufous-bellied Nighthawk,0,1,0,0.0,0,False
+Machaeropterus deliciosus,Club-winged Manakin,0,1,0,0.0,0,False
+Margarornis stellatus,Star-chested Treerunner,0,6,0,0.0,0,False
+Megaceryle torquata,Ringed Kingfisher,0,1,0,0.0,0,False
+Microrhopias quixensis,Dot-winged Antwren,0,1,0,0.0,0,False
+Mitrephanes phaeocercus,Northern Tufted Flycatcher,0,1,0,0.0,0,False
+Myioborus miniatus,Slate-throated Whitestart,0,1,0,0.0,0,False
+Neomorphus radiolosus,Banded Ground Cuckoo,0,1,0,0.0,0,False
+Ornithion brunneicapillus,Brown-capped Tyrannulet,0,1,0,0.0,0,False
+Pardirallus maculatus,Spotted Rail,0,1,0,0.0,0,False
+Pavo cristatus,Indian Peafowl,0,1,0,0.0,0,False
+Phaenostictus mcleannani,Ocellated Antbird,0,1,0,0.0,0,False
+Pharomachrus antisianus,Crested Quetzal,0,1,0,0.0,0,False
+Pharomachrus auriceps,Golden-headed Quetzal,0,3,0,0.0,0,False
+Pheugopedius fasciatoventris,Black-bellied Wren,0,1,0,0.0,0,False
+Piculus litae,Lita Woodpecker,0,1,0,0.0,0,False
+Pseudocolaptes johnsoni,Pacific Tuftedcheek,0,1,0,0.0,0,False
+Pseudopipra pipra,White-crowned Manakin,0,1,0,0.0,0,False
+Ramphocelus flammigerus,Flame-rumped Tanager,0,1,0,0.0,0,False
+Semnornis ramphastinus,Toucan Barbet,0,2,0,0.0,0,False
+Setophaga fusca,Blackburnian Warbler,0,1,0,0.0,0,False
+Sonus naturalis,Soundscape,0,2,0,0.0,0,False
+Strix nigrolineata,Black-and-white Owl,0,1,0,0.0,0,False
+Synallaxis unirufa,Rufous Spinetail,0,1,0,0.0,0,False
+Tangara icterocephala,Silver-throated Tanager,0,1,0,0.0,0,False
+Thamnophilus atrinucha,Black-crowned Antshrike,0,6,0,0.0,0,False
+Thamnophilus unicolor,Uniform Antshrike,0,2,0,0.0,0,False
+Tityra semifasciata,Masked Tityra,0,1,0,0.0,0,False
+Trogon comptus,Choco Trogon,0,2,0,0.0,0,False
+Trogon massena,Slaty-tailed Trogon,0,1,0,0.0,0,False
+Turdus grayi,Clay-colored Thrush,0,1,0,0.0,0,False
+Uropsalis lyra,Lyre-tailed Nightjar,0,1,0,0.0,0,False
+Vireo leucophrys,Brown-capped Vireo,0,1,0,0.0,0,False
+Xiphorhynchus lachrymosus,Black-striped Woodcreeper,0,1,0,0.0,0,False
+Zenaida auriculata,Eared Dove,0,1,0,0.0,0,False
+Zimmerius chrysops,Golden-faced Tyrannulet,0,1,0,0.0,0,False
