@@ -1,0 +1,32 @@
+{
+  "run_name": "cnn_sin_aug",
+  "checkpoint": "experiments/checkpoints/cnn_sin_aug.pt",
+  "best_epoch": 11,
+  "best_val_f1_macro": 0.7053392365158329,
+  "epochs_run": 12,
+  "n_classes": 15,
+  "n_train_windows": 7972,
+  "n_val_windows": 1593,
+  "config": {
+    "processed_dir": "data/processed",
+    "index_file": "index.csv",
+    "output_dir": "experiments",
+    "model_name": "cnn_baseline",
+    "pretrained": true,
+    "base_channels": 16,
+    "epochs": 12,
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "val_size": 0.15,
+    "test_size": 0.15,
+    "patience": 4,
+    "augment": false,
+    "class_weights": true,
+    "num_workers": 0,
+    "seed": 42,
+    "run_name": "cnn_sin_aug",
+    "split_column": "split",
+    "torch_threads": 6
+  }
+}

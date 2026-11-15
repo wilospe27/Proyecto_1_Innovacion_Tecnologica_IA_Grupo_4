@@ -1,0 +1,12 @@
+{
+  "checkpoint": "experiments/checkpoints/cnn_base.pt",
+  "split": "test",
+  "n_windows": 1594,
+  "accuracy": 0.7340025094102886,
+  "balanced_accuracy": 0.7304637601180697,
+  "precision_macro": 0.7437265256731529,
+  "recall_macro": 0.7304637601180697,
+  "f1_macro": 0.7349205519249524,
+  "f1_weighted": 0.7369075919676802,
+  "top3_accuracy": 0.8707653701380176
+}

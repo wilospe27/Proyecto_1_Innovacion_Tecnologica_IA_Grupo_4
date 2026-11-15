@@ -1,0 +1,20 @@
+# Tema del prototipo: "bosque de noche" (fondo verde oscuro, acento verde, titulares con serifa)
+[theme]
+base = "dark"
+primaryColor = "#2BB673"
+backgroundColor = "#0F1714"
+secondaryBackgroundColor = "#17231E"
+textColor = "#E6EFE9"
+borderColor = "#2A3A33"
+linkColor = "#6FD3A2"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+headingFont = "Fraunces:https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&display=swap"
+baseRadius = "0.75rem"
+showWidgetBorder = true
+greenColor = "#2BB673"
+chartCategoricalColors = ["#3DDC97", "#F2B84B", "#6EC1E4", "#E07A5F", "#B79CED", "#9AA5A0"]
+chartSequentialColors = ["#13201B", "#163A2C", "#1A553C", "#1F704B", "#2A8B57", "#45A55E", "#6BBE63", "#97D46A", "#C6E77A", "#F2F79A"]
+dataframeHeaderBackgroundColor = "#1D2C26"
+
+[server]
+headless = true

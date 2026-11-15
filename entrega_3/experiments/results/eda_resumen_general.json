@@ -1,0 +1,28 @@
+{
+  "grabaciones_disponibles": 2724,
+  "grabaciones_descargadas": 870,
+  "grabaciones_conservadas": 822,
+  "minutos_conservados": 664.6,
+  "ventanas": 11159,
+  "grabadores": 178,
+  "duracion_mediana_s": 34.0,
+  "con_otras_especies_pct": 13.4,
+  "frecuencias_de_muestreo": {
+    "44100": 535,
+    "48000": 264,
+    "96000": 8,
+    "32000": 6,
+    "192000": 5,
+    "16000": 2,
+    "22050": 1,
+    "24000": 1
+  },
+  "kmeans": {
+    "k": 15,
+    "n_ventanas": 11159,
+    "pureza": 0.25566807061564656,
+    "pureza_azar_clase_mayoritaria": 0.08316157361770768,
+    "ari": 0.07120927976544804,
+    "nmi": 0.18579942792303009
+  }
+}

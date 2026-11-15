@@ -1,0 +1,24 @@
+{
+  "checkpoint": "experiments/checkpoints/cnn_base.pt",
+  "split": "test",
+  "n_ventanas": 1594,
+  "n_grabaciones": 119,
+  "n_remuestras": 2000,
+  "por_ventana": {
+    "f1_macro": 0.7349205519249524,
+    "ic_inferior": 0.6613843754921203,
+    "ic_superior": 0.7815029643002748,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 0.753
+  },
+  "por_grabacion": {
+    "f1_macro": 0.8171713345707153,
+    "ic_inferior": 0.7398720720314071,
+    "ic_superior": 0.873453537547706,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 0.997,
+    "exactitud": 0.8067226890756303
+  }
+}

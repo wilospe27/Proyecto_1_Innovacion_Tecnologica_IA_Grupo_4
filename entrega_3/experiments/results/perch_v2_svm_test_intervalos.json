@@ -1,0 +1,25 @@
+{
+  "modelo": "svm",
+  "caracteristicas": "embeddings_perch_v2.npy",
+  "particion": "split",
+  "n_ventanas": 1594,
+  "n_grabaciones": 119,
+  "n_remuestras": 2000,
+  "por_ventana": {
+    "f1_macro": 0.8900774529931587,
+    "ic_inferior": 0.8444330782195074,
+    "ic_superior": 0.91632308219581,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 1.0
+  },
+  "por_grabacion": {
+    "f1_macro": 0.9306563291083415,
+    "ic_inferior": 0.8748043129709796,
+    "ic_superior": 0.9685809301114523,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 1.0,
+    "exactitud": 0.9243697478991597
+  }
+}

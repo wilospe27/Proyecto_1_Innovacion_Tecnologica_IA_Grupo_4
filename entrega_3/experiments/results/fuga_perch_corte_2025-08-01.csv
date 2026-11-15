@@ -1,0 +1,5 @@
+modelo,grupo,corte,grabaciones,ventanas,exactitud_ventana,exactitud_grabacion
+Perch 2.0 + regresión logística,antes del corte,2025-08-01,107,1444,0.8732686980609419,0.9626168224299065
+Perch 2.0 + regresión logística,desde el corte,2025-08-01,12,150,0.94,1.0
+CNN base,antes del corte,2025-08-01,107,1444,0.7299168975069252,0.8130841121495327
+CNN base,desde el corte,2025-08-01,12,150,0.7733333333333333,0.75
