@@ -6,7 +6,7 @@ Borrador para que el equipo lo ajuste. Repartimos el tiempo entre los cuatro int
 
 | Tiempo | Bloque | Quién | Qué se ve en pantalla | Qué decimos |
 |---|---|---|---|---|
-| 0:00–0:45 | Gancho | Wilson | Audio de *Cyphorhinus thoracicus* con su espectrograma | Colombia tiene unas 1.950 especies de aves; muchas se oyen antes de verse. ¿Puede una IA reconocerlas por su canto? |
+| 0:00–0:45 | Gancho | Wilson | Audio de *Cyphorhinus thoracicus* con su espectrograma | Colombia tiene 1.966 especies de aves, más que cualquier otro país; muchas se oyen antes de verse. ¿Puede una IA reconocerlas por su canto? |
 | 0:45–2:00 | Problema | Santiago | Árbol de problemas (reporte 1) | Depende de expertos escasos; las grabadoras producen más audio del que se puede escuchar; las herramientas globales fallan más en el Neotrópico |
 | 2:00–2:45 | Objetivo y alcance | Santiago | Objetivo general y mapa de las 15 especies | 15 especies del Valle del Cauca; meta aproximada de F1 macro de 0,70 en grabaciones no vistas, con intervalo de confianza |
 | 2:45–4:15 | Datos | Adriana | Figuras de calidad, desbalance y espectrogramas | 822 grabaciones de xeno-canto, 665 minutos, 178 grabadores; depuración; ventanas de 5 s; etiquetas débiles y ruido de fondo |

@@ -7,7 +7,7 @@ Universidad Icesi · Facultad Barberi de Ingeniería, Diseño y Ciencias Aplicad
 Integrantes: Wilson Ospina Pérez · Santiago Osorio · Martín Pérez · Adriana Zapata  
 Fecha de entrega: 1 de diciembre de 2026
 
-> **Estado del borrador.** Los resultados de los cinco enfoques ya están incluidos y verificados. Queda marcado con ⏳ el reemplazo de las referencias [1] y [2].
+> **Estado del borrador.** Los resultados de los cinco enfoques ya están incluidos y verificados.
 
 ---
 
@@ -34,7 +34,7 @@ Fecha de entrega: 1 de diciembre de 2026
 
 ## I. Introducción
 
-Colombia ocupa el primer lugar mundial en diversidad de aves, con cerca de 1.954 especies registradas [1]. Buena parte de esa fauna se detecta con más facilidad por el oído que por la vista, y las grabadoras autónomas de monitoreo producen muchas más horas de audio de las que una persona puede escuchar. La bioacústica computacional responde a ese cuello de botella con modelos de aprendizaje profundo que clasifican vocalizaciones a partir de espectrogramas [3]; sin embargo, las herramientas globales tienen menor cobertura y exhaustividad para especies neotropicales poco documentadas [4], [5], [6].
+La lista oficial de aves de Colombia registra 1.966 especies, 83 de ellas endémicas [1], la mayor riqueza de aves de cualquier país [2]. Buena parte de esa fauna se detecta con más facilidad por el oído que por la vista, y las grabadoras autónomas de monitoreo producen muchas más horas de audio de las que una persona puede escuchar. La bioacústica computacional responde a ese cuello de botella con modelos de aprendizaje profundo que clasifican vocalizaciones a partir de espectrogramas [3]; sin embargo, las herramientas globales tienen menor cobertura y exhaustividad para especies neotropicales poco documentadas [4], [5], [6].
 
 En este proyecto construimos un sistema que, a partir de una grabación, sugiere las especies de ave más probables con su probabilidad. Trabajamos en tres etapas: en la primera analizamos el problema, el estado del arte y la planeación ([reporte 1](../../entrega_1/docs/reporte_entrega_1.md)); en la segunda construimos el conjunto de datos, hicimos el análisis exploratorio y entrenamos los modelos de referencia ([reporte 2](../../entrega_2/docs/reporte_entrega_2.md)); y en esta tercera comparamos cinco enfoques de clasificación, pusimos a prueba las hipótesis y construimos un prototipo de demostración.
 
@@ -60,15 +60,15 @@ En este proyecto construimos un sistema que, a partir de una grabación, sugiere
 
 ## III. Estado del arte
 
-El enfoque dominante en bioacústica es aplicar redes convolucionales a espectrogramas Mel [3]. BirdNET [10] y Perch [16] son modelos entrenados con millones de grabaciones de miles de especies, y sus *embeddings* permiten entrenar clasificadores para especies nuevas con pocos ejemplos, con mejores resultados que entrenar desde cero [8]. En selvas hiperdiversas, Sun *et al.* mostraron que la aumentación de datos mejora las CNN cuando los datos son escasos [7]. Las competencias BirdCLEF, cuya edición 2025 se evaluó con grabaciones del Magdalena Medio colombiano [14], confirman el predominio de las CNN preentrenadas y de los ensambles. A la vez, BirdNET pierde exhaustividad en Centro y Suramérica [5] y Merlin cubre solo una fracción de las aves del país [6]: los modelos globales no resuelven por sí solos el caso colombiano. El detalle de los 9 trabajos revisados está en la sección V del [reporte 1](../../entrega_1/docs/reporte_entrega_1.md#v-estado-del-arte).
+El enfoque dominante en bioacústica es aplicar redes convolucionales a espectrogramas Mel [3]. BirdNET [7] y Perch [8] son modelos entrenados con millones de grabaciones de miles de especies, y sus *embeddings* permiten entrenar clasificadores para especies nuevas con pocos ejemplos, con mejores resultados que entrenar desde cero [9]. En selvas hiperdiversas, Sun *et al.* mostraron que la aumentación de datos mejora las CNN cuando los datos son escasos [10]. Las competencias BirdCLEF, cuya edición 2025 se evaluó con grabaciones del Magdalena Medio colombiano [11], confirman el predominio de las CNN preentrenadas y de los ensambles. A la vez, BirdNET pierde exhaustividad en Centro y Suramérica [5] y Merlin cubre solo una fracción de las aves del país [6]: los modelos globales no resuelven por sí solos el caso colombiano. El detalle de los 9 trabajos revisados está en la sección V del [reporte 1](../../entrega_1/docs/reporte_entrega_1.md#v-estado-del-arte).
 
 ## IV. Metodología
 
-Seguimos un marco CRISP-DM [20] adaptado: comprensión del problema, datos, preparación, modelado, evaluación y prototipo.
+Seguimos un marco CRISP-DM [12] adaptado: comprensión del problema, datos, preparación, modelado, evaluación y prototipo.
 
 ### A. Datos
 
-- **Fuente:** xeno-canto, API v3 [11], [22], con licencias Creative Commons por archivo.
+- **Fuente:** xeno-canto, API v3 [13], [14], con licencias Creative Commons por archivo.
 - **Selección de especies:** 15 especies con al menos 30 grabaciones de calidad A o B en Colombia y presencia confirmada en el Valle del Cauca; incluimos pares del mismo género para que la evaluación sea exigente (tabla II.B del [reporte 2](../../entrega_2/docs/reporte_entrega_2.md)).
 - **Descarga y depuración:** 870 grabaciones de calidad A y B; descartamos 48 (44 con otra especie objetivo al fondo, 2 duplicadas y 2 de menos de 1 s). Quedan **822 grabaciones, 665 minutos y 178 grabadores**.
 
@@ -86,10 +86,10 @@ Audio mono a 32 kHz; primeros 60 s de cada grabación; ventanas de 5 s con 50 % 
 
 | Enfoque | Entrada | Configuración |
 |---|---|---|
-| Clásicos (regresión logística, SVM, bosque aleatorio, potenciación de gradiente) | 80 estadísticas de MFCC | Hiperparámetros estándar, pesos balanceados |
-| CNN base | Espectrograma 128 × 501 | 4 bloques convolucionales, 295.647 parámetros, SpecAugment, AdamW, 12 épocas |
-| EfficientNet-B0 [21] | Espectrograma replicado en 3 canales | Pesos de ImageNet, ajuste completo, tasa de aprendizaje 3e-4, hasta 10 épocas (paciencia 3) |
-| *Embeddings* de Perch 2.0 [16] | Audio crudo de 5 s a 32 kHz | Vector de 1.536 dimensiones por ventana + regresión logística y SVM |
+| Clásicos (regresión logística, SVM, bosque aleatorio, potenciación de gradiente) | 80 estadísticas de MFCC | Hiperparámetros estándar de scikit-learn [15], pesos balanceados |
+| CNN base | Espectrograma 128 × 501 | 4 bloques convolucionales, 295.647 parámetros, SpecAugment [16], AdamW, 12 épocas |
+| EfficientNet-B0 [17] | Espectrograma replicado en 3 canales | Pesos de ImageNet, ajuste completo, tasa de aprendizaje 3e-4, hasta 10 épocas (paciencia 3) |
+| *Embeddings* de Perch 2.0 [8] | Audio crudo de 5 s a 32 kHz | Vector de 1.536 dimensiones por ventana + regresión logística y SVM |
 
 Todos los modelos usan la misma partición. Elegimos la época de las redes con la validación y evaluamos una sola vez en prueba. Entrenamos en CPU (sin GPU).
 
@@ -193,7 +193,7 @@ Medimos el tiempo de inferencia en ocho grabaciones de prueba de 60 s en un port
 - **La representación importa más que el clasificador.** Los cuatro clasificadores clásicos quedan agrupados entre 0,57 y 0,62 por ventana; la CNN, que conserva la estructura tiempo-frecuencia, los supera en 13 de 15 especies.
 - **La forma de evaluar cambia la conclusión.** La partición por ventana infla el F1 hasta en 0,34, y la agregación por grabación lo sube hasta en 0,18. Reportar ambos niveles, con intervalos, evita conclusiones apresuradas: por grabación, el bosque aleatorio queda cerca de la CNN.
 - **La dificultad depende de la acústica, no de la cantidad de datos.** Las especies más confundidas son las que el análisis exploratorio mostró más cercanas en el espacio de MFCC; la especie con menos datos (*O. hyperythrus*) obtiene 0,86.
-- **Las representaciones preentrenadas ganan con claridad.** Un clasificador lineal sobre los *embeddings* de Perch 2.0, entrenado en segundos, supera a todos los modelos que entrenamos con nuestros datos, en especial en las especies parecidas entre sí. Coincide con lo reportado por Ghani *et al.* [8]: con decenas de grabaciones por especie, aprovechar un modelo entrenado con millones de grabaciones rinde más que aprender desde cero.
+- **Las representaciones preentrenadas ganan con claridad.** Un clasificador lineal sobre los *embeddings* de Perch 2.0, entrenado en segundos, supera a todos los modelos que entrenamos con nuestros datos, en especial en las especies parecidas entre sí. Coincide con lo reportado por Ghani *et al.* [9]: con decenas de grabaciones por especie, aprovechar un modelo entrenado con millones de grabaciones rinde más que aprender desde cero.
 - **El preentrenamiento ayuda aunque venga de otro dominio, pero el del mismo dominio ayuda más.** EfficientNet-B0, preentrenada con fotografías de ImageNet, supera a la CNN base por 0,06 por ventana y 0,08 por grabación, aunque sobreajusta pronto y su entrenamiento tomó varias horas en CPU. Perch 2.0, preentrenado con sonidos de animales, rinde más y cuesta menos: basta un clasificador lineal entrenado en segundos sobre sus *embeddings*.
 - **La fuga no explica la ventaja.** Como Perch 2.0 se entrenó con xeno-canto, verificamos su desempeño en grabaciones subidas después de su entrenamiento: acierta 12 de 12. La muestra es pequeña, pero la ventaja se mantiene.
 
@@ -212,9 +212,9 @@ Medimos el tiempo de inferencia en ocho grabaciones de prueba de 60 s en un port
 
 ## IX. Referencias
 
-> ⏳ **Pendiente:** reemplazar [1] y [2] (notas de prensa) por las fuentes primarias del SiB Colombia y del Instituto Humboldt o la UICN, como pidió el profesor.
+[1] M. A. Echeverry-Galvis, O. Acevedo-Charry, J. E. Avendaño, C. Gómez, F. G. Stiles, F. A. Estela y A. M. Cuervo, "Lista oficial de las aves de Colombia 2022: Adiciones, cambios taxonómicos y actualizaciones de estado," *Ornitología Colombiana*, n.º 22, pp. 25–51, 2022. Conjunto de datos: "Lista de referencia de especies de aves de Colombia - 2022," v1.5, Asociación Colombiana de Ornitología, 2023, doi: 10.15472/qhsz0p.
 
-[1] "Colombia vuelve a liderar el mayor conteo internacional de aves del mundo," *Forbes Colombia*, 15 de mayo de 2026. Cifras del SiB Colombia. ⏳ *Reemplazar por la fuente primaria.*
+[2] Sistema de Información sobre Biodiversidad de Colombia (SiB Colombia), "Cifras destacadas. Biodiversidad de Colombia 2025," corte de cifras: 31 de diciembre de 2025, actualizado: 2 de marzo de 2026. [En línea]. Disponible: https://cifras.biodiversidad.co/files/Kit_prensa-Cifras_Sobre_Biodiversidad_de_Colombia.pdf
 
 [3] D. Stowell, "Computational bioacoustics with deep learning: a review and roadmap," *PeerJ*, vol. 10, art. e13152, 2022, doi: 10.7717/peerj.13152.
 
@@ -224,27 +224,27 @@ Medimos el tiempo de inferencia en ocho grabaciones de prueba de 60 s en un port
 
 [6] Cornell Lab of Ornithology, "Help expand Merlin in Colombia," *Merlin Bird ID*, 2025. [En línea]. Disponible: https://www.merlinbirds.org/help-expand-merlin-in-colombia/
 
-[7] Y. Sun, T. M. Maeda, C. Solís-Lemus, D. Pimentel-Alarcón y Z. Buřivalová, "Classification of animal sounds in a hyperdiverse rainforest using convolutional neural networks with data augmentation," *Ecological Indicators*, vol. 145, art. 109621, 2022, doi: 10.1016/j.ecolind.2022.109621.
+[7] S. Kahl, C. M. Wood, M. Eibl y H. Klinck, "BirdNET: A deep learning solution for avian diversity monitoring," *Ecological Informatics*, vol. 61, art. 101236, 2021, doi: 10.1016/j.ecoinf.2021.101236.
 
-[8] B. Ghani, T. Denton, S. Kahl y H. Klinck, "Global birdsong embeddings enable superior transfer learning for bioacoustic classification," *Scientific Reports*, vol. 13, art. 22876, 2023, doi: 10.1038/s41598-023-49989-z.
+[8] B. van Merriënboer, V. Dumoulin, J. Hamer, L. Harrell, A. Burns y T. Denton, "Perch 2.0: The Bittern Lesson for Bioacoustics," arXiv:2508.04665, 2025.
 
-[9] D. S. Park *et al.*, "SpecAugment: A simple data augmentation method for automatic speech recognition," en *Proc. Interspeech*, 2019, pp. 2613–2617.
+[9] B. Ghani, T. Denton, S. Kahl y H. Klinck, "Global birdsong embeddings enable superior transfer learning for bioacoustic classification," *Scientific Reports*, vol. 13, art. 22876, 2023, doi: 10.1038/s41598-023-49989-z.
 
-[10] S. Kahl, C. M. Wood, M. Eibl y H. Klinck, "BirdNET: A deep learning solution for avian diversity monitoring," *Ecological Informatics*, vol. 61, art. 101236, 2021, doi: 10.1016/j.ecoinf.2021.101236.
+[10] Y. Sun, T. M. Maeda, C. Solís-Lemus, D. Pimentel-Alarcón y Z. Buřivalová, "Classification of animal sounds in a hyperdiverse rainforest using convolutional neural networks with data augmentation," *Ecological Indicators*, vol. 145, art. 109621, 2022, doi: 10.1016/j.ecolind.2022.109621.
 
-[11] Xeno-canto Foundation, "xeno-canto: Sharing wildlife sounds from around the world." [En línea]. Disponible: https://xeno-canto.org
+[11] J. S. Cañas *et al.*, "Overview of BirdCLEF+ 2025: Multi-taxonomic sound identification in the Middle Magdalena, Colombia," en *Working Notes of CLEF 2025*, CEUR Workshop Proceedings, vol. 4038, 2025.
 
-[14] J. S. Cañas *et al.*, "Overview of BirdCLEF+ 2025: Multi-taxonomic sound identification in the Middle Magdalena, Colombia," en *Working Notes of CLEF 2025*, CEUR Workshop Proceedings, vol. 4038, 2025.
+[12] P. Chapman *et al.*, *CRISP-DM 1.0: Step-by-step data mining guide*. SPSS Inc., 2000.
 
-[16] B. van Merriënboer, V. Dumoulin, J. Hamer, L. Harrell, A. Burns y T. Denton, "Perch 2.0: The Bittern Lesson for Bioacoustics," arXiv:2508.04665, 2025.
+[13] Xeno-canto Foundation, "xeno-canto: Sharing wildlife sounds from around the world." [En línea]. Disponible: https://xeno-canto.org
 
-[20] P. Chapman *et al.*, *CRISP-DM 1.0: Step-by-step data mining guide*. SPSS Inc., 2000.
+[14] Xeno-canto Foundation, "API v3 documentation." [En línea]. Disponible: https://xeno-canto.org/explore/api
 
-[21] M. Tan y Q. V. Le, "EfficientNet: Rethinking model scaling for convolutional neural networks," en *Proc. 36th International Conference on Machine Learning (ICML)*, 2019, pp. 6105–6114.
+[15] F. Pedregosa *et al.*, "Scikit-learn: Machine learning in Python," *Journal of Machine Learning Research*, vol. 12, pp. 2825–2830, 2011.
 
-[22] Xeno-canto Foundation, "API v3 documentation." [En línea]. Disponible: https://xeno-canto.org/explore/api
+[16] D. S. Park *et al.*, "SpecAugment: A simple data augmentation method for automatic speech recognition," en *Proc. Interspeech*, 2019, pp. 2613–2617.
 
-[23] F. Pedregosa *et al.*, "Scikit-learn: Machine learning in Python," *Journal of Machine Learning Research*, vol. 12, pp. 2825–2830, 2011.
+[17] M. Tan y Q. V. Le, "EfficientNet: Rethinking model scaling for convolutional neural networks," en *Proc. 36th International Conference on Machine Learning (ICML)*, 2019, pp. 6105–6114.
 
 ## Anexo A. Reproducibilidad
 
