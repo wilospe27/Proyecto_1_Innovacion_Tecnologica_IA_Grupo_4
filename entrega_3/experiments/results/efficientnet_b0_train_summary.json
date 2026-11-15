@@ -1,0 +1,32 @@
+{
+  "run_name": "efficientnet_b0",
+  "checkpoint": "experiments/checkpoints/efficientnet_b0.pt",
+  "best_epoch": 5,
+  "best_val_f1_macro": 0.8080954665646497,
+  "epochs_run": 8,
+  "n_classes": 15,
+  "n_train_windows": 7972,
+  "n_val_windows": 1593,
+  "config": {
+    "processed_dir": "data/processed",
+    "index_file": "index.csv",
+    "output_dir": "experiments",
+    "model_name": "efficientnet_b0",
+    "pretrained": true,
+    "base_channels": 32,
+    "epochs": 10,
+    "batch_size": 32,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "val_size": 0.15,
+    "test_size": 0.15,
+    "patience": 3,
+    "augment": true,
+    "class_weights": true,
+    "num_workers": 0,
+    "seed": 42,
+    "run_name": "efficientnet_b0",
+    "split_column": "split",
+    "torch_threads": 12
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "modelo": "regresion_logistica",
+  "caracteristicas": "mfcc_stats.npy",
+  "particion": "split",
+  "n_ventanas": 1594,
+  "n_grabaciones": 119,
+  "n_remuestras": 2000,
+  "por_ventana": {
+    "f1_macro": 0.5673264339348433,
+    "ic_inferior": 0.47893800709097406,
+    "ic_superior": 0.6221663744293703,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 0.0
+  },
+  "por_grabacion": {
+    "f1_macro": 0.7183923483923483,
+    "ic_inferior": 0.6143587186377435,
+    "ic_superior": 0.7882294268173143,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 0.565,
+    "exactitud": 0.7226890756302521
+  }
+}

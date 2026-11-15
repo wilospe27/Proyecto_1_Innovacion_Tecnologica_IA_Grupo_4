@@ -1,0 +1,24 @@
+{
+  "checkpoint": "experiments/checkpoints/efficientnet_b0.pt",
+  "split": "test",
+  "n_ventanas": 1594,
+  "n_grabaciones": 119,
+  "n_remuestras": 2000,
+  "por_ventana": {
+    "f1_macro": 0.7993222492255285,
+    "ic_inferior": 0.7318413939919768,
+    "ic_superior": 0.8344985717747371,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 0.999
+  },
+  "por_grabacion": {
+    "f1_macro": 0.9007753357753358,
+    "ic_inferior": 0.8339164933531942,
+    "ic_superior": 0.9467411255411255,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 1.0,
+    "exactitud": 0.8991596638655462
+  }
+}

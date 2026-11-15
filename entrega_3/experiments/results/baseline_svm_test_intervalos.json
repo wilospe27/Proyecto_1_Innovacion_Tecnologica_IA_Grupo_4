@@ -1,0 +1,25 @@
+{
+  "modelo": "svm",
+  "caracteristicas": "mfcc_stats.npy",
+  "particion": "split",
+  "n_ventanas": 1594,
+  "n_grabaciones": 119,
+  "n_remuestras": 2000,
+  "por_ventana": {
+    "f1_macro": 0.6227193560355555,
+    "ic_inferior": 0.5412066721208011,
+    "ic_superior": 0.6703820692416419,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 0.0015
+  },
+  "por_grabacion": {
+    "f1_macro": 0.6876392114937006,
+    "ic_inferior": 0.5836938020556441,
+    "ic_superior": 0.7603743074676577,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 0.2895,
+    "exactitud": 0.6890756302521008
+  }
+}

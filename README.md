@@ -87,7 +87,7 @@ Para desarrollar el proyecto usamos:
 - **Modelado:** `TensorFlow/Keras` o `PyTorch`, `scikit-learn`
 - **Modelos de referencia:** BirdNET, YAMNet, EfficientNet/ResNet (transfer learning)
 - **Visualización:** `matplotlib`, `seaborn`
-- **Interfaz:** `Streamlit` o `Gradio`
+- **Interfaz:** `Streamlit`
 - **Entorno:** Jupyter Notebook / Google Colab
 
 ## 📦 Entregas
@@ -98,9 +98,9 @@ Organizamos cada entrega en su propia carpeta, con la estructura estándar del c
 |---|---|---|---|---|---|
 | 1 | 19-oct-2026 | Análisis del problema, estado del arte y planeación | 20 % | [`entrega_1/`](entrega_1/) | ✅ Realizado |
 | 2 | 19-nov-2026 | Análisis exploratorio de datos, modelos de referencia e hipótesis | 10 % | [`entrega_2/`](entrega_2/) | ✅ Realizado |
-| 3 | 1-dic-2026 | Reporte final y video de 10 minutos | 70 % | `entrega_3/` | ⏳ Pendiente |
+| 3 | 1-dic-2026 | Reporte final y video de 10 minutos | 70 % | [`entrega_3/`](entrega_3/) | 🚧 Avanzada: reporte, modelos y prototipo listos; faltan el video y la presentación oral |
 
-📄 **Reporte de la Entrega 1:** [`entrega_1/docs/reporte_entrega_1.md`](entrega_1/docs/reporte_entrega_1.md) · 📄 **Reporte de la Entrega 2:** [`entrega_2/docs/reporte_entrega_2.md`](entrega_2/docs/reporte_entrega_2.md) · 📅 **Cronograma:** [`entrega_1/docs/cronograma.xlsx`](entrega_1/docs/cronograma.xlsx)
+📄 **Reporte de la Entrega 1:** [`entrega_1/docs/reporte_entrega_1.md`](entrega_1/docs/reporte_entrega_1.md) · 📄 **Reporte de la Entrega 2:** [`entrega_2/docs/reporte_entrega_2.md`](entrega_2/docs/reporte_entrega_2.md) · 📄 **Reporte final (borrador):** [`entrega_3/docs/reporte_final.md`](entrega_3/docs/reporte_final.md) · 📅 **Cronograma:** [`entrega_1/docs/cronograma.xlsx`](entrega_1/docs/cronograma.xlsx)
 
 ## 📁 Estructura del repositorio
 
@@ -117,11 +117,16 @@ Proyecto_1_Innovacion_Tecnologica_IA_Grupo_4/
 │   ├── experiments/          # logs/ · checkpoints/ · results/
 │   ├── tests/                # Pruebas con pytest
 │   └── requirements.txt · environment.yml · .gitignore · LICENSE · README.md
-└── entrega_2/                # Misma estructura, más:
-    ├── docs/                 # reporte_entrega_2.md · guia_etapa_2.md · figuras/
-    ├── src/                  # data/clean.py · analysis/eda.py · models/classical.py
-    ├── notebooks/            # 02_eda.ipynb · 03_modelos_referencia.ipynb
-    └── experiments/results/  # Tablas y métricas que cita el reporte
+├── entrega_2/                # Misma estructura, más:
+│   ├── docs/                 # reporte_entrega_2.md · guia_etapa_2.md · figuras/
+│   ├── src/                  # data/clean.py · analysis/eda.py · models/classical.py
+│   ├── notebooks/            # 02_eda.ipynb · 03_modelos_referencia.ipynb
+│   └── experiments/results/  # Tablas y métricas que cita el reporte
+└── entrega_3/                # Código de la Entrega 2, más:
+    ├── app/                  # streamlit_app.py: prototipo de demostración
+    ├── docs/                 # reporte_final.md · guion_video.md · figuras/
+    ├── src/                  # models/embeddings.py · inference/perch.py · evaluation/uncertainty.py · evaluation/leakage.py
+    └── experiments/results/  # Métricas e intervalos de confianza de los cinco enfoques
 ```
 
 ## 🚀 Instalación y uso
@@ -149,21 +154,21 @@ python -m src.main train --model cnn_baseline --epochs 30 --run-name cnn_v1
 python -m src.main predict --audio ruta/al/audio.wav --checkpoint experiments/checkpoints/cnn_v1.pt
 ```
 
-Desarrollaremos la interfaz web (Streamlit o Gradio) en la Entrega 3.
+**Prototipo** (Entrega 3): `cd entrega_3` y `streamlit run app/streamlit_app.py`. Para incluir Perch 2.0 hay que instalar TensorFlow en el mismo entorno (ver [`entrega_3/docs/instalacion.md`](entrega_3/docs/instalacion.md)).
 
 ## 📊 Resultados
 
-Resultados de la Entrega 2 sobre el conjunto de prueba (15 especies, 119 grabaciones no vistas, partición por grabación):
+Resultados sobre el conjunto de prueba (15 especies, 119 grabaciones no vistas, partición por grabación). El F1 macro por grabación promedia las ventanas de cada grabación antes de decidir:
 
-| Modelo | Accuracy | F1 macro | Observaciones |
-|---|---|---|---|
-| SVM sobre MFCC | 0,620 | 0,623 | Mejor clasificador clásico |
-| Random Forest sobre MFCC | 0,610 | 0,608 | — |
-| CNN base | 0,734 | 0,735 | Versión liviana, 12 épocas en CPU; top-3 de 0,871 |
-| Transfer learning (EfficientNet) | — | — | Entrega 3 |
-| Embeddings bioacústicos (BirdNET/Perch) | — | — | Entrega 3 |
+| Modelo | Accuracy (ventana) | F1 macro (ventana) | F1 macro (grabación) | Entrega |
+|---|---|---|---|---|
+| SVM sobre MFCC | 0,620 | 0,623 | 0,688 | 2 |
+| Random Forest sobre MFCC | 0,610 | 0,608 | 0,785 | 2 |
+| CNN base | 0,734 | 0,735 | 0,817 | 2 |
+| Transfer learning (EfficientNet-B0) | 0,799 | 0,799 | 0,901 | 3 |
+| Embeddings de Perch 2.0 + regresión logística | 0,880 | 0,878 | **0,966** | 3 |
 
-Detalle en el [reporte de la Entrega 2](entrega_2/docs/reporte_entrega_2.md).
+Los intervalos de confianza, la verificación de fuga de Perch 2.0 y el análisis por especie están en el [reporte final (borrador)](entrega_3/docs/reporte_final.md). El detalle de los modelos de referencia está en el [reporte de la Entrega 2](entrega_2/docs/reporte_entrega_2.md).
 
 ## 🌱 Impacto y aplicaciones
 

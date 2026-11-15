@@ -1,0 +1,25 @@
+{
+  "modelo": "potenciacion_gradiente",
+  "caracteristicas": "mfcc_stats.npy",
+  "particion": "split",
+  "n_ventanas": 1594,
+  "n_grabaciones": 119,
+  "n_remuestras": 2000,
+  "por_ventana": {
+    "f1_macro": 0.5895151644224481,
+    "ic_inferior": 0.5056627442672106,
+    "ic_superior": 0.6407495886901846,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 0.0
+  },
+  "por_grabacion": {
+    "f1_macro": 0.6974108462343757,
+    "ic_inferior": 0.5972288482084215,
+    "ic_superior": 0.7671550726871429,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 0.3595,
+    "exactitud": 0.6974789915966386
+  }
+}

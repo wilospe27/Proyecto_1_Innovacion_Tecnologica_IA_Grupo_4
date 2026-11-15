@@ -1,0 +1,25 @@
+{
+  "modelo": "bosque_aleatorio",
+  "caracteristicas": "mfcc_stats.npy",
+  "particion": "split",
+  "n_ventanas": 1594,
+  "n_grabaciones": 119,
+  "n_remuestras": 2000,
+  "por_ventana": {
+    "f1_macro": 0.6077683626206335,
+    "ic_inferior": 0.5245139938824096,
+    "ic_superior": 0.6510793375550842,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 0.0005
+  },
+  "por_grabacion": {
+    "f1_macro": 0.7850074619895592,
+    "ic_inferior": 0.6939226667410103,
+    "ic_superior": 0.8491304752697334,
+    "confianza": 0.95,
+    "umbral": 0.7,
+    "fraccion_remuestras_sobre_umbral": 0.9645,
+    "exactitud": 0.7815126050420168
+  }
+}
