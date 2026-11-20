@@ -10,6 +10,7 @@ Partimos del código de la Entrega 2 y agregamos la transferencia de aprendizaje
 |---|---|
 | Reporte final (introducción, metodología, resultados, discusión, conclusiones y referencias) | [`docs/reporte_final.md`](docs/reporte_final.md) |
 | Guion del video de 10 minutos y esquema de la presentación oral | [`docs/guion_video.md`](docs/guion_video.md) |
+| Presentación para la clase (29 diapositivas con notas del orador) | [`docs/presentacion_proyecto.pptx`](docs/presentacion_proyecto.pptx) |
 | Prototipo de demostración | [`app/streamlit_app.py`](app/streamlit_app.py) |
 
 ## 🚀 Cómo ejecutarla
